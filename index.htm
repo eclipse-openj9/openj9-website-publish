@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Eclipse OpenJ9</title>
+<meta charset="Cp1252">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
+.w3-bar,h1,button {font-family: "Montserrat", sans-serif}
+.fa-anchor,.fa-coffee {font-size:200px}
+</style>
+</head>
+<body>
+
+<!-- Navbar -->
+<div class="w3-top">
+  <div class="w3-bar w3-cyan w3-card w3-left-align w3-large">
+    <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large w3-cyan" href="javascript:void(0);" onclick="myFunction()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>
+    <img class="w3-bar-item w3-padding-large w3-black" src="Logo.svg"></img>
+    <a href="https://www.eclipse.org/openj9/docs/" target="_blank" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Docs</a>
+    <a href="https://blog.openj9.org/" target="_blank" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Blog</a>
+    <a href="https://openj9.slack.com/" target="_blank" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Slack</a>
+    <a href="https://openj9.slack.com/join/shared_invite/enQtNDU4MDI4Mjk0MTk2LWVhNTMzMGY1N2JkODQ1OWE0NTNmZjM4ZDcxOTBiMjk3NGFjM2U0ZDNhMmY0MDZlNzU0ZjAyNzQ1ODlmYjg3MjA" target="_blank" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Join Slack</a>
+    <a href="https://github.com/eclipse-openj9/openj9/issues" target="_blank" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">OpenJ9 Issues</a>
+    <div class="w3-right w3-xlarge">
+    <a class="w3-bar-item w3-button w3-hide-small fa fa-twitter w3-hover-opacity" href="https://twitter.com/openj9/" target="_blank"></a>
+    <a class="w3-bar-item w3-button w3-hide-small fa fa-github w3-hover-opacity" href="https://github.com/eclipse-openj9/openj9" target="_blank"></a>
+    <a class="w3-bar-item w3-button w3-hide-small fa fa-slack w3-hover-opacity" href="https://openj9.slack.com/" target="_blank"></a>
+    <a class="w3-bar-item w3-button w3-hide-small fa fa-stack-overflow w3-hover-opacity" href="https://stackoverflow.com/search?q=%23OpenJ9" target="_blank"></a>
+    </div>
+  </div>
+
+  <!-- Navbar on small screens -->
+  <div id="navDemo" class="w3-bar-block w3-white w3-hide w3-hide-large w3-hide-medium w3-large">
+    <a href="https://www.eclipse.org/openj9/docs/" target="_blank" class="w3-bar-item w3-button w3-padding-large">Docs</a>
+    <a href="https://blog.openj9.org/" target="_blank" class="w3-bar-item w3-button w3-padding-large">Blog</a>
+    <a href="https://openj9.slack.com/" target="_blank" class="w3-bar-item w3-button w3-padding-large">Slack</a>
+    <a href="https://openj9.slack.com/join/shared_invite/enQtNDU4MDI4Mjk0MTk2LWVhNTMzMGY1N2JkODQ1OWE0NTNmZjM4ZDcxOTBiMjk3NGFjM2U0ZDNhMmY0MDZlNzU0ZjAyNzQ1ODlmYjg3MjA" target="_blank" class="w3-bar-item w3-button w3-padding-large">Join Slack</a>
+    <a href="https://github.com/eclipse-openj9/openj9/issues" target="_blank" class="w3-bar-item w3-button w3-padding-large">OpenJ9 Issues</a>
+  </div>
+</div>
+
+<!-- Header -->
+<header class="w3-container w3-cyan w3-center" style="padding:96px 16px">
+  <img style="width:20%" class="w3-black" src="openj9-logo-white.svg"/>
+  <h1 class="w3-margin w3-jumbo">Unleash the power of Java</h1>
+  <p class="w3-content w3-xlarge">Optimized to run Java� applications cost-effectively in the cloud, Eclipse OpenJ9� is a fast and efficient JVM that delivers power and performance when you need it most.</p>
+<div class="w3-large">
+<p>Optimized for the Cloud, for microservices and monoliths too!</p>
+<p>Faster Startup</p>
+<p>Faster Ramp-up, when deployed to cloud</p>
+<p>Smaller</p>
+</div>
+</header>
+
+<!-- First Grid -->
+<div class="w3-row-padding w3-padding-32 w3-container">
+  <div class="w3-content">
+    <div class="w3-center">
+      <h1>Our Story</h1>
+      <h5 class="w3-padding-32">Eclipse OpenJ9 is a high performance, scalable, Java virtual machine (JVM) implementation that represents hundreds of person-years of effort. Contributed to the Eclipse project by IBM, the OpenJ9 JVM underpins the IBM SDK, Java Technology Edition product that is a core component of many IBM Enterprise software products. Continued development of OpenJ9 at the Eclipse foundation ensures wider collaboration, fresh innovation, and the opportunity to influence the development of OpenJ9 for the next generation of Java applications.</h5>
+    </div>
+  </div>
+</div>
+
+<!-- Second Grid -->
+<div class="w3-light-grey w3-padding-32 w3-container">
+  <div class="w3-content">
+    <!--div class="w3-third w3-center">
+      <i class="w3-padding-64 w3-margin-right"></i>
+    </div-->
+
+    <div class="w3-center">
+      <h1>Our supporters</h1>
+      <h5 class="w3-padding-32">The success of the OpenJ9 project is underpinned by the generosity of our supporters, to whom we would like to extend our thanks. This support comes in different forms; monetory, people, system, and data center resources. People resources help us to staff the planning, development, delivery, and support of OpenJ9 releases as well as pioneering new and innovative technologies. Dedicated systems and hosting services allow us to run automated build and test operations, which help ensure that quality and reliability is central to all our deliverables.</h5>
+</div>
+</div>
+</div>
+<div class="w3-center w3-light-grey">
+      <img style="width:14%" src="ibm-logo.svg"/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <img style="width:20%" class="w3-grey" src="adopt-open-jdk.png"/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <img style="width:20%" src="oregon-state-university-logo.svg"/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <img style="width:16%" src="university-of-new-brunswick-unb-logo-vector.svg"/>
+</div>
+<div class="w3-light-grey w3-padding-32">
+</div>
+
+<div class="w3-container w3-black w3-opacity w3-padding-64">
+    <h1 class="w3-quarter w3-margin w3-center">Join the conversation</h1>
+<div class="w3-row-padding w3-third w3-large">
+<p>Join us on Slack where you can ask questions and chat directly with our developers. Whether you simply have a question about using OpenJ9, an idea for improvement, or a problem you want to discuss, we'd love to hear from you.</p>
+<a class="w3-button w3-cyan" href="https://openj9.slack.com/join/shared_invite/enQtNDU4MDI4Mjk0MTk2LWVhNTMzMGY1N2JkODQ1OWE0NTNmZjM4ZDcxOTBiMjk3NGFjM2U0ZDNhMmY0MDZlNzU0ZjAyNzQ1ODlmYjg3MjA" target="_blank">Join OpenJ9 Slack <i class="fa fa-slack"></i></a>
+</div>
+<div class="w3-row-padding w3-third w3-large">
+<p>Like all great open source projects, we have a vibrant and busy GitHub repository where you can create issues to explore ideas, request new features, or report any difficulties you are having.</p>
+<a class="w3-button w3-cyan" href="https://github.com/eclipse-openj9/openj9/issues" target="_blank">See OpenJ9 Issues <i class="fa fa-github"></i></a>
+</div>
+</div>
+
+<div class="w3-container w3-grey w3-opacity w3-padding-64">
+    <h1 class="w3-quarter w3-margin w3-center">Participate in the Eclipse OpenJ9 project</h1>
+<div class="w3-row-padding w3-third w3-large">
+<h2>Become a contributor</h2>
+<p>We welcome contributions to the project in all shapes and forms. If you are interested in JVM development, we'd love to hear your ideas and help you collaborate with us on the code base. There are other ways you can contribute too, such as working on our website and docs. Be a part of the project and share in our success!</p>
+<a class="w3-button w3-cyan" href="https://github.com/eclipse-openj9/openj9/blob/master/CONTRIBUTING.md" target="_blank">Contributor Guide</a>
+</div>
+<div class="w3-row-padding w3-third w3-large">
+<h2>Join community calls</h2>
+<p>Our regular calls are a great place to find out what is going on in the project. As well as discussing our release plans and development status, we often feature lightning talks by members of the community. For example, technical deep dives or overviews about new features. To see agendas and recordings, look in the Slack #planning channel.</p>
+<a class="w3-button w3-cyan" href="https://calendar.google.com/calendar?cid=YjBnYjB0ZzNxaTZhb3NhZGZnbG0wa3BjY29AZ3JvdXAuY2FsZW5kYXIuZ29vZ2xlLmNvbQ" target="_blank">Add to Calendar</a>
+</div>
+</div>
+
+<div class="w3-padding-32 w3-container w3-light-grey">
+  <div class="w3-content">
+    <div class="w3-center">
+      <h1>Eclipse OpenJ9 version 0.37.0 released</h1>
+<p>April 2023</p>
+</div>
+<p>We're pleased to announce the availability of Eclipse OpenJ9 v0.37.0.</p>
+<p>This release works with OpenJDK version 19. OpenJDK 19 is out of support at the time of the 0.37.0 release. Builds of 0.37.0 should not be used in production and might contain known security vulnerabilities as of 18 April 2023. For more information about supported platforms and OpenJDK versions, see <a class="w3-hover-opacity" href="https://www.eclipse.org/openj9/docs/openj9_support/" target="_blank">Supported environments</a>.</p>
+<p>Other updates in this release include the following:</p>
+<ul>
+<li>Linux� builds for platforms Linux x86 64-bit, Linux on POWER� LE 64-bit, and Linux on IBM Z� 64-bit now use gcc 11.2 instead of gcc 10.3. Linux AArch64 64-bit continues to use the gcc 10.3 compiler.</li>
+<li>The OpenJ9 ThreadMXBean interface extends the <a class="w3-hover-opacity" href="https://docs.oracle.com/javase/8/docs/jre/api/management/extension/com/sun/management/ThreadMXBean.html" target="_blank">com.sun.management.ThreadMXBean</a> interface instead of the java.lang.management.ThreadMXBean interface.</li>
+<li>OpenJ9 now supports the use of an extra attribute, <code>tokenlabel</code>, in the SunPKCS11 configuration file on z/OS� and Linux on IBM Z to assign a label to a PKCS#11 token. The <code>tokenlabel</code> attribute can be used instead of the <code>slot</code> or <code>slotListIndex</code> attributes.</li>
+</ul>
+<p>To read more about these and other changes, see the <a class="w3-hover-opacity" href="https://www.eclipse.org/openj9/docs/openj9_releases/" target="_blank">OpenJ9 user documentation</a>.</p>
+  </div>
+</div>
+
+<!-- Footer -->
+<footer class="w3-container w3-opacity">  
+  <div class="w3-large w3-padding-32">
+    <a class="w3-hover-opacity" style="text-decoration:none" href="https://www.eclipse.org/" target="_blank">Eclipse Foundation Website</a> &nbsp;&nbsp;
+    <a class="w3-hover-opacity" style="text-decoration:none" href="https://www.eclipse.org/legal/privacy.php" target="_blank">Privacy Policy</a> &nbsp;&nbsp;
+    <a class="w3-hover-opacity" style="text-decoration:none" href="https://www.eclipse.org/legal/termsofuse.php" target="_blank">Terms of Use</a> &nbsp;&nbsp;
+    <a class="w3-hover-opacity" style="text-decoration:none" href="https://www.eclipse.org/legal/copyright.php" target="_blank">Copyright Agent</a> &nbsp;&nbsp;
+    <a class="w3-hover-opacity" style="text-decoration:none" href="https://www.eclipse.org/legal/" target="_blank">Legal</a>
+    <div class="w3-right w3-xlarge">
+    <a class="w3-button fa fa-twitter w3-hover-opacity" href="https://twitter.com/openj9/" target="_blank"></a>
+    <a class="w3-button fa fa-github w3-hover-opacity" href="https://github.com/eclipse-openj9/openj9" target="_blank"></a>
+    <a class="w3-button fa fa-slack w3-hover-opacity" href="https://openj9.slack.com/" target="_blank"></a>
+    <a class="w3-button fa fa-stack-overflow w3-hover-opacity" href="https://stackoverflow.com/search?q=%23OpenJ9" target="_blank"></a>
+    </div>
+    <p><a class="w3-right w3-hover-opacity" style="text-decoration:none" href="https://wiki.eclipse.org/Development_Resources/Process_Guidelines/What_is_Incubation" target="_blank">OpenJ9 is an Eclipse Incubator Project</a></p>
+ </div>
+</footer>
+
+<script>
+// Used to toggle the menu on small screens when clicking on the menu button
+function myFunction() {
+  var x = document.getElementById("navDemo");
+  if (x.className.indexOf("w3-show") == -1) {
+    x.className += " w3-show";
+  } else { 
+    x.className = x.className.replace(" w3-show", "");
+  }
+}
+</script>
+
+</body>
+</html>
