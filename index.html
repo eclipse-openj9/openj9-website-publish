@@ -117,19 +117,36 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
 
 <div class="w3-padding-64 w3-container w3-light-grey">
   <div class="w3-content">
-    <div class="w3-center">
-      <h1>Eclipse OpenJ9 version 0.37.0 released</h1>
-<p>April 2023</p>
+        <div class="w3-center">
+      <h1>Eclipse OpenJ9 version 0.38.0 released</h1>
+<p>May 2023</p>
 </div>
-<p>We're pleased to announce the availability of Eclipse OpenJ9 v0.37.0.</p>
-<p>This release works with OpenJDK version 19. OpenJDK 19 is out of support at the time of the 0.37.0 release. Builds of 0.37.0 should not be used in production and might contain known security vulnerabilities as of 18 April 2023. For more information about supported platforms and OpenJDK versions, see <a class="w3-hover-opacity" href="https://www.eclipse.org/openj9/docs/openj9_support/" target="_blank">Supported environments</a>.</p>
+<p>We're pleased to announce the availability of Eclipse OpenJ9™ v0.38.0.</p>
+<p>This release supports OpenJDK version 8, 11, and 17. For more information about supported platforms and OpenJDK versions, see <a class="w3-hover-opacity" href="https://www.eclipse.org/openj9/docs/openj9_support/" target="_blank">Supported environments</a>.</p>
 <p>Other updates in this release include the following:</p>
 <ul>
-<li>Linux® builds for platforms Linux x86 64-bit, Linux on POWER® LE 64-bit, and Linux on IBM Z® 64-bit now use gcc 11.2 instead of gcc 10.3. Linux AArch64 64-bit continues to use the gcc 10.3 compiler.</li>
+  <li>New <code>-XX:[+|-]HandleSIGUSR2</code> option is added to enable the handling of the <code>SIGUSR2</code> signal by the application signal handler instead of the VM signal handler in the absence of signal chaining.</li>
+<li>Support for the Checkpoint/Restore In Userspace (CRIU) tool is currently provided as a technical preview. This preview is supported for use in production environments, however, all APIs and options are subject to change. You can use the CRIU feature to stop the VM at a checkpoint, save its state, then run the VM from the point where it was stopped, hence improving the VM startup time and performance.</li>
+</ul>   
+<p>To read more about these and other changes, see the <a class="w3-hover-opacity" href="https://www.eclipse.org/openj9/docs/openj9_releases/" target="_blank">OpenJ9 user documentation</a>.</p>
+<p><b>Performance highlights include:</b></p>
+<ul>
+  <li>Stack walking for refreshing the latest user defined ClassLoader (LUDCL) cache is optimized, saving a substantial amount of CPU time for applicable workloads.</li>
+</ul>
+    <div class="w3-center">
+      <h1>Eclipse OpenJ9 version 0.37.0 released</h1>
+</div>
+<p>OpenJ9 v0.37.0. release supported OpenJDK version 19. OpenJDK 19 was out of support at the time of the 0.37.0 release. Builds of 0.37.0 should not be used in production and contains known security vulnerabilities as of 18 April 2023.</p>
+<p>Other updates in this release include the following:</p>
+<ul>
 <li>The OpenJ9 ThreadMXBean interface extends the <a class="w3-hover-opacity" href="https://docs.oracle.com/javase/8/docs/jre/api/management/extension/com/sun/management/ThreadMXBean.html" target="_blank">com.sun.management.ThreadMXBean</a> interface instead of the java.lang.management.ThreadMXBean interface.</li>
 <li>OpenJ9 now supports the use of an extra attribute, <code>tokenlabel</code>, in the SunPKCS11 configuration file on z/OS® and Linux on IBM Z to assign a label to a PKCS#11 token. The <code>tokenlabel</code> attribute can be used instead of the <code>slot</code> or <code>slotListIndex</code> attributes.</li>
 </ul>
 <p>To read more about these and other changes, see the <a class="w3-hover-opacity" href="https://www.eclipse.org/openj9/docs/openj9_releases/" target="_blank">OpenJ9 user documentation</a>.</p>
+<p><b>Performance highlights include:</b></p>
+<ul>
+  <li>With the implementation of CRC-32C polynomial acceleration on Linux on POWER LE (ppc64le) and AIX POWER® BE (ppc64), performance of CRC-32C calculations on these platforms is 25 times faster (even up to 42 times faster) on data payload of typical sizes.</li>
+</ul>  
   </div>
 </div>
 
