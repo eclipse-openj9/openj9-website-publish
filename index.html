@@ -118,22 +118,18 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
 <div class="w3-padding-64 w3-container w3-light-grey">
   <div class="w3-content">
         <div class="w3-center">
-      <h1>Eclipse OpenJ9 version 0.39.0 released</h1>
-<p>June 2023</p>
+      <h1>Eclipse OpenJ9 version 0.40.0 released</h1>
+<p>Jule 2023</p>
 </div>
 <p>We're pleased to announce the availability of Eclipse OpenJ9™ v0.39.0.</p>
-<p>This release supports OpenJDK version 20. For more information about supported platforms and OpenJDK versions, see <a class="w3-hover-opacity" href="https://www.eclipse.org/openj9/docs/openj9_support/" target="_blank">Supported environments</a>.</p>
+<p>This release supports OpenJDK version 8, 11, 17 and 20. For more information about supported platforms and OpenJDK versions, see <a class="w3-hover-opacity" href="https://www.eclipse.org/openj9/docs/openj9_support/" target="_blank">Supported environments</a>.</p>
 <p>Other updates in this release include the following:</p>
 <ul>
-  <li>RHEL 8.4 is out of support. RHEL 8.6 is the new minimum operating system level.</li>
+  <li>Support for persistent shared classes cache is now added on z/OS&reg; systems.</li>
+  <li>A new `-XX:codecachetotalMaxRAMPercentage` option is added to set the maximum limit for the total JIT code cache size based on the amount of physical memory available to the VM.</li>
+  <li>Even though the container detection fails when you mount the /proc file system with the hidepid=2 option on Linux® platforms, the VM starts but with a warning message.</li>
 </ul>   
 <p>To read more about these and other changes, see the <a class="w3-hover-opacity" href="https://www.eclipse.org/openj9/docs/openj9_releases/" target="_blank">OpenJ9 user documentation</a>.</p>
-<p><b>Performance highlights include:</b></p>
-<ul>
-  <li>For virtual threads, throughput is optimized by reducing the synchronization overhead in the mount and unmount code paths, and the memory usage is reduced through a Java stack caching feature that enables reuse of Java stacks.</li>
-  <li>MethodHandle throughput performance is improved by using compiled code instead of interpreter in more cases.</li>
-  <li>Footprint in garbage collection (GC) policies other than the balanced GC is improved with enabling of dual indexable header.</li>
-</ul>
   </div>
 </div>
 
