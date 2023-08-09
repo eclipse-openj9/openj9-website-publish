@@ -13,7 +13,7 @@
         <link rel="canonical" href="https://www.eclipse.org/openj9/docs/version0.39/">
       
       
-        <link rel="prev" href="../openj9_releases/">
+        <link rel="prev" href="../version0.40/">
       
       
         <link rel="next" href="../version0.38/">
@@ -318,6 +318,20 @@
               
   
   
+  
+    <li class="md-nav__item">
+      <a href="../version0.40/" class="md-nav__link">
+        Version 0.40.0
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
     
   
   
@@ -364,6 +378,13 @@
           <li class="md-nav__item">
   <a href="#binaries-and-supported-environments" class="md-nav__link">
     Binaries and supported environments
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ec-key-generation-algorithm-support-for-openssl" class="md-nav__link">
+    EC key generation algorithm support for OpenSSL
   </a>
   
 </li>
@@ -423,6 +444,32 @@
   
 
             
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_6" type="checkbox" id="__nav_5_6" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_5_6">
+          Earlier releases
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Earlier releases" data-md-level="2">
+        <label class="md-nav__title" for="__nav_5_6">
+          <span class="md-nav__icon md-icon"></span>
+          Earlier releases
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
           
             
               
@@ -507,32 +554,6 @@
   
 
             
-          
-            
-              
-  
-  
-  
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-      
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_11" type="checkbox" id="__nav_5_11" >
-      
-      
-      
-      
-        <label class="md-nav__link" for="__nav_5_11">
-          Earlier releases
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <nav class="md-nav" aria-label="Earlier releases" data-md-level="2">
-        <label class="md-nav__title" for="__nav_5_11">
-          <span class="md-nav__icon md-icon"></span>
-          Earlier releases
-        </label>
-        <ul class="md-nav__list" data-md-scrollfix>
           
             
               
@@ -2312,6 +2333,62 @@
   
   
     <li class="md-nav__item">
+      <a href="../djdknativeec/" class="md-nav__link">
+        -Djdk.nativeEC
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../djdknativeeckeygen/" class="md-nav__link">
+        -Djdk.nativeECKeyGen
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../djdknativexdhkeyagreement/" class="md-nav__link">
+        -Djdk.nativeXDHKeyAgreement
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../djdknativexdhkeygen/" class="md-nav__link">
+        -Djdk.nativeXDHKeyGen
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../djdknativegcm/" class="md-nav__link">
         -Djdk.nativeGCM
       </a>
@@ -4072,6 +4149,20 @@
   
   
     <li class="md-nav__item">
+      <a href="../xxcodecachetotalmaxrampercentage/" class="md-nav__link">
+        -XX:codecachetotalMaxRAMPercentage
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../xxcompactstrings/" class="md-nav__link">
         -XX:[+|-]CompactStrings
       </a>
@@ -5665,6 +5756,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#ec-key-generation-algorithm-support-for-openssl" class="md-nav__link">
+    EC key generation algorithm support for OpenSSL
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#new-jdk-20-features" class="md-nav__link">
     New JDK 20 features
   </a>
@@ -5726,6 +5824,7 @@
 <p>The following new features and notable changes since version 0.38.0 are included in this release:</p>
 <ul>
 <li><a href="#binaries-and-supported-environments">New binaries and changes to supported environments</a></li>
+<li><a href="#ec-key-generation-algorithm-support-for-openssl">EC key generation algorithm support for OpenSSL</a></li>
 <li><a href="#new-jdk-20-features">New JDK 20 features</a></li>
 </ul>
 <h2 id="features-and-changes">Features and changes</h2>
@@ -5734,6 +5833,8 @@
 <p>OpenJDK 20 with Eclipse OpenJ9 is <em>not</em> a long term support (LTS) release.</p>
 <p>RHEL 8.4 is out of support. RHEL 8.6 is the new minimum operating system level.</p>
 <p>To learn more about support for OpenJ9 releases, including OpenJDK levels and platform support, see <a href="../openj9_support/">Supported environments</a>.</p>
+<h3 id="ec-key-generation-algorithm-support-for-openssl">EC key generation algorithm support for OpenSSL</h3>
+<p>The EC key generation algorithm can now use the native OpenSSL library for OpenJDK 20. For more information, see <a href="../djdknativeeckeygen/"><code>-Djdk.nativeECKeyGen</code></a>.</p>
 <h3 id="new-jdk-20-features"><img alt="Start of content that applies to Java 20 plus" src="../cr/java20plus.png" /> New JDK 20 features</h3>
 <p>The following features are supported by OpenJ9:</p>
 <ul>
