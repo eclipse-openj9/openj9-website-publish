@@ -76,7 +76,7 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
 
     <div class="w3-center">
       <h1>Our supporters</h1>
-      <h5 class="w3-padding-32">The success of the OpenJ9 project is underpinned by the generosity of our supporters, to whom we would like to extend our thanks. This support comes in different forms; monetory, people, system, and data center resources. People resources help us to staff the planning, development, delivery, and support of OpenJ9 releases as well as pioneering new and innovative technologies. Dedicated systems and hosting services allow us to run automated build and test operations, which help ensure that quality and reliability is central to all our deliverables.</h5>
+      <h5 class="w3-padding-32">The success of the OpenJ9 project is underpinned by the generosity of our supporters, to whom we would like to extend our thanks. This support comes in different forms; monetary, people, system, and data center resources. People resources help us to staff the planning, development, delivery, and support of OpenJ9 releases as well as pioneering new and innovative technologies. Dedicated systems and hosting services allow us to run automated build and test operations, which help ensure that quality and reliability is central to all our deliverables.</h5>
 </div>
 </div>
 </div>
@@ -118,18 +118,26 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
 <div class="w3-padding-64 w3-container w3-light-grey">
   <div class="w3-content">
         <div class="w3-center">
-      <h1>Eclipse OpenJ9 version 0.40.0 released</h1>
-<p>July 2023</p>
+      <h1>Eclipse OpenJ9 version 0.41.0 released</h1>
+<p>November 2023</p>
 </div>
-<p>We're pleased to announce the availability of Eclipse OpenJ9™ v0.40.0.</p>
-<p>This release supports OpenJDK version 8, 11, 17 and 20. For more information about supported platforms and OpenJDK versions, see <a class="w3-hover-opacity" href="https://www.eclipse.org/openj9/docs/openj9_support/" target="_blank">Supported environments</a>.</p>
+<p>We're pleased to announce the availability of Eclipse OpenJ9 v0.41.0.</p>
+<p>This release supports OpenJDK version 8, 11, and 17. For more information about supported platforms and OpenJDK versions, see <a class="w3-hover-opacity" href="https://www.eclipse.org/openj9/docs/openj9_support/" target="_blank">Supported environments</a>.</p>
 <p>Other updates in this release include the following:</p>
 <ul>
-  <li>Support for persistent shared classes cache is now added on z/OS&reg; systems.</li>
-  <li>A new <code>-XX:codecachetotalMaxRAMPercentage</code> option is added to set the maximum limit for the total JIT code cache size based on the amount of physical memory available to the VM.</li>
-  <li>Even though the container detection fails when you mount the <code>/proc</code> file system with the <code>hidepid=2</code> option on Linux® platforms, the VM starts but with a warning message.</li>
+  <li>The <code>-XX:+CompactStrings</code> option is now enabled by default on Java 11 and later.</li>
+  <li>The JITServer client can now use the JITServer AOT cache even if both the <code>-Xshareclasses:readonly</code> option and the JITServer AOT cache feature were enabled at the same time. With the change in behavior of the <code>-Xshareclasses:readonly</code> option, the shared class cache startup creates a temporary new (writable) top layer that the JITServer AOT cache can use to store data that it needs to function.</li>
+  <li>A new <code>-XX:[+|-]EnableDynamicAgentLoading</code> option is added to enable or disable the dynamic loading of agents into a running VM.</li>
+  <li>A new <code>-XX:[+|-]UseZlibNX</code> option is added to control the loading of the <code>zlibnx</code> library in the <code>LIBPATH</code> environment variable on AIX&reg; systems.</li>
+  <li>Support is added for the <code>com.sun.management.ThreadMXBean.getThreadAllocatedBytes()</code> API on all platforms except z/OS&reg;. In the coming future z/OS release, the support for this API will be added on z/OS platforms as well.</li>
 </ul>   
 <p>To read more about these and other changes, see the <a class="w3-hover-opacity" href="https://www.eclipse.org/openj9/docs/openj9_releases/" target="_blank">OpenJ9 user documentation</a>.</p>
+<p><b>Performance highlights include:</b></p>
+<ul>
+  <li>Performance of algorithms with the use of OpenSSL version 3 and later is now enhanced. Improved algorithms include SHA256, AES, HmacSHA256, and ChaCha20.<br>To obtain these improved algorithms and further enhance the performance of these algorithms on Linux&reg; and AIX, use OpenSSL 3.0.12 or a later 3.0.x version, or 3.1.4 or a later 3.1.x version.</li>
+  <li>For Java 17, the performance to call virtual or interface methods through <code>MethodHandles</code> is improved.</li>
+  <li>The JIT inlining optimization is enhanced to improve performance when it selects methods with constant arguments.</li>
+</ul>
   </div>
 </div>
 
