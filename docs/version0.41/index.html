@@ -13,14 +13,14 @@
         <link rel="canonical" href="https://www.eclipse.org/openj9/docs/version0.41/">
       
       
-        <link rel="prev" href="../openj9_releases/">
+        <link rel="prev" href="../version0.42/">
       
       
         <link rel="next" href="../version0.40/">
       
       
       <link rel="icon" href="../cr/openj9-logo.svg">
-      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.7">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.3">
     
     
       
@@ -28,10 +28,10 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.4b4a2bd9.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.50c56a3b.min.css">
       
         
-        <link rel="stylesheet" href="../assets/stylesheets/palette.356b1318.min.css">
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
       
       
 
@@ -69,7 +69,6 @@
     
     <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="cyan">
   
-    
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
@@ -127,6 +126,7 @@
     
     
     
+    
       <label class="md-header__button md-icon" for="__search">
         
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
@@ -169,7 +169,7 @@
         <a href="https://github.com/eclipse-openj9/openj9" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
   </div>
   <div class="md-source__repository">
     eclipse-openj9/openj9
@@ -214,7 +214,7 @@
       <a href="https://github.com/eclipse-openj9/openj9" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
   </div>
   <div class="md-source__repository">
     eclipse-openj9/openj9
@@ -226,6 +226,7 @@
     
       
       
+  
   
   
   
@@ -248,6 +249,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../builds/" class="md-nav__link">
         
@@ -264,6 +266,7 @@
     
       
       
+  
   
   
   
@@ -286,6 +289,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../openj9_newuser/" class="md-nav__link">
         
@@ -305,6 +309,7 @@
   
   
     
+  
   
   
     
@@ -343,6 +348,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../openj9_releases/" class="md-nav__link">
         
@@ -362,7 +368,29 @@
                 
   
   
+  
+  
+    <li class="md-nav__item">
+      <a href="../version0.42/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Version 0.42.0
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
     
+  
   
   
     <li class="md-nav__item md-nav__item--active">
@@ -411,7 +439,9 @@
       
         <li class="md-nav__item">
   <a href="#features-and-changes" class="md-nav__link">
-    Features and changes
+    <span class="md-ellipsis">
+      Features and changes
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Features and changes">
@@ -419,77 +449,99 @@
         
           <li class="md-nav__item">
   <a href="#binaries-and-supported-environments" class="md-nav__link">
-    Binaries and supported environments
+    <span class="md-ellipsis">
+      Binaries and supported environments
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#new-xx-showcarrierframes-option-added" class="md-nav__link">
-    New -XX:[+|-]ShowCarrierFrames option added
+    <span class="md-ellipsis">
+      New -XX:[+|-]ShowCarrierFrames option added
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#new-xxcontinuationcache-option-added" class="md-nav__link">
-    New -XX:ContinuationCache option added
+    <span class="md-ellipsis">
+      New -XX:ContinuationCache option added
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#-xxcompactstrings-option-enabled-by-default" class="md-nav__link">
-    -XX:+CompactStrings option enabled by default
+    <span class="md-ellipsis">
+      -XX:+CompactStrings option enabled by default
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#change-in-behavior-of-xshareclassesreadonly" class="md-nav__link">
-    Change in behavior of -Xshareclasses:readonly
+    <span class="md-ellipsis">
+      Change in behavior of -Xshareclasses:readonly
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#new-xx-enabledynamicagentloading-option-added" class="md-nav__link">
-    New -XX:[+|-]EnableDynamicAgentLoading option added
+    <span class="md-ellipsis">
+      New -XX:[+|-]EnableDynamicAgentLoading option added
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#new-xx-usezlibnx-option-added" class="md-nav__link">
-    New -XX:[+|-]UseZlibNX option added
+    <span class="md-ellipsis">
+      New -XX:[+|-]UseZlibNX option added
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#support-for-openssl-3x" class="md-nav__link">
-    Support for OpenSSL 3.x
+    <span class="md-ellipsis">
+      Support for OpenSSL 3.x
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#performance-improvement" class="md-nav__link">
-    Performance improvement
+    <span class="md-ellipsis">
+      Performance improvement
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#support-added-for-the-comsunmanagementthreadmxbeangetthreadallocatedbytes-api" class="md-nav__link">
-    Support added for the com.sun.management.ThreadMXBean.getThreadAllocatedBytes() API
+    <span class="md-ellipsis">
+      Support added for the com.sun.management.ThreadMXBean.getThreadAllocatedBytes() API
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#change-in-behavior-of-the-djavasecuritymanager-system-property-for-openjdk-version-8-and-11" class="md-nav__link">
-    Change in behavior of the -Djava.security.manager system property for OpenJDK version 8 and 11
+    <span class="md-ellipsis">
+      Change in behavior of the -Djava.security.manager system property for OpenJDK version 8 and 11
+    </span>
   </a>
   
 </li>
@@ -501,7 +553,9 @@
       
         <li class="md-nav__item">
   <a href="#known-problems-and-full-release-information" class="md-nav__link">
-    Known problems and full release information
+    <span class="md-ellipsis">
+      Known problems and full release information
+    </span>
   </a>
   
 </li>
@@ -517,6 +571,7 @@
             
               
                 
+  
   
   
   
@@ -540,6 +595,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../version0.39/" class="md-nav__link">
         
@@ -557,6 +613,7 @@
             
               
                 
+  
   
   
   
@@ -580,6 +637,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../version0.37/" class="md-nav__link">
         
@@ -600,6 +658,7 @@
   
   
   
+  
     
     
     
@@ -610,10 +669,10 @@
         
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_7" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_8" >
         
           
-          <label class="md-nav__link" for="__nav_5_7" id="__nav_5_7_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_5_8" id="__nav_5_8_label" tabindex="0">
             
   
   <span class="md-ellipsis">
@@ -624,8 +683,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_7_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_5_7">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_8">
             <span class="md-nav__icon md-icon"></span>
             Earlier releases
           </label>
@@ -633,6 +692,7 @@
             
               
                 
+  
   
   
   
@@ -656,6 +716,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../version0.35/" class="md-nav__link">
         
@@ -673,6 +734,7 @@
             
               
                 
+  
   
   
   
@@ -696,6 +758,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../version0.32/" class="md-nav__link">
         
@@ -713,6 +776,7 @@
             
               
                 
+  
   
   
   
@@ -736,6 +800,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../version0.30/" class="md-nav__link">
         
@@ -753,6 +818,7 @@
             
               
                 
+  
   
   
   
@@ -776,6 +842,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../version0.29/" class="md-nav__link">
         
@@ -793,6 +860,7 @@
             
               
                 
+  
   
   
   
@@ -816,6 +884,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../version0.26/" class="md-nav__link">
         
@@ -833,6 +902,7 @@
             
               
                 
+  
   
   
   
@@ -856,6 +926,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../version0.24/" class="md-nav__link">
         
@@ -873,6 +944,7 @@
             
               
                 
+  
   
   
   
@@ -896,6 +968,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../version0.22/" class="md-nav__link">
         
@@ -913,6 +986,7 @@
             
               
                 
+  
   
   
   
@@ -936,6 +1010,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../version0.20/" class="md-nav__link">
         
@@ -953,6 +1028,7 @@
             
               
                 
+  
   
   
   
@@ -976,6 +1052,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../version0.18/" class="md-nav__link">
         
@@ -993,6 +1070,7 @@
             
               
                 
+  
   
   
   
@@ -1016,6 +1094,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../version0.16/" class="md-nav__link">
         
@@ -1033,6 +1112,7 @@
             
               
                 
+  
   
   
   
@@ -1056,6 +1136,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../version0.14/" class="md-nav__link">
         
@@ -1073,6 +1154,7 @@
             
               
                 
+  
   
   
   
@@ -1096,6 +1178,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../version0.12/" class="md-nav__link">
         
@@ -1113,6 +1196,7 @@
             
               
                 
+  
   
   
   
@@ -1136,6 +1220,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../version0.10/" class="md-nav__link">
         
@@ -1156,6 +1241,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../version0.9/" class="md-nav__link">
         
@@ -1173,6 +1259,7 @@
             
               
                 
+  
   
   
   
@@ -1208,6 +1295,7 @@
     
       
       
+  
   
   
   
@@ -1247,6 +1335,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../migrating8to11/" class="md-nav__link">
         
@@ -1267,12 +1356,34 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../migrating11to17/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
     Migrating from Java 11 to Java 17
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../migrating17to21/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Migrating from Java 17 to Java 21
   </span>
   
 
@@ -1294,6 +1405,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../configuring/" class="md-nav__link">
         
@@ -1310,6 +1422,7 @@
     
       
       
+  
   
   
   
@@ -1349,6 +1462,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../allocation/" class="md-nav__link">
         
@@ -1366,6 +1480,7 @@
             
               
                 
+  
   
   
   
@@ -1389,6 +1504,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../gc/" class="md-nav__link">
         
@@ -1406,6 +1522,7 @@
             
               
                 
+  
   
   
   
@@ -1445,6 +1562,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../vgclog/" class="md-nav__link">
         
@@ -1462,6 +1580,7 @@
             
               
                 
+  
   
   
   
@@ -1500,6 +1619,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../jit/" class="md-nav__link">
         
@@ -1516,6 +1636,7 @@
     
       
       
+  
   
   
   
@@ -1538,6 +1659,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../jitserver_tuning/" class="md-nav__link">
         
@@ -1557,6 +1679,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../aot/" class="md-nav__link">
         
@@ -1573,6 +1696,7 @@
     
       
       
+  
   
   
   
@@ -1612,6 +1736,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../shrc/" class="md-nav__link">
         
@@ -1629,6 +1754,7 @@
             
               
                 
+  
   
   
   
@@ -1656,6 +1782,7 @@
     
       
       
+  
   
   
   
@@ -1695,6 +1822,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../criusupport/" class="md-nav__link">
         
@@ -1712,6 +1840,7 @@
             
               
                 
+  
   
   
   
@@ -1751,6 +1880,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../dorgeclipseopenj9criuimmutableenvvars/" class="md-nav__link">
         
@@ -1768,6 +1898,7 @@
             
               
                 
+  
   
   
   
@@ -1791,6 +1922,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../xshareclassesdisableonrestore/" class="md-nav__link">
         
@@ -1808,6 +1940,7 @@
             
               
                 
+  
   
   
   
@@ -1831,6 +1964,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../xxcriurestorenonportablemode/" class="md-nav__link">
         
@@ -1851,6 +1985,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../xxenablecriusupport/" class="md-nav__link">
         
@@ -1868,6 +2003,7 @@
             
               
                 
+  
   
   
   
@@ -1906,6 +2042,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../attachapi/" class="md-nav__link">
         
@@ -1922,6 +2059,7 @@
     
       
       
+  
   
   
   
@@ -1961,6 +2099,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../openssl/" class="md-nav__link">
         
@@ -1978,6 +2117,7 @@
             
               
                 
+  
   
   
   
@@ -2005,6 +2145,7 @@
     
       
       
+  
   
   
   
@@ -2044,6 +2185,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../diag_overview/" class="md-nav__link">
         
@@ -2061,6 +2203,7 @@
             
               
                 
+  
   
   
   
@@ -2100,6 +2243,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../dump_javadump/" class="md-nav__link">
         
@@ -2120,6 +2264,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../dump_heapdump/" class="md-nav__link">
         
@@ -2137,6 +2282,7 @@
             
               
                 
+  
   
   
   
@@ -2165,6 +2311,7 @@
             
               
                 
+  
   
   
   
@@ -2204,6 +2351,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../tool_jextract/" class="md-nav__link">
         
@@ -2221,6 +2369,7 @@
             
               
                 
+  
   
   
   
@@ -2244,6 +2393,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../tool_traceformat/" class="md-nav__link">
         
@@ -2261,6 +2411,7 @@
             
               
                 
+  
   
   
   
@@ -2284,6 +2435,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../tool_jcmd/" class="md-nav__link">
         
@@ -2301,6 +2453,7 @@
             
               
                 
+  
   
   
   
@@ -2324,6 +2477,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../tool_jps/" class="md-nav__link">
         
@@ -2341,6 +2495,7 @@
             
               
                 
+  
   
   
   
@@ -2364,6 +2519,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../tool_jstat/" class="md-nav__link">
         
@@ -2381,6 +2537,7 @@
             
               
                 
+  
   
   
   
@@ -2409,6 +2566,7 @@
             
               
                 
+  
   
   
   
@@ -2448,6 +2606,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../interface_jvmti/" class="md-nav__link">
         
@@ -2468,6 +2627,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../interface_dtfj/" class="md-nav__link">
         
@@ -2485,6 +2645,7 @@
             
               
                 
+  
   
   
   
@@ -2520,6 +2681,7 @@
     
       
       
+  
   
   
   
@@ -2559,6 +2721,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../cmdline_specifying/" class="md-nav__link">
         
@@ -2576,6 +2739,7 @@
             
               
                 
+  
   
   
   
@@ -2599,6 +2763,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../cmdline_migration/" class="md-nav__link">
         
@@ -2616,6 +2781,7 @@
             
               
                 
+  
   
   
   
@@ -2655,6 +2821,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../d_jvm_commands/" class="md-nav__link">
         
@@ -2672,6 +2839,7 @@
             
               
                 
+  
   
   
   
@@ -2695,6 +2863,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../dcomibmenablelegacydumpsecurity/" class="md-nav__link">
         
@@ -2712,6 +2881,7 @@
             
               
                 
+  
   
   
   
@@ -2735,6 +2905,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../dcomibmenablelegacytracesecurity/" class="md-nav__link">
         
@@ -2752,6 +2923,7 @@
             
               
                 
+  
   
   
   
@@ -2775,6 +2947,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../dcomibmgpuenable/" class="md-nav__link">
         
@@ -2792,6 +2965,7 @@
             
               
                 
+  
   
   
   
@@ -2815,6 +2989,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../dcomibmlangmanagementosmxbeaniscputime100ns/" class="md-nav__link">
         
@@ -2832,6 +3007,7 @@
             
               
                 
+  
   
   
   
@@ -2855,6 +3031,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../dcomibmotisharedsharedclassglobalfilterclass/" class="md-nav__link">
         
@@ -2872,6 +3049,7 @@
             
               
                 
+  
   
   
   
@@ -2895,6 +3073,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../dcomibmtoolsattachdirectory/" class="md-nav__link">
         
@@ -2912,6 +3091,7 @@
             
               
                 
+  
   
   
   
@@ -2935,6 +3115,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../dcomibmtoolsattachenable/" class="md-nav__link">
         
@@ -2952,6 +3133,7 @@
             
               
                 
+  
   
   
   
@@ -2975,6 +3157,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../dcomibmtoolsattachlogging/" class="md-nav__link">
         
@@ -2992,6 +3175,7 @@
             
               
                 
+  
   
   
   
@@ -3015,6 +3199,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../dcomibmtoolsattachshutdown_timeout/" class="md-nav__link">
         
@@ -3032,6 +3217,7 @@
             
               
                 
+  
   
   
   
@@ -3055,6 +3241,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../dfileencoding/" class="md-nav__link">
         
@@ -3072,6 +3259,7 @@
             
               
                 
+  
   
   
   
@@ -3095,6 +3283,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../djavalangstringsubstringnocopy/" class="md-nav__link">
         
@@ -3112,6 +3301,7 @@
             
               
                 
+  
   
   
   
@@ -3135,6 +3325,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../djdknativecbc/" class="md-nav__link">
         
@@ -3152,6 +3343,7 @@
             
               
                 
+  
   
   
   
@@ -3175,6 +3367,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../djdknativecrypto/" class="md-nav__link">
         
@@ -3192,6 +3385,7 @@
             
               
                 
+  
   
   
   
@@ -3215,6 +3409,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../djdknativeec/" class="md-nav__link">
         
@@ -3232,6 +3427,7 @@
             
               
                 
+  
   
   
   
@@ -3255,6 +3451,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../djdknativexdhkeyagreement/" class="md-nav__link">
         
@@ -3272,6 +3469,7 @@
             
               
                 
+  
   
   
   
@@ -3295,6 +3493,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../djdknativegcm/" class="md-nav__link">
         
@@ -3312,6 +3511,7 @@
             
               
                 
+  
   
   
   
@@ -3340,6 +3540,7 @@
             
               
                 
+  
   
   
   
@@ -3379,6 +3580,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../x_jvm_commands/" class="md-nav__link">
         
@@ -3396,6 +3598,7 @@
             
               
                 
+  
   
   
   
@@ -3419,6 +3622,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../xaggressive/" class="md-nav__link">
         
@@ -3436,6 +3640,7 @@
             
               
                 
+  
   
   
   
@@ -3459,6 +3664,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../xaot/" class="md-nav__link">
         
@@ -3476,6 +3682,7 @@
             
               
                 
+  
   
   
   
@@ -3499,6 +3706,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../xbootclasspath/" class="md-nav__link">
         
@@ -3516,6 +3724,7 @@
             
               
                 
+  
   
   
   
@@ -3539,6 +3748,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../xcheck/" class="md-nav__link">
         
@@ -3556,6 +3766,7 @@
             
               
                 
+  
   
   
   
@@ -3579,6 +3790,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../xcodecache/" class="md-nav__link">
         
@@ -3596,6 +3808,7 @@
             
               
                 
+  
   
   
   
@@ -3619,6 +3832,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../xcomp/" class="md-nav__link">
         
@@ -3636,6 +3850,7 @@
             
               
                 
+  
   
   
   
@@ -3659,6 +3874,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../xcompactgc/" class="md-nav__link">
         
@@ -3676,6 +3892,7 @@
             
               
                 
+  
   
   
   
@@ -3699,6 +3916,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../xcompressedrefs/" class="md-nav__link">
         
@@ -3716,6 +3934,7 @@
             
               
                 
+  
   
   
   
@@ -3739,6 +3958,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../xconcurrentlevel/" class="md-nav__link">
         
@@ -3756,6 +3976,7 @@
             
               
                 
+  
   
   
   
@@ -3779,6 +4000,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../xconmeter/" class="md-nav__link">
         
@@ -3796,6 +4018,7 @@
             
               
                 
+  
   
   
   
@@ -3819,6 +4042,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../xenableexplicitgc/" class="md-nav__link">
         
@@ -3836,6 +4060,7 @@
             
               
                 
+  
   
   
   
@@ -3859,6 +4084,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../xenablestringconstantgc/" class="md-nav__link">
         
@@ -3876,6 +4102,7 @@
             
               
                 
+  
   
   
   
@@ -3899,6 +4126,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../xenableexcessivegc/" class="md-nav__link">
         
@@ -3916,6 +4144,7 @@
             
               
                 
+  
   
   
   
@@ -3939,6 +4168,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../xenablestringconstantgc/" class="md-nav__link">
         
@@ -3956,6 +4186,7 @@
             
               
                 
+  
   
   
   
@@ -3979,6 +4210,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../xfuture/" class="md-nav__link">
         
@@ -3996,6 +4228,7 @@
             
               
                 
+  
   
   
   
@@ -4019,6 +4252,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../xgcsplitheap/" class="md-nav__link">
         
@@ -4036,6 +4270,7 @@
             
               
                 
+  
   
   
   
@@ -4059,6 +4294,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../xgcpolicy/" class="md-nav__link">
         
@@ -4076,6 +4312,7 @@
             
               
                 
+  
   
   
   
@@ -4099,6 +4336,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../xgcworkpackets/" class="md-nav__link">
         
@@ -4116,6 +4354,7 @@
             
               
                 
+  
   
   
   
@@ -4139,6 +4378,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../xss/" class="md-nav__link">
         
@@ -4156,6 +4396,7 @@
             
               
                 
+  
   
   
   
@@ -4179,6 +4420,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../xjni/" class="md-nav__link">
         
@@ -4196,6 +4438,7 @@
             
               
                 
+  
   
   
   
@@ -4219,6 +4462,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../xloa/" class="md-nav__link">
         
@@ -4236,6 +4480,7 @@
             
               
                 
+  
   
   
   
@@ -4259,6 +4504,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../xloaminimum/" class="md-nav__link">
         
@@ -4276,6 +4522,7 @@
             
               
                 
+  
   
   
   
@@ -4299,6 +4546,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../xlockreservation/" class="md-nav__link">
         
@@ -4316,6 +4564,7 @@
             
               
                 
+  
   
   
   
@@ -4339,6 +4588,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../xlog/" class="md-nav__link">
         
@@ -4356,6 +4606,7 @@
             
               
                 
+  
   
   
   
@@ -4379,6 +4630,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../xlpcodecache/" class="md-nav__link">
         
@@ -4396,6 +4648,7 @@
             
               
                 
+  
   
   
   
@@ -4419,6 +4672,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../xmine/" class="md-nav__link">
         
@@ -4436,6 +4690,7 @@
             
               
                 
+  
   
   
   
@@ -4459,6 +4714,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../xmint/" class="md-nav__link">
         
@@ -4476,6 +4732,7 @@
             
               
                 
+  
   
   
   
@@ -4499,6 +4756,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../xmca/" class="md-nav__link">
         
@@ -4516,6 +4774,7 @@
             
               
                 
+  
   
   
   
@@ -4539,6 +4798,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../xmine/" class="md-nav__link">
         
@@ -4556,6 +4816,7 @@
             
               
                 
+  
   
   
   
@@ -4579,6 +4840,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../xmint/" class="md-nav__link">
         
@@ -4596,6 +4858,7 @@
             
               
                 
+  
   
   
   
@@ -4619,6 +4882,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../xmn/" class="md-nav__link">
         
@@ -4636,6 +4900,7 @@
             
               
                 
+  
   
   
   
@@ -4659,6 +4924,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../xmo/" class="md-nav__link">
         
@@ -4676,6 +4942,7 @@
             
               
                 
+  
   
   
   
@@ -4699,6 +4966,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../xmo/" class="md-nav__link">
         
@@ -4716,6 +4984,7 @@
             
               
                 
+  
   
   
   
@@ -4739,6 +5008,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../xmr/" class="md-nav__link">
         
@@ -4756,6 +5026,7 @@
             
               
                 
+  
   
   
   
@@ -4779,6 +5050,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../xms/" class="md-nav__link">
         
@@ -4796,6 +5068,7 @@
             
               
                 
+  
   
   
   
@@ -4819,6 +5092,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../xms/" class="md-nav__link">
         
@@ -4836,6 +5110,7 @@
             
               
                 
+  
   
   
   
@@ -4859,6 +5134,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../xclassgc/" class="md-nav__link">
         
@@ -4876,6 +5152,7 @@
             
               
                 
+  
   
   
   
@@ -4899,6 +5176,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../xcompactgc/" class="md-nav__link">
         
@@ -4916,6 +5194,7 @@
             
               
                 
+  
   
   
   
@@ -4939,6 +5218,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../xjit/" class="md-nav__link">
         
@@ -4956,6 +5236,7 @@
             
               
                 
+  
   
   
   
@@ -4979,6 +5260,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../xloa/" class="md-nav__link">
         
@@ -4996,6 +5278,7 @@
             
               
                 
+  
   
   
   
@@ -5019,6 +5302,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../xsigchain/" class="md-nav__link">
         
@@ -5036,6 +5320,7 @@
             
               
                 
+  
   
   
   
@@ -5059,6 +5344,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../xoptionsfile/" class="md-nav__link">
         
@@ -5076,6 +5362,7 @@
             
               
                 
+  
   
   
   
@@ -5099,6 +5386,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../xrs/" class="md-nav__link">
         
@@ -5116,6 +5404,7 @@
             
               
                 
+  
   
   
   
@@ -5139,6 +5428,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../xscdmx/" class="md-nav__link">
         
@@ -5156,6 +5446,7 @@
             
               
                 
+  
   
   
   
@@ -5179,6 +5470,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../xscminjitdata/" class="md-nav__link">
         
@@ -5196,6 +5488,7 @@
             
               
                 
+  
   
   
   
@@ -5219,6 +5512,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../xscminjitdata/" class="md-nav__link">
         
@@ -5236,6 +5530,7 @@
             
               
                 
+  
   
   
   
@@ -5259,6 +5554,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../xshareclasses/" class="md-nav__link">
         
@@ -5276,6 +5572,7 @@
             
               
                 
+  
   
   
   
@@ -5299,6 +5596,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../xsigchain/" class="md-nav__link">
         
@@ -5316,6 +5614,7 @@
             
               
                 
+  
   
   
   
@@ -5339,6 +5638,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../xsoftmx/" class="md-nav__link">
         
@@ -5356,6 +5656,7 @@
             
               
                 
+  
   
   
   
@@ -5379,6 +5680,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../xss/" class="md-nav__link">
         
@@ -5396,6 +5698,7 @@
             
               
                 
+  
   
   
   
@@ -5419,6 +5722,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../xsyslog/" class="md-nav__link">
         
@@ -5436,6 +5740,7 @@
             
               
                 
+  
   
   
   
@@ -5459,6 +5764,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../xthr/" class="md-nav__link">
         
@@ -5476,6 +5782,7 @@
             
               
                 
+  
   
   
   
@@ -5499,6 +5806,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../xtrace/" class="md-nav__link">
         
@@ -5516,6 +5824,7 @@
             
               
                 
+  
   
   
   
@@ -5539,6 +5848,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../xverbosegclog/" class="md-nav__link">
         
@@ -5559,6 +5869,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../xverify/" class="md-nav__link">
         
@@ -5576,6 +5887,7 @@
             
               
                 
+  
   
   
   
@@ -5604,6 +5916,7 @@
             
               
                 
+  
   
   
   
@@ -5643,6 +5956,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../xx_jvm_commands/" class="md-nav__link">
         
@@ -5660,6 +5974,7 @@
             
               
                 
+  
   
   
   
@@ -5683,6 +5998,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../xxadaptivegcthreading/" class="md-nav__link">
         
@@ -5700,6 +6016,7 @@
             
               
                 
+  
   
   
   
@@ -5723,6 +6040,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../xxalwayspretouch/" class="md-nav__link">
         
@@ -5740,6 +6058,7 @@
             
               
                 
+  
   
   
   
@@ -5763,6 +6082,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../xxconcgcthreads/" class="md-nav__link">
         
@@ -5780,6 +6100,7 @@
             
               
                 
+  
   
   
   
@@ -5803,6 +6124,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../xxcodecachetotalmaxrampercentage/" class="md-nav__link">
         
@@ -5820,6 +6142,7 @@
             
               
                 
+  
   
   
   
@@ -5843,6 +6166,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../xxcontinuationcache/" class="md-nav__link">
         
@@ -5860,6 +6184,7 @@
             
               
                 
+  
   
   
   
@@ -5883,6 +6208,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../xxdisableexplicitgc/" class="md-nav__link">
         
@@ -5900,6 +6226,7 @@
             
               
                 
+  
   
   
   
@@ -5923,6 +6250,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../xxenable3164interoperability/" class="md-nav__link">
         
@@ -5940,6 +6268,7 @@
             
               
                 
+  
   
   
   
@@ -5963,6 +6292,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../xxenabledynamicagentloading/" class="md-nav__link">
         
@@ -5980,6 +6310,7 @@
             
               
                 
+  
   
   
   
@@ -6003,6 +6334,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../xxexitonoutofmemoryerror/" class="md-nav__link">
         
@@ -6020,6 +6352,7 @@
             
               
                 
+  
   
   
   
@@ -6043,6 +6376,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../xxhandlesigabrt/" class="md-nav__link">
         
@@ -6060,6 +6394,7 @@
             
               
                 
+  
   
   
   
@@ -6083,6 +6418,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../xxhandlesigxfsz/" class="md-nav__link">
         
@@ -6100,6 +6436,7 @@
             
               
                 
+  
   
   
   
@@ -6123,6 +6460,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../xxheapdumppath/" class="md-nav__link">
         
@@ -6140,6 +6478,7 @@
             
               
                 
+  
   
   
   
@@ -6163,6 +6502,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../xxidletuningcompactonidle/" class="md-nav__link">
         
@@ -6180,6 +6520,7 @@
             
               
                 
+  
   
   
   
@@ -6203,6 +6544,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../xxidletuningminfreeheaponidle/" class="md-nav__link">
         
@@ -6220,6 +6562,7 @@
             
               
                 
+  
   
   
   
@@ -6243,6 +6586,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../xxignoreunrecognizedvmoptions/" class="md-nav__link">
         
@@ -6260,6 +6604,7 @@
             
               
                 
+  
   
   
   
@@ -6283,6 +6628,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../xxinitialrampercentage/" class="md-nav__link">
         
@@ -6300,6 +6646,7 @@
             
               
                 
+  
   
   
   
@@ -6323,6 +6670,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../xxinterleavememory/" class="md-nav__link">
         
@@ -6340,6 +6688,28 @@
             
               
                 
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../xxiprofileduringstartupphase/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    -XX:[+|-]IProfileDuringStartupPhase
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
   
   
   
@@ -6363,6 +6733,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../xxjitserveraddress/" class="md-nav__link">
         
@@ -6380,6 +6751,7 @@
             
               
                 
+  
   
   
   
@@ -6403,6 +6775,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../xxjitserveraotcachename/" class="md-nav__link">
         
@@ -6420,6 +6793,7 @@
             
               
                 
+  
   
   
   
@@ -6443,6 +6817,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../xxjitserveraotmx/" class="md-nav__link">
         
@@ -6460,6 +6835,7 @@
             
               
                 
+  
   
   
   
@@ -6483,6 +6859,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../xxjitserverlogconnections/" class="md-nav__link">
         
@@ -6500,6 +6877,7 @@
             
               
                 
+  
   
   
   
@@ -6523,6 +6901,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../xxjitservermetricsport/" class="md-nav__link">
         
@@ -6540,6 +6919,7 @@
             
               
                 
+  
   
   
   
@@ -6563,6 +6943,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../xxjitservermetricssslkey/" class="md-nav__link">
         
@@ -6580,6 +6961,7 @@
             
               
                 
+  
   
   
   
@@ -6603,6 +6985,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../xxjitservershareromclasses/" class="md-nav__link">
         
@@ -6620,6 +7003,7 @@
             
               
                 
+  
   
   
   
@@ -6643,6 +7027,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../xxjitserversslcert/" class="md-nav__link">
         
@@ -6660,6 +7045,7 @@
             
               
                 
+  
   
   
   
@@ -6683,6 +7069,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../xxjitservertimeout/" class="md-nav__link">
         
@@ -6700,6 +7087,7 @@
             
               
                 
+  
   
   
   
@@ -6723,6 +7111,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../xxlazysymbolresolution/" class="md-nav__link">
         
@@ -6740,6 +7129,7 @@
             
               
                 
+  
   
   
   
@@ -6763,6 +7153,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../xxmaxdirectmemorysize/" class="md-nav__link">
         
@@ -6780,6 +7171,7 @@
             
               
                 
+  
   
   
   
@@ -6803,6 +7195,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../xxinitialrampercentage/" class="md-nav__link">
         
@@ -6820,6 +7213,7 @@
             
               
                 
+  
   
   
   
@@ -6843,6 +7237,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../xxonoutofmemoryerror/" class="md-nav__link">
         
@@ -6860,6 +7255,7 @@
             
               
                 
+  
   
   
   
@@ -6883,6 +7279,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../xxoriginaljdk8heapsizecompatibilitymode/" class="md-nav__link">
         
@@ -6900,6 +7297,7 @@
             
               
                 
+  
   
   
   
@@ -6923,6 +7321,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../xxpagealigndirectmemory/" class="md-nav__link">
         
@@ -6940,6 +7339,7 @@
             
               
                 
+  
   
   
   
@@ -6963,6 +7363,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../xxparallelgcmaxthreads/" class="md-nav__link">
         
@@ -6980,6 +7381,7 @@
             
               
                 
+  
   
   
   
@@ -7003,6 +7405,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../xxperftool/" class="md-nav__link">
         
@@ -7020,6 +7423,7 @@
             
               
                 
+  
   
   
   
@@ -7043,6 +7447,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../xxpositiveidentityhash/" class="md-nav__link">
         
@@ -7060,6 +7465,7 @@
             
               
                 
+  
   
   
   
@@ -7083,6 +7489,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../xxprintflagsfinal/" class="md-nav__link">
         
@@ -7100,6 +7507,7 @@
             
               
                 
+  
   
   
   
@@ -7123,6 +7531,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../xxreducecpumonitoroverhead/" class="md-nav__link">
         
@@ -7140,6 +7549,7 @@
             
               
                 
+  
   
   
   
@@ -7163,6 +7573,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../xxruntimeinstrumentation/" class="md-nav__link">
         
@@ -7180,6 +7591,7 @@
             
               
                 
+  
   
   
   
@@ -7203,6 +7615,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../xxshareanonymousclasses/" class="md-nav__link">
         
@@ -7220,6 +7633,7 @@
             
               
                 
+  
   
   
   
@@ -7243,6 +7657,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../xxshareclassesenablebci/" class="md-nav__link">
         
@@ -7260,6 +7675,7 @@
             
               
                 
+  
   
   
   
@@ -7283,6 +7699,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../xxshareunsafeclasses/" class="md-nav__link">
         
@@ -7300,6 +7717,7 @@
             
               
                 
+  
   
   
   
@@ -7323,6 +7741,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../xxshowhiddenframes/" class="md-nav__link">
         
@@ -7340,6 +7759,7 @@
             
               
                 
+  
   
   
   
@@ -7363,6 +7783,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../xxstacktraceinthrowable/" class="md-nav__link">
         
@@ -7380,6 +7801,7 @@
             
               
                 
+  
   
   
   
@@ -7403,6 +7825,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../xxusecompressedoops/" class="md-nav__link">
         
@@ -7420,6 +7843,7 @@
             
               
                 
+  
   
   
   
@@ -7443,6 +7867,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../xxusegcstartuphints/" class="md-nav__link">
         
@@ -7460,6 +7885,7 @@
             
               
                 
+  
   
   
   
@@ -7483,6 +7909,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../xxusenogc/" class="md-nav__link">
         
@@ -7500,6 +7927,7 @@
             
               
                 
+  
   
   
   
@@ -7523,6 +7951,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../xxutfcache/" class="md-nav__link">
         
@@ -7543,6 +7972,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../xxverboseverification/" class="md-nav__link">
         
@@ -7560,6 +7990,7 @@
             
               
                 
+  
   
   
   
@@ -7595,6 +8026,7 @@
     
       
       
+  
   
   
   
@@ -7634,6 +8066,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../openj9_support/" class="md-nav__link">
         
@@ -7651,6 +8084,7 @@
             
               
                 
+  
   
   
   
@@ -7674,6 +8108,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../openj9_signals/" class="md-nav__link">
         
@@ -7691,6 +8126,7 @@
             
               
                 
+  
   
   
   
@@ -7714,6 +8150,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../messages_intro/" class="md-nav__link">
         
@@ -7731,6 +8168,7 @@
             
               
                 
+  
   
   
   
@@ -7758,6 +8196,7 @@
     
       
       
+  
   
   
   
@@ -7797,6 +8236,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../api-overview/" class="md-nav__link">
         
@@ -7814,6 +8254,7 @@
             
               
                 
+  
   
   
   
@@ -7853,6 +8294,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../api-conditionhandling/" class="md-nav__link">
         
@@ -7870,6 +8312,7 @@
             
               
                 
+  
   
   
   
@@ -7893,6 +8336,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../api-daa/" class="md-nav__link">
         
@@ -7910,6 +8354,7 @@
             
               
                 
+  
   
   
   
@@ -7933,6 +8378,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../api-gpu/" class="md-nav__link">
         
@@ -7950,6 +8396,7 @@
             
               
                 
+  
   
   
   
@@ -7973,6 +8420,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../api-langmgmt/" class="md-nav__link">
         
@@ -7990,6 +8438,7 @@
             
               
                 
+  
   
   
   
@@ -8021,6 +8470,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../api-jdk11/" class="md-nav__link">
         
@@ -8041,6 +8491,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="../api-jdk17/" class="md-nav__link">
         
@@ -8058,6 +8509,7 @@
             
               
                 
+  
   
   
   
@@ -8085,6 +8537,7 @@
     
       
       
+  
   
   
   
@@ -8130,7 +8583,9 @@
       
         <li class="md-nav__item">
   <a href="#features-and-changes" class="md-nav__link">
-    Features and changes
+    <span class="md-ellipsis">
+      Features and changes
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Features and changes">
@@ -8138,77 +8593,99 @@
         
           <li class="md-nav__item">
   <a href="#binaries-and-supported-environments" class="md-nav__link">
-    Binaries and supported environments
+    <span class="md-ellipsis">
+      Binaries and supported environments
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#new-xx-showcarrierframes-option-added" class="md-nav__link">
-    New -XX:[+|-]ShowCarrierFrames option added
+    <span class="md-ellipsis">
+      New -XX:[+|-]ShowCarrierFrames option added
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#new-xxcontinuationcache-option-added" class="md-nav__link">
-    New -XX:ContinuationCache option added
+    <span class="md-ellipsis">
+      New -XX:ContinuationCache option added
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#-xxcompactstrings-option-enabled-by-default" class="md-nav__link">
-    -XX:+CompactStrings option enabled by default
+    <span class="md-ellipsis">
+      -XX:+CompactStrings option enabled by default
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#change-in-behavior-of-xshareclassesreadonly" class="md-nav__link">
-    Change in behavior of -Xshareclasses:readonly
+    <span class="md-ellipsis">
+      Change in behavior of -Xshareclasses:readonly
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#new-xx-enabledynamicagentloading-option-added" class="md-nav__link">
-    New -XX:[+|-]EnableDynamicAgentLoading option added
+    <span class="md-ellipsis">
+      New -XX:[+|-]EnableDynamicAgentLoading option added
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#new-xx-usezlibnx-option-added" class="md-nav__link">
-    New -XX:[+|-]UseZlibNX option added
+    <span class="md-ellipsis">
+      New -XX:[+|-]UseZlibNX option added
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#support-for-openssl-3x" class="md-nav__link">
-    Support for OpenSSL 3.x
+    <span class="md-ellipsis">
+      Support for OpenSSL 3.x
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#performance-improvement" class="md-nav__link">
-    Performance improvement
+    <span class="md-ellipsis">
+      Performance improvement
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#support-added-for-the-comsunmanagementthreadmxbeangetthreadallocatedbytes-api" class="md-nav__link">
-    Support added for the com.sun.management.ThreadMXBean.getThreadAllocatedBytes() API
+    <span class="md-ellipsis">
+      Support added for the com.sun.management.ThreadMXBean.getThreadAllocatedBytes() API
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#change-in-behavior-of-the-djavasecuritymanager-system-property-for-openjdk-version-8-and-11" class="md-nav__link">
-    Change in behavior of the -Djava.security.manager system property for OpenJDK version 8 and 11
+    <span class="md-ellipsis">
+      Change in behavior of the -Djava.security.manager system property for OpenJDK version 8 and 11
+    </span>
   </a>
   
 </li>
@@ -8220,7 +8697,9 @@
       
         <li class="md-nav__item">
   <a href="#known-problems-and-full-release-information" class="md-nav__link">
-    Known problems and full release information
+    <span class="md-ellipsis">
+      Known problems and full release information
+    </span>
   </a>
   
 </li>
@@ -8318,11 +8797,19 @@
 
 
 
+
+
+
+
+
+
+
                 
               </article>
             </div>
           
           
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
         </div>
         
       </main>
@@ -8403,7 +8890,7 @@
     
     
     <a href="https://github.com/eclipse-openj9/openj9" target="_blank" rel="noopener" title="OpenJ9 in GitHub" class="md-social__link">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
     </a>
   
     
@@ -8411,7 +8898,7 @@
     
     
     <a href="https://openj9.slack.com" target="_blank" rel="noopener" title="OpenJ9 on Slack" class="md-social__link">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M94.12 315.1c0 25.9-21.16 47.06-47.06 47.06S0 341 0 315.1c0-25.9 21.16-47.06 47.06-47.06h47.06v47.06zm23.72 0c0-25.9 21.16-47.06 47.06-47.06s47.06 21.16 47.06 47.06v117.84c0 25.9-21.16 47.06-47.06 47.06s-47.06-21.16-47.06-47.06V315.1zm47.06-188.98c-25.9 0-47.06-21.16-47.06-47.06S139 32 164.9 32s47.06 21.16 47.06 47.06v47.06H164.9zm0 23.72c25.9 0 47.06 21.16 47.06 47.06s-21.16 47.06-47.06 47.06H47.06C21.16 243.96 0 222.8 0 196.9s21.16-47.06 47.06-47.06H164.9zm188.98 47.06c0-25.9 21.16-47.06 47.06-47.06 25.9 0 47.06 21.16 47.06 47.06s-21.16 47.06-47.06 47.06h-47.06V196.9zm-23.72 0c0 25.9-21.16 47.06-47.06 47.06-25.9 0-47.06-21.16-47.06-47.06V79.06c0-25.9 21.16-47.06 47.06-47.06 25.9 0 47.06 21.16 47.06 47.06V196.9zM283.1 385.88c25.9 0 47.06 21.16 47.06 47.06 0 25.9-21.16 47.06-47.06 47.06-25.9 0-47.06-21.16-47.06-47.06v-47.06h47.06zm0-23.72c-25.9 0-47.06-21.16-47.06-47.06 0-25.9 21.16-47.06 47.06-47.06h117.84c25.9 0 47.06 21.16 47.06 47.06 0 25.9-21.16 47.06-47.06 47.06H283.1z"/></svg>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M94.12 315.1c0 25.9-21.16 47.06-47.06 47.06S0 341 0 315.1c0-25.9 21.16-47.06 47.06-47.06h47.06v47.06zm23.72 0c0-25.9 21.16-47.06 47.06-47.06s47.06 21.16 47.06 47.06v117.84c0 25.9-21.16 47.06-47.06 47.06s-47.06-21.16-47.06-47.06V315.1zm47.06-188.98c-25.9 0-47.06-21.16-47.06-47.06S139 32 164.9 32s47.06 21.16 47.06 47.06v47.06H164.9zm0 23.72c25.9 0 47.06 21.16 47.06 47.06s-21.16 47.06-47.06 47.06H47.06C21.16 243.96 0 222.8 0 196.9s21.16-47.06 47.06-47.06H164.9zm188.98 47.06c0-25.9 21.16-47.06 47.06-47.06 25.9 0 47.06 21.16 47.06 47.06s-21.16 47.06-47.06 47.06h-47.06V196.9zm-23.72 0c0 25.9-21.16 47.06-47.06 47.06-25.9 0-47.06-21.16-47.06-47.06V79.06c0-25.9 21.16-47.06 47.06-47.06 25.9 0 47.06 21.16 47.06 47.06V196.9zM283.1 385.88c25.9 0 47.06 21.16 47.06 47.06 0 25.9-21.16 47.06-47.06 47.06-25.9 0-47.06-21.16-47.06-47.06v-47.06h47.06zm0-23.72c-25.9 0-47.06-21.16-47.06-47.06 0-25.9 21.16-47.06 47.06-47.06h117.84c25.9 0 47.06 21.16 47.06 47.06 0 25.9-21.16 47.06-47.06 47.06H283.1z"/></svg>
     </a>
   
     
@@ -8419,7 +8906,7 @@
     
     
     <a href="https://twitter.com/openj9" target="_blank" rel="noopener" title="OpenJ9 on Twitter" class="md-social__link">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"/></svg>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"/></svg>
     </a>
   
     
@@ -8427,7 +8914,7 @@
     
     
     <a href="https://stackoverflow.com/search?q=OpenJ9" target="_blank" rel="noopener" title="OpenJ9 on StackOverflow" class="md-social__link">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M290.7 311 95 269.7 86.8 309l195.7 41zm51-87L188.2 95.7l-25.5 30.8 153.5 128.3zm-31.2 39.7L129.2 179l-16.7 36.5L293.7 300zM262 32l-32 24 119.3 160.3 32-24zm20.5 328h-200v39.7h200zm39.7 80H42.7V320h-40v160h359.5V320h-40z"/></svg>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M290.7 311 95 269.7 86.8 309l195.7 41zm51-87L188.2 95.7l-25.5 30.8 153.5 128.3zm-31.2 39.7L129.2 179l-16.7 36.5L293.7 300zM262 32l-32 24 119.3 160.3 32-24zm20.5 328h-200v39.7h200zm39.7 80H42.7V320h-40v160h359.5V320h-40z"/></svg>
     </a>
   
 </div>
@@ -8453,7 +8940,7 @@
     <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.f886a092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": 2.0}</script>
     
     
-      <script src="../assets/javascripts/bundle.aecac24b.min.js"></script>
+      <script src="../assets/javascripts/bundle.d7c377c4.min.js"></script>
       
         <script src="../javascripts/oj9.js"></script>
       
