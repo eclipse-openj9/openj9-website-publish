@@ -128,6 +128,7 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
   <li>The dump extractor tool, OpenJ9 <code>jextract</code>, is removed from Java 21 and later. The <code>jpackcore</code> tool replaced the OpenJ9 <code>jextract</code> tool after its deprecation in release 0.26.0.</li>
   <li>The <code>System.gc()</code> call behavior is changed. Now, the <code>System.gc()</code> call triggers the GC cycle twice internally to clear the unreachable objects that were not identified during the first GC cycle. The call also triggers finalization of the objects in the Finalization queues.</li>
   <li>The <code>-XX:[+|-]IProfileDuringStartupPhase</code> option is added to control the collection of the profiling information during the startup phase. You can now overrule the heuristics that the VM uses to decide whether to collect interpreter profiling information during the VM startup.</li>
+  <li>The <code>-XX:[+|-]CRIUSecProvider</code> option is added to control the use of <code>CRIUSECProvider</code> during the checkpoint phase. You can now choose to use either the <code>CRIUSECProvider</code> security provider that is added by default when you enable CRIU support or continue to use all the existing security providers.</li>
 </ul>   
 <p>To read more about these and other changes, see the <a class="w3-hover-opacity" href="https://www.eclipse.org/openj9/docs/openj9_releases/" target="_blank">OpenJ9 user documentation</a>.</p>
 <p><b>Performance highlights include:</b></p>
