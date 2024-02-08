@@ -118,23 +118,26 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
 <div class="w3-padding-64 w3-container w3-light-grey">
   <div class="w3-content">
         <div class="w3-center">
-      <h1>Eclipse OpenJ9 version 0.42.0 released</h1>
-<p>January 2024</p>
+      <h1>Eclipse OpenJ9 version 0.43.0 released</h1>
+<p>February 2024</p>
 </div>
-<p>We're pleased to announce the availability of Eclipse OpenJ9 v0.42.0.</p>
-<p>This release supports OpenJDK version 21. For more information about supported platforms and OpenJDK versions, see <a class="w3-hover-opacity" href="https://www.eclipse.org/openj9/docs/openj9_support/" target="_blank">Supported environments</a>.</p>
+<p>We're pleased to announce the availability of Eclipse OpenJ9 v0.43.0.</p>
+<p>This release supports OpenJDK version 8, 11, 17, and 21. For more information about supported platforms and OpenJDK versions, see <a class="w3-hover-opacity" href="https://www.eclipse.org/openj9/docs/openj9_support/" target="_blank">Supported environments</a>.</p>
 <p>Other updates in this release include the following:</p>
 <ul>
-  <li>The dump extractor tool, OpenJ9 <code>jextract</code>, is removed from Java 21 and later. The <code>jpackcore</code> tool replaced the OpenJ9 <code>jextract</code> tool after its deprecation in release 0.26.0.</li>
-  <li>The <code>System.gc()</code> call behavior is changed. Now, the <code>System.gc()</code> call triggers the GC cycle twice internally to clear the unreachable objects that were not identified during the first GC cycle. The call also triggers finalization of the objects in the Finalization queues.</li>
-  <li>The <code>-XX:[+|-]IProfileDuringStartupPhase</code> option is added to control the collection of the profiling information during the startup phase. You can now overrule the heuristics that the VM uses to decide whether to collect interpreter profiling information during the VM startup.</li>
-  <li>The <code>-XX:[+|-]CRIUSecProvider</code> option is added to control the use of <code>CRIUSECProvider</code> during the checkpoint phase. You can now choose to use either the <code>CRIUSECProvider</code> security provider that is added by default when you enable CRIU support or continue to use all the existing security providers.</li>
+  <li>Linux&reg; x86 64-bit, Linux on POWER&reg; LE 64-bit, and Linux on IBM Z&reg; 64-bit builds on OpenJDK 8, 11, and 17 now use gcc 11.2 compiler. Linux AArch64 64-bit moved to gcc 10.3 compiler from gcc 7.5 compiler on OpenJDK 8 and 11.</li>
+  <li>The <code>-XX:[+|-]CRIUSecProvider</code> option is added to enable or disable <code>CRIUSECProvider</code> during the checkpoint phase. You can choose to continue to use all the existing security providers during the checkpoint phase instead of the <code>CRIUSECProvider</code>.</li>
+  <li>The <code>-XX:Compatibility</code> option is added to enable a compatibility mode that OpenJ9 can run in to support applications that require specific capabilities. In release 0.43.0, the compatibility mode is provided for the Elasticsearch application only.</li>
+  <li>The <code>-XX:[+|-]CpuLoadCompatibility</code> option is added to enable or disable the OpenJDK behavior of the <code>getProcessCpuLoad()</code> and <code>getSystemCpuLoad()</code> methods in OpenJ9 so that these methods return 0 when called in OpenJ9 for the first time. This change in the method return value makes it easier to differentiate between the first call behavior and an error that needs further investigation.</li>
+  <li>The large page memory allocation is now made based on the size of the total code cache for JIT.</li>
+  <li>Support is added for the <code>com.sun.management.ThreadMXBean.getThreadAllocatedBytes()</code> API on z/OS&reg; platforms.</li>
 </ul>   
 <p>To read more about these and other changes, see the <a class="w3-hover-opacity" href="https://www.eclipse.org/openj9/docs/openj9_releases/" target="_blank">OpenJ9 user documentation</a>.</p>
 <p><b>Performance highlights include:</b></p>
 <ul>
-  <li>Method inlining of Java Class Library (JCL) methods in the Unsafe class is improved for performance.</li>
-</ul>
+  <li>Checkpoint/Restore In Userspace (CRIU) supports dynamic garbage collection (GC) heap resizing that adapts to different physical memory or container size between checkpoint and restore environments.</li>
+  </ul>
+
   </div>
 </div>
 
