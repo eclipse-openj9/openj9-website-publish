@@ -118,24 +118,25 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
 <div class="w3-padding-64 w3-container w3-light-grey">
   <div class="w3-content">
         <div class="w3-center">
-      <h1>Eclipse OpenJ9 version 0.43.0 released</h1>
-<p>February 2024</p>
+      <h1>Eclipse OpenJ9 version 0.45.0 released</h1>
+<p>May 2024</p>
 </div>
-<p>We're pleased to announce the availability of Eclipse OpenJ9 v0.43.0.</p>
-<p>This release supports OpenJDK version 8, 11, 17, and 21. For more information about supported platforms and OpenJDK versions, see <a class="w3-hover-opacity" href="https://www.eclipse.org/openj9/docs/openj9_support/" target="_blank">Supported environments</a>.</p>
-<p>Other updates in this release include the following:</p>
+<p>We're pleased to announce the availability of Eclipse OpenJ9 v0.45.0.</p>
+<p>This release supports OpenJDK 22. For more information about supported platforms and OpenJDK versions, see <a class="w3-hover-opacity" href="https://www.eclipse.org/openj9/docs/openj9_support/" target="_blank">Supported environments</a>.</p>
+<p>Note: v0.44.0 content will be released soon. All the issues or features in v0.44.0 release are available in v0.45.0.</p>
+<p>Updates in this release include the following:</p>
 <ul>
-  <li>Linux&reg; x86 64-bit, Linux on POWER&reg; LE 64-bit, and Linux on IBM Z&reg; 64-bit builds on OpenJDK 8, 11, and 17 now use gcc 11.2 compiler. Linux AArch64 64-bit moved to gcc 10.3 compiler from gcc 7.5 compiler on OpenJDK 8 and 11.</li>
-  <li>The <code>-XX:[+|-]CRIUSecProvider</code> option is added to enable or disable <code>CRIUSECProvider</code> during the checkpoint phase. You can choose to continue to use all the existing security providers during the checkpoint phase instead of the <code>CRIUSECProvider</code>.</li>
-  <li>The <code>-XX:Compatibility</code> option is added to enable a compatibility mode that OpenJ9 can run in to support applications that require specific capabilities. In release 0.43.0, the compatibility mode is provided for the Elasticsearch application only.</li>
-  <li>The <code>-XX:[+|-]CpuLoadCompatibility</code> option is added to enable or disable the OpenJDK behavior of the <code>getProcessCpuLoad()</code> and <code>getSystemCpuLoad()</code> methods in OpenJ9 so that these methods return 0 when called in OpenJ9 for the first time. This change in the method return value makes it easier to differentiate between the first call behavior and an error that needs further investigation.</li>
-  <li>The large page memory allocation is now made based on the size of the total code cache for JIT.</li>
-  <li>Support is added for the <code>com.sun.management.ThreadMXBean.getThreadAllocatedBytes()</code> API on z/OS&reg; platforms.</li>
+  <li>Like on other operating systems, on AIX systems also, the display of warnings each time the same agent is loaded without specifying the <code>-XX:+EnableDynamicAgentLoading</code> option is now restricted to a single warning on the first load only.</li>
+  <li>XL C++ Runtime 16.1.0.7 or later is required for AIX OpenJ9 builds on OpenJDK 8.</li>
+  <li>A new option, <code>-XX:[+|-]ShowUnmountedThreadStacks</code>, is added to control the inclusion of the unmounted virtual threads in a Java core file.</li>
+  <li>For OpenJDK compatibility, OpenJ9 now supports direct use of the Java process name, full or partial, as the ID to send the <code>jcmd</code> command. The <code>jcmd</code> tool also now supports specifying <code>0</code> as a VMID to target all VMs.</li>
+  <li>Flag names that refer to the fields of <code>J9BuildFlags</code> are changed in the Direct Dump Reader (DDR) code. To reduce complexity and improve the uniformity of how the DDR code uses the flags, you must use the names that are specified in <code>j9cfg.h</code> as flag names in the plug-in code.</li>
+  <li>A new system property, <code>-Dcom.ibm.tools.attach.fileAccessUpdateTime</code>, is added to prevent automatic deletion of the Attach API control files in the <code>/tmp</code> folder.</li>
 </ul>   
 <p>To read more about these and other changes, see the <a class="w3-hover-opacity" href="https://www.eclipse.org/openj9/docs/openj9_releases/" target="_blank">OpenJ9 user documentation</a>.</p>
 <p><b>Performance highlights include:</b></p>
 <ul>
-  <li>Checkpoint/Restore In Userspace (CRIU) supports dynamic garbage collection (GC) heap resizing that adapts to different physical memory or container size between checkpoint and restore environments.</li>
+  <li>Improvements to JVMTI redefinition and restransformation runtime performance in Java 17 and later.</li>
   </ul>
 
   </div>
