@@ -118,12 +118,11 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
 <div class="w3-padding-64 w3-container w3-light-grey">
   <div class="w3-content">
         <div class="w3-center">
-      <h1>Eclipse OpenJ9 version 0.45.0 released</h1>
+      <h1>Eclipse OpenJ9 version 0.44.0 released</h1>
 <p>May 2024</p>
 </div>
-<p>We're pleased to announce the availability of Eclipse OpenJ9 v0.45.0.</p>
-<p>This release supports OpenJDK 22. For more information about supported platforms and OpenJDK versions, see <a class="w3-hover-opacity" href="https://www.eclipse.org/openj9/docs/openj9_support/" target="_blank">Supported environments</a>.</p>
-<p>Note: v0.44.0 content will be released soon. All the issues or features in v0.44.0 release are available in v0.45.0.</p>
+<p>We're pleased to announce the availability of Eclipse OpenJ9 v0.44.0.</p>
+<p>This release supports OpenJDK 8, 11, 17, and 21. For more information about supported platforms and OpenJDK versions, see <a class="w3-hover-opacity" href="https://www.eclipse.org/openj9/docs/openj9_support/" target="_blank">Supported environments</a>.</p>
 <p>Updates in this release include the following:</p>
 <ul>
   <li>Like on other operating systems, on AIX systems also, the display of warnings each time the same agent is loaded without specifying the <code>-XX:+EnableDynamicAgentLoading</code> option is now restricted to a single warning on the first load only.</li>
@@ -137,8 +136,22 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
 <p><b>Performance highlights include:</b></p>
 <ul>
   <li>Improvements to JVMTI redefinition and restransformation runtime performance in Java 17 and later.</li>
+  <li>JITServer now supports Java 21.</li>
+  <li>Performance optimization due to not storing or finding heap size hints when heap is fully expanded.</li>
   </ul>
 
+  </div>
+</div>
+
+<div class="w3-padding-64 w3-container w3-light-grey">
+  <div class="w3-content">
+        <div class="w3-center">
+      <h1>Eclipse OpenJ9 version 0.45.0 released</h1>
+<p>May 2024</p>
+</div>
+<p>We're pleased to announce the availability of Eclipse OpenJ9 v0.45.0.</p>
+<p>This release supports OpenJDK version 22. For more information about supported platforms and OpenJDK versions, see <a class="w3-hover-opacity" href="https://www.eclipse.org/openj9/docs/openj9_support/" target="_blank">Supported environments</a>.</p>
+<p>Note: There are no additional issues or features specific to v0.45.0. All the issues or features in the v0.44.0 release are available in v0.45.0.</p>
   </div>
 </div>
 
