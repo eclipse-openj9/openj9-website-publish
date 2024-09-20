@@ -715,37 +715,54 @@ function addTracepoint(type, defaultComponent) {
 
 	if (type == "component") {
 		newTracepoint.innerHTML +=
-			'<select id="tp_comp_select_'         + tracepointCounter + '">' +
-			'    <option id="tp_comp_all_'        + tracepointCounter + '" value="all" selected >All components</option>' +
-			'    <option id="tp_comp_mt_'         + tracepointCounter + '" value="mt"           >Methods / Stacks (see below)</option>' +
-			' 	 <option id="tp_comp_ibm_gpu_'    + tracepointCounter + '" value="ibm_gpu"      >JCL - GPU</option>' +
-			'  	 <option id="tp_comp_io_'         + tracepointCounter + '" value="io"           >JCL - IO</option>' +
-			'  	 <option id="tp_comp_JSOR_'       + tracepointCounter + '" value="JSOR"         >JCL - JSOR</option>' +
-			'  	 <option id="tp_comp_JVERBS_'     + tracepointCounter + '" value="JVERBS"       >JCL - jVERBS</option>' +
-			'  	 <option id="tp_comp_net_'        + tracepointCounter + '" value="net"          >JCL - TCP/IP</option>' +
-			'    <option id="tp_comp_j9vm_'       + tracepointCounter + '" value="j9vm"         >JVM - General</option>' +
-			'    <option id="tp_comp_avl_'        + tracepointCounter + '" value="avl"          >JVM - AVL</option>' +
-			'  	 <option id="tp_comp_j9bcu_'      + tracepointCounter + '" value="j9bcu"        >JVM - Bytecode utilities</option>' +
-			'  	 <option id="tp_comp_j9bcverify_' + tracepointCounter + '" value="j9bcverify"   >JVM - Bytecode verifier</option>' +
-			'  	 <option id="tp_comp_j9codertvm_' + tracepointCounter + '" value="j9codertvm"   >JVM - Bytecode runtime</option>' +
-			'  	 <option id="tp_comp_j9dmp_'      + tracepointCounter + '" value="j9dmp"        >JVM - Dump</option>' +
-			'  	 <option id="tp_comp_j9jcl_'      + tracepointCounter + '" value="j9jcl"        >JVM - JCL</option>' +
-			'  	 <option id="tp_comp_sunvmi_'     + tracepointCounter + '" value="sunvmi"       >JVM - JCL interface (sunvmi)</option>' +
-			'  	 <option id="tp_comp_j9scar_'     + tracepointCounter + '" value="j9scar"       >JVM - JCL interface (j9scar)</option>' + // TODO: difference between this and option above?
-			'  	 <option id="tp_comp_j9jit_'      + tracepointCounter + '" value="j9jit"        >JVM - JIT interface</option>' +
-			'  	 <option id="tp_comp_j9jni_'      + tracepointCounter + '" value="j9jni"        >JVM - JNI</option>' +
-			'  	 <option id="tp_comp_j9jvmti_'    + tracepointCounter + '" value="j9jvmti"      >JVM - JVMTI</option>' +
-			'  	 <option id="tp_comp_j9mm_'       + tracepointCounter + '" value="j9mm"         >JVM - Memory management</option>' +
-			'  	 <option id="tp_comp_map_'        + tracepointCounter + '" value="map"          >JVM - Memory mapping</option>' +
-			'  	 <option id="tp_comp_j9prt_'      + tracepointCounter + '" value="j9prt"        >JVM - Port library</option>' +
-			'  	 <option id="tp_comp_rpc_'        + tracepointCounter + '" value="rpc"          >JVM - RPC</option>' +
-			'  	 <option id="tp_comp_j9shr_'      + tracepointCounter + '" value="j9shr"        >JVM - Shared classes</option>' +
-			'    <option id="tp_comp_j9vrb_'      + tracepointCounter + '" value="j9vrb"        >JVM - Stack walker</option>' +
-			'  	 <option id="tp_comp_pool_'       + tracepointCounter + '" value="pool"         >JVM - Storage pool</option>' +
-			'  	 <option id="tp_comp_simplepool_' + tracepointCounter + '" value="simplepool"   >JVM - Storage pool (simple)</option>' +
-			'  	 <option id="tp_comp_j9trc_'      + tracepointCounter + '" value="j9trc"        >JVM - Trace engine</option>' +
-			'    <option id="tp_comp_j9util_'     + tracepointCounter + '" value="j9util"       >JVM - Utilities (j9util)</option>' + // TODO: what is the difference between this and j9vmutil?
-			'    <option id="tp_comp_j9vmutil_'   + tracepointCounter + '" value="j9vmutil"     >JVM - Utilities (j9vmutil)</option>' +
+			'<select id="tp_comp_select_'           + tracepointCounter + '">' +
+			'    <option id="tp_comp_all_'          + tracepointCounter + '" value="all" selected >All components</option>' +
+			'    <option id="tp_comp_mt_'           + tracepointCounter + '" value="mt"           >Methods / Stacks (see below)</option>' +
+			'    <option id="tp_comp_ibm_gpu_'      + tracepointCounter + '" value="ibm_gpu"      >JCL - GPU (IBM Java 8 only)</option>' +
+			'    <option id="tp_comp_io_'           + tracepointCounter + '" value="io"           >JCL - IO (IBM Java 8 only)</option>' +
+			'    <option id="tp_comp_JSOR_'         + tracepointCounter + '" value="JSOR"         >JCL - JSOR (IBM Java 8 only)</option>' +
+			'    <option id="tp_comp_JVERBS_'       + tracepointCounter + '" value="JVERBS"       >JCL - jVERBS (IBM Java 8 only)</option>' +
+			'    <option id="tp_comp_net_'          + tracepointCounter + '" value="net"          >JCL - TCP/IP (IBM Java 8 only)</option>' +
+			'    <option id="tp_comp_j9vmchk_'      + tracepointCounter + '" value="j9vmchk"      >JVM - Check command</option>' +
+			'    <option id="tp_comp_cuda4j_'       + tracepointCounter + '" value="cuda4j"       >JVM - CUDA support</option>' +
+			'    <option id="tp_comp_omrvm_'        + tracepointCounter + '" value="omrvm"        >JVM - General (OMR)</option>' +
+			'    <option id="tp_comp_j9vm_'         + tracepointCounter + '" value="j9vm"         >JVM - General (OpenJ9)</option>' +
+			'    <option id="tp_comp_avl_'          + tracepointCounter + '" value="avl"          >JVM - AVL</option>' +
+			'    <option id="tp_comp_j9bcu_'        + tracepointCounter + '" value="j9bcu"        >JVM - Bytecode utilities</option>' +
+			'    <option id="tp_comp_j9bcverify_'   + tracepointCounter + '" value="j9bcverify"   >JVM - Bytecode verifier</option>' +
+			'    <option id="tp_comp_j9codertvm_'   + tracepointCounter + '" value="j9codertvm"   >JVM - Bytecode runtime</option>' +
+			'    <option id="tp_comp_j9utilcore_'   + tracepointCounter + '" value="j9utilcore"   >JVM - Character decoding utilities</option>' +
+			'    <option id="tp_comp_j9dmp_'        + tracepointCounter + '" value="j9dmp"        >JVM - Dump</option>' +
+			'    <option id="tp_comp_hashtable_'    + tracepointCounter + '" value="hashtable"    >JVM - Hashtables</option>' +
+			'    <option id="tp_comp_j9hook_'       + tracepointCounter + '" value="j9hook"       >JVM - Hooks</option>' +
+			'    <option id="tp_comp_j9hshelp_'     + tracepointCounter + '" value="j9hshelp"     >JVM - Hot swap helpers</option>' +
+			'    <option id="tp_comp_dg_'           + tracepointCounter + '" value="dg"           >JVM - Intrinsic tracepoints issued by the trace engine</option>' +
+			'    <option id="tp_comp_j9jcl_'        + tracepointCounter + '" value="j9jcl"        >JVM - JCL</option>' +
+			'    <option id="tp_comp_sunvmi_'       + tracepointCounter + '" value="sunvmi"       >JVM - JCL interface (sunvmi)</option>' +
+			'    <option id="tp_comp_j9scar_'       + tracepointCounter + '" value="j9scar"       >JVM - JCL interface (j9scar)</option>' + // TODO: difference between this and option above?
+			'    <option id="tp_comp_j9jit_'        + tracepointCounter + '" value="j9jit"        >JVM - JIT interface</option>' +
+			'    <option id="tp_comp_j9jni_'        + tracepointCounter + '" value="j9jni"        >JVM - JNI</option>' +
+			'    <option id="tp_comp_j9jvmti_'      + tracepointCounter + '" value="j9jvmti"      >JVM - JVMTI</option>' +
+			'    <option id="tp_comp_omrmm_'        + tracepointCounter + '" value="omrmm"        >JVM - Memory management (OMR)</option>' +
+			'    <option id="tp_comp_j9mm_'         + tracepointCounter + '" value="j9mm"         >JVM - Memory management (OpenJ9)</option>' +
+			'    <option id="tp_comp_map_'          + tracepointCounter + '" value="map"          >JVM - Memory mapping</option>' +
+			'    <option id="tp_comp_module_'       + tracepointCounter + '" value="module"       >JVM - Modularity</option>' +
+			'    <option id="tp_comp_omrport_'      + tracepointCounter + '" value="omrport"      >JVM - Port library (OMR)</option>' +
+			'    <option id="tp_comp_j9prt_'        + tracepointCounter + '" value="j9prt"        >JVM - Port library (OpenJ9)</option>' +
+			'    <option id="tp_comp_rpc_'          + tracepointCounter + '" value="rpc"          >JVM - RPC</option>' +
+			'    <option id="tp_comp_j9shr_'        + tracepointCounter + '" value="j9shr"        >JVM - Shared classes</option>' +
+			'    <option id="tp_comp_srphashtable_' + tracepointCounter + '" value="srphashtable" >JVM - SRP hashtables</option>' +
+			'    <option id="tp_comp_j9vrb_'        + tracepointCounter + '" value="j9vrb"        >JVM - Stack walker</option>' +
+			'    <option id="tp_comp_pool_'         + tracepointCounter + '" value="pool"         >JVM - Storage pool</option>' +
+			'    <option id="tp_comp_simplepool_'   + tracepointCounter + '" value="simplepool"   >JVM - Storage pool (simple)</option>' +
+			'    <option id="tp_comp_j9thr_'        + tracepointCounter + '" value="j9thr"        >JVM - Thread support</option>' +
+			'    <option id="tp_comp_omrti_'        + tracepointCounter + '" value="omrti"        >JVM - Tooling</option>' +
+			'    <option id="tp_comp_j9trc_'        + tracepointCounter + '" value="j9trc"        >JVM - Trace engine</option>' +
+			'    <option id="tp_comp_j9trc_aux_'    + tracepointCounter + '" value="j9trc_aux"    >JVM - Trace engine auxiliary</option>' +
+			'    <option id="tp_comp_j9util_'       + tracepointCounter + '" value="j9util"       >JVM - Utilities (j9util)</option>' + // TODO: what is the difference between this and j9vmutil?
+			'    <option id="tp_comp_j9vmutil_'     + tracepointCounter + '" value="j9vmutil"     >JVM - Utilities (j9vmutil)</option>' +
+			'    <option id="tp_comp_omrutil_'      + tracepointCounter + '" value="omrutil"      >JVM - Utilities (OMR)</option>' +
+			'    <option id="tp_comp_j9vgc_'        + tracepointCounter + '" value="j9vgc"        >JVM - Verbose GC utilities</option>' +
 			'</select>' +
 			'&nbsp;&nbsp;' +
 			'<select id="tp_level_select_' + tracepointCounter + '">' +
@@ -774,17 +791,23 @@ function addTracepoint(type, defaultComponent) {
 			'&nbsp;&nbsp;' +
 			'<input type="radio" id="tp_group_' + tracepointCounter + '" name="tp_type_or_group_' + tracepointCounter + '" value="group">' +
 			'    <select id="tp_group_select_' + tracepointCounter + '" disabled>' +
-			'        <option id="tp_group_option_all_'             + tracepointCounter + '" value="all" selected    >All applicable groups</option>' +
-			'        <option id="tp_group_option_gclogger_'        + tracepointCounter + '" value="gclogger"        >GC logger</option>' +
-			'        <option id="tp_group_option_nlsmessage_'      + tracepointCounter + '" value="nlsmessage"      >NLS messages</option>' +
-			'        <option id="tp_group_option_verboseclass_'    + tracepointCounter + '" value="verboseclass"    >Verbose:class</option>' +
-			'        <option id="tp_group_option_checkjni_'        + tracepointCounter + '" value="checkjni"        >Check:JNI</option>' +
-			'        <option id="tp_group_option_checkmemory_'     + tracepointCounter + '" value="checkmemory"     >Check:memory</option>' +
-			'        <option id="tp_group_option_checkvm_'         + tracepointCounter + '" value="checkvm"         >Check:VM</option>' +
-			'        <option id="tp_group_option_verbose_'         + tracepointCounter + '" value="verbose"         >Verbose</option>' +
-			'        <option id="tp_group_option_compiledmethods_' + tracepointCounter + '" value="compiledmethods" >Compiled methods</option>' +
-			'        <option id="tp_group_option_nativemethods_'   + tracepointCounter + '" value="nativemethods"   >Native methods</option>' +
-			'        <option id="tp_group_option_staticmethods_'   + tracepointCounter + '" value="staticmethods"   >Static methods</option>' +
+			'        <option id="tp_group_option_all_'                + tracepointCounter + '" value="all" selected       >All applicable groups</option>' +
+			'        <option id="tp_group_option_gclogger_'           + tracepointCounter + '" value="gclogger"           >GC logger</option>' +
+			'        <option id="tp_group_option_regionvalidator_'    + tracepointCounter + '" value="regionvalidator"    >GC region validation</option>' +
+			'        <option id="tp_group_option_stackslotvalidator_' + tracepointCounter + '" value="stackslotvalidator" >GC stack slot validation</option>' +
+			'        <option id="tp_group_option_nlsmessage_'         + tracepointCounter + '" value="nlsmessage"         >NLS messages</option>' +
+			'        <option id="tp_group_option_verbose_'            + tracepointCounter + '" value="verbose"            >Verbose</option>' +
+			'        <option id="tp_group_option_verboseclass_'       + tracepointCounter + '" value="verboseclass"       >Verbose:class</option>' +
+			'        <option id="tp_group_option_checkjni_'           + tracepointCounter + '" value="checkjni"           >Check:JNI</option>' +
+			'        <option id="tp_group_option_checkmemory_'        + tracepointCounter + '" value="checkmemory"        >Check:memory</option>' +
+			'        <option id="tp_group_option_checkvm_'            + tracepointCounter + '" value="checkvm"            >Check:VM</option>' +
+			'        <option id="tp_group_option_profilingbc_'        + tracepointCounter + '" value="profilingbc"        >Bytecode profiling</option>' +
+			'        <option id="tp_group_option_compiledmethods_'    + tracepointCounter + '" value="compiledmethods"    >Compiled methods</option>' +
+			'        <option id="tp_group_option_nativemethods_'      + tracepointCounter + '" value="nativemethods"      >Native methods</option>' +
+			'        <option id="tp_group_option_staticmethods_'      + tracepointCounter + '" value="staticmethods"      >Static methods</option>' +
+			'        <option id="tp_group_option_runtimeexec_'        + tracepointCounter + '" value="runtimeexec"        >Runtime execution</option>' +
+			'        <option id="tp_group_option_j9file_'             + tracepointCounter + '" value="j9file"             >File operations</option>' +
+			'        <option id="tp_group_option_j9sysinfo_'          + tracepointCounter + '" value="j9sysinfo"          >System information operations</option>' +
 			'    </select>' +
 			'</input>' +
 			'&nbsp;&nbsp;';
