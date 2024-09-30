@@ -2,34 +2,194 @@ var tracepointCounter = 0;
 var methodCounter = 0;
 var triggerCounter = 0;
 
+var tracepointDestinations = [
+	{ name: "maximal",   desc: "Trace to buffers (maximal)" },
+	{ name: "minimal",   desc: "Trace to buffers (minimal)" },
+	{ name: "count",     desc: "Trace to buffers (count only)" },
+	{ name: "exception", desc: "Trace to Exception buffers" },
+	{ name: "print",     desc: "Trace to STDERR (standard)" },
+	{ name: "iprint",    desc: "Trace to STDERR (indented)" },
+	{ name: "external",  desc: "Trace to external receiver" },
+	{ name: "none",      desc: "None (disable tracepoint)" }
+]
+
+var tracepointTypes = [
+	{ name: "all",       desc: "All types" },
+	{ name: "entry",     desc: "Entry" },
+	{ name: "exit",      desc: "Exit" },
+	{ name: "event",     desc: "Event" },
+	{ name: "exception", desc: "Exception" },
+	{ name: "mem",       desc: "Memory" }
+]
+
+var tracepointComponents = [
+	{ name: "all",          desc: "All components" },
+	{ name: "mt",           desc: "Methods / Stacks (see below)" },
+	{ name: "ibm_gpu",      desc: "JCL - GPU (IBM Java 8 only)" },
+	{ name: "io",           desc: "JCL - IO (IBM Java 8 only)" },
+	{ name: "JSOR",         desc: "JCL - JSOR (IBM Java 8 only)" },
+	{ name: "JVERBS",       desc: "JCL - jVERBS (IBM Java 8 only)" },
+	{ name: "net",          desc: "JCL - TCP/IP (IBM Java 8 only)" },
+	{ name: "j9vmchk",      desc: "JVM - Check command" },
+	{ name: "cuda4j",       desc: "JVM - CUDA support" },
+	{ name: "omrvm",        desc: "JVM - General (OMR)" },
+	{ name: "j9vm",         desc: "JVM - General (OpenJ9)" },
+	{ name: "avl",          desc: "JVM - AVL" },
+	{ name: "j9bcu",        desc: "JVM - Bytecode utilities" },
+	{ name: "j9bcverify",   desc: "JVM - Bytecode verifier" },
+	{ name: "j9codertvm",   desc: "JVM - Bytecode runtime" },
+	{ name: "j9utilcore",   desc: "JVM - Character decoding utilities" },
+	{ name: "j9dmp",        desc: "JVM - Dump" },
+	{ name: "hashtable",    desc: "JVM - Hashtables" },
+	{ name: "j9hook",       desc: "JVM - Hooks" },
+	{ name: "j9hshelp",     desc: "JVM - Hot swap helpers" },
+	{ name: "dg",           desc: "JVM - Intrinsic tracepoints" },
+	{ name: "j9jcl",        desc: "JVM - JCL" },
+	{ name: "sunvmi",       desc: "JVM - JCL interface (sunvmi)" },
+	{ name: "j9scar",       desc: "JVM - JCL interface (j9scar)" },
+	{ name: "j9jit",        desc: "JVM - JIT interface" },
+	{ name: "j9jni",        desc: "JVM - JNI" },
+	{ name: "j9jvmti",      desc: "JVM - JVMTI" },
+	{ name: "omrmm",        desc: "JVM - Memory management (OMR)" },
+	{ name: "j9mm",         desc: "JVM - Memory management (OpenJ9)" },
+	{ name: "map",          desc: "JVM - Memory mapping" },
+	{ name: "module",       desc: "JVM - Modularity" },
+	{ name: "omrport",      desc: "JVM - Port library (OMR)" },
+	{ name: "j9prt",        desc: "JVM - Port library (OpenJ9)" },
+	{ name: "rpc",          desc: "JVM - RPC" },
+	{ name: "j9shr",        desc: "JVM - Shared classes" },
+	{ name: "srphashtable", desc: "JVM - SRP hashtables" },
+	{ name: "j9vrb",        desc: "JVM - Stack walker" },
+	{ name: "pool",         desc: "JVM - Storage pool" },
+	{ name: "simplepool",   desc: "JVM - Storage pool (simple)" },
+	{ name: "j9thr",        desc: "JVM - Thread support" },
+	{ name: "omrti",        desc: "JVM - Tooling" },
+	{ name: "j9trc",        desc: "JVM - Trace engine" },
+	{ name: "j9trc_aux",    desc: "JVM - Trace engine auxiliary" },
+	{ name: "j9util",       desc: "JVM - Utilities (j9util)" },
+	{ name: "j9vmutil",     desc: "JVM - Utilities (j9vmutil)" },
+	{ name: "omrutil",      desc: "JVM - Utilities (OMR)" },
+	{ name: "j9vgc",        desc: "JVM - Verbose GC utilities" }
+]
+
+var tracepointGroups = [
+	{ name: "bytecodeMethods",      desc: "Bytecode methods",                  comps: [ "mt" ] },
+	{ name: "profilingbc",          desc: "Bytecode profiling",                comps: [ "j9vm" ] },
+	{ name: "clasinit",             desc: "Class initialization",              comps: [ "j9jcl", "j9vm" ] },
+	{ name: "verboseclass",         desc: "Class loading (-verbose:class)",    comps: [ "j9jcl", "j9vrb", "j9vm" ] },
+	{ name: "compiledmethods",      desc: "Compiled methods",                  comps: [ "mt" ] },
+	{ name: "cuda",                 desc: "CUDA operations",                   comps: [ "j9prt", "omrport" ] },
+	{ name: "exvmaccess",           desc: "Exclusive vm access",               comps: [ "j9vm" ] },
+	{ name: "adaptivethread",       desc: "GC adaptive threading",             comps: [ "j9mm"  ] },
+	{ name: "ageblending",          desc: "GC age blending",                   comps: [ "j9mm" ] },
+	{ name: "aging",                desc: "GC aging",                          comps: [ "j9mm" ] },
+	{ name: "allocate",             desc: "GC allocation",                     comps: [ "j9mm" ] },
+	{ name: "allocthreshold",       desc: "GC allocation thresholds",          comps: [ "j9mm" ] },
+	{ name: "arraylet",             desc: "GC arraylets",                      comps: [ "j9mm", "omrmm" ] },
+	{ name: "cardscrubbing",        desc: "GC card scrubbing",                 comps: [ "j9mm" ] },
+	{ name: "unload",               desc: "GC class unloading",                comps: [ "j9mm" ] },
+	{ name: "compact",              desc: "GC compaction",                     comps: [ "j9mm", "omrmm" ] },
+	{ name: "concurrent",           desc: "GC concurrency",                    comps: [ "j9mm" ] },
+	{ name: "copyforwardscheme",    desc: "GC copy forward scheme",            comps: [ "j9mm" ] },
+	{ name: "darkMatterComparison", desc: "GC dark matter comparison",         comps: [ "j9mm" ] },
+	{ name: "dynamiccollectionset", desc: "GC dynamic collection set",         comps: [ "j9mm" ] },
+	{ name: "kickoff",              desc: "GC kickoff",                        comps: [ "j9mm"  ] },
+	{ name: "alloclarge",           desc: "GC large allocation",               comps: [ "j9mm" ] },
+	{ name: "gclogger",             desc: "GC logger (-verbose:gc)",           comps: [ "j9mm", "omrmm" ] },
+	{ name: "loaresize",            desc: "GC LOA resize",                     comps: [ "j9mm"  ] },
+	{ name: "markdelegate",         desc: "GC mark delegate",                  comps: [ "j9mm"  ] },
+	{ name: "oracle",               desc: "GC oracle",                         comps: [ "j9mm"  ] },
+	{ name: "parallel",             desc: "GC parallel operations",            comps: [ "j9mm" ] },
+	{ name: "dispatcher",           desc: "GC parallel dispatcher",            comps: [ "j9mm" ] },
+	{ name: "percolate",            desc: "GC percolate",                      comps: [ "j9mm", "omrmm" ] },
+	{ name: "regionvalidator",      desc: "GC region validation",              comps: [ "j9mm" ] },
+	{ name: "reclaim",              desc: "GC reclaim",                        comps: [ "j9mm" ] },
+	{ name: "rememberedset",        desc: "GC remembered set",                 comps: [ "j9mm" ] },
+	{ name: "resize",               desc: "GC resize operations",              comps: [ "j9mm" ] },
+	{ name: "scavenge",             desc: "GC scavenge flip",                  comps: [ "j9mm"  ] },
+	{ name: "scavenger",            desc: "GC scavenger",                      comps: [ "j9mm" ] },
+	{ name: "stackremember",        desc: "GC stack remember",                 comps: [ "j9mm" ] },
+	{ name: "stackslotvalidator",   desc: "GC stack slot validation",          comps: [ "j9mm"  ] },
+	{ name: "stringtable",          desc: "GC string table",                   comps: [ "j9mm"  ] },
+	{ name: "tarok",                desc: "GC Tarok operations",               comps: [ "j9mm"  ] },
+	{ name: "j9gs",                 desc: "Guarded storage",                   comps: [ "j9prt" ] },
+	{ name: "j9hypervisor",         desc: "Hypervisor operations",             comps: [ "j9prt" ] },
+	{ name: "checkjni",             desc: "JNI function checks (-Xcheck:jni)", comps: [ "j9jni", "j9vm" ] },
+	{ name: "methodArguments",      desc: "Method arguments",                  comps: [ "mt" ] },
+	{ name: "nativemethods",        desc: "Native methods",                    comps: [ "mt" ] },
+	{ name: "nlsmessage",           desc: "NLS messages",                      comps: [ "j9prt"  ] },
+	{ name: "double_map",           desc: "OMR double map",                    comps: [ "omrport" ] },
+	{ name: "heap",                 desc: "OMR heap",                          comps: [ "omrport" ] },
+	{ name: "file",                 desc: "OMR portable file",                 comps: [ "omrport" ] },
+	{ name: "mem",                  desc: "OMR portable memory allocation",    comps: [ "omrport" ] },
+	{ name: "mmap",                 desc: "OMR portable mmap",                 comps: [ "omrport" ] },
+	{ name: "omrfilestream",        desc: "OMR portable file stream",          comps: [ "omrport" ] },
+	{ name: "omrshared",            desc: "OMR portable shared classes",       comps: [ "omrport" ] },
+	{ name: "omrshmem",             desc: "OMR portable shared memory",        comps: [ "omrport" ] },
+	{ name: "omrshsem",             desc: "OMR portable shared semaphore",     comps: [ "omrport" ] },
+	{ name: "omrsock",              desc: "OMR portable socket",               comps: [ "omrport" ] },
+	{ name: "sl",                   desc: "OMR portable shared library",       comps: [ "omrport" ] },
+	{ name: "signal",               desc: "OMR portable signal",               comps: [ "omrport" ] },
+	{ name: "sysinfo",              desc: "OMR portable system information",   comps: [ "omrport" ] },
+	{ name: "syslog",               desc: "OMR system logging",                comps: [ "omrport" ] },
+	{ name: "perfmon",              desc: "Performance monitor",               comps: [ "j9jit", "j9vm", "omrti" ] },
+	{ name: "j9shmem",              desc: "Portable shared memory",            comps: [ "j9prt" ] },
+	{ name: "j9shsem",              desc: "Portable shared semaphore",         comps: [ "j9prt" ] },
+	{ name: "j9sock",               desc: "Portable socket",                   comps: [ "j9prt" ] },
+	{ name: "runtimeexec",          desc: "Runtime execution",                 comps: [ "j9mm" ] },
+	{ name: "j9ri",                 desc: "Runtime instrumentation",           comps: [ "j9prt" ] },
+	{ name: "j9shared",             desc: "Shared classes",                    comps: [ "j9prt", "omrport" ] },
+	{ name: "OSCache",              desc: "Shared classes OSCache",            comps: [ "j9shr" ] },
+	{ name: "staticmethods",        desc: "Static methods",                    comps: [ "mt" ] },
+	{ name: "j9sysinfo",            desc: "System information",                comps: [ "j9prt" ] },
+	{ name: "throw",                desc: "Throw operations",                  comps: [ "mt" ] },
+	{ name: "checkvm",              desc: "VM checks (-Xcheck:vm)",            comps: [ "j9vm" ] }
+]
+
+var triggerActions = [
+	{ name: "none",        desc: "No action" },
+	{ name: "javadump",    desc: "Javacore" },
+	{ name: "sysdump",     desc: "System dump (core file)" },
+	{ name: "heapdump",    desc: "Heap dump" },
+	{ name: "snap",        desc: "Snap trace" },
+	{ name: "jstacktrace", desc: "Java stacktrace" },
+	{ name: "resumethis",  desc: "Start trace (current thread)" },
+	{ name: "suspendthis", desc: "Stop trace (current thread)" },
+	{ name: "resume",      desc: "Start trace (all threads)" },
+	{ name: "suspend",     desc: "Stop trace (all threads)" },
+	{ name: "sleep",       desc: "Thread sleep" }, // TODO: sleeptime
+	{ name: "segv",        desc: "SIGSEGV/GPF" },
+	{ name: "abort",       desc: "Abort" }
+]
+
 window.onload = initialSetup();
 
 function initialSetup() {
 	document.getElementById("XtraceForm").addEventListener(                     'submit', handleSubmit);
-	
+
 	document.getElementById("button_add_tracepoint_id").addEventListener(       'click',  addTracepoint.bind(null, 'id', null));
 	document.getElementById("button_add_tracepoint_component").addEventListener('click',  addTracepoint.bind(null, 'component', null));
-	
+
 	document.getElementById("disable_predefined").addEventListener(             'change', processChange.bind(null, document.getElementById("disable_predefined")));
-	
+
 	document.getElementById("button_add_method").addEventListener(              'click',  addMethod);
 	document.getElementById("button_add_trigger_method").addEventListener(      'click',  addTrigger.bind(null, 'method'));
 	document.getElementById("button_add_trigger_tracepoint").addEventListener(  'click',  addTrigger.bind(null, 'tracepoint'));
 	document.getElementById("button_add_trigger_group").addEventListener(       'click',  addTrigger.bind(null, 'group'));
 
 	document.getElementById("trace_initially_disabled").addEventListener(       'change', processChange.bind(null, document.getElementById("trace_initially_disabled")));
-	
+
 	document.getElementById("sleep_time").addEventListener(                     'change', processChange.bind(null, document.getElementById("sleep_time")));
 	document.getElementById("sleep_time").addEventListener(                     'blur',   processChange.bind(null, document.getElementById("sleep_time")));
-	
+
 	document.getElementById("stack_depth").addEventListener(                    'change', processChange.bind(null, document.getElementById("stack_depth")));
 	document.getElementById("stack_depth").addEventListener(                    'blur',   processChange.bind(null, document.getElementById("stack_depth")));
-	
+
 	document.getElementById("buffer_size").addEventListener(                    'change', processChange.bind(null, document.getElementById("buffer_size")));
 	document.getElementById("dynamic_buffers").addEventListener(                'change', processChange.bind(null, document.getElementById("dynamic_buffers")));
-	
+
 	document.getElementById("wrap_in_quotes").addEventListener(                 'change', processChange.bind(null, document.getElementById("wrap_in_quotes")));
-	
+
 	document.getElementById("button_copy_to_clipboard").addEventListener(       'click',  copyTextToClipboard.bind(null, document.getElementById('result')));
 	document.getElementById("button_copy_link_to_clipboard").addEventListener(  'click',  copyLinkToClipboard);
 	document.getElementById("button_reset").addEventListener(                   'click',  reload);
@@ -41,17 +201,17 @@ function initialSetup() {
 			allInputs[i].addEventListener('change', processChange.bind(null, allInputs[i]));
 			allInputs[i].addEventListener('blur', processChange.bind(null, allInputs[i]));
 		}
-		
+
 		if (allInputs[i].id.indexOf("file_button_") != -1) {
 			allInputs[i].addEventListener('click', processChange.bind(null, allInputs[i]));
 		}
-		
+
 		if (allInputs[i].id.indexOf("output_") != -1) {
 			allInputs[i].addEventListener('change', processChange.bind(null, allInputs[i]));
 			allInputs[i].addEventListener('blur', processChange.bind(null, allInputs[i]));
 		}
 	}
-	
+
 	parseParams();
 }
 
@@ -353,61 +513,21 @@ function processChange(option) {
 		var tracepointIndex = regexArray[1];
 		var selectElement = document.getElementById("tp_group_select_" + tracepointIndex);
 
-		switch(option.value) {
-			case "all":
-				enableAllOptions(selectElement);
-				break;
+		disableAllOptions(selectElement);
 
-			case "mt":
-				disableAllOptions(selectElement);
-				enableOption(selectElement, "all");
-				enableOption(selectElement, "compiledmethods");
-				enableOption(selectElement, "nativemethods");
-				enableOption(selectElement, "staticmethods");
-				break;
-
-			case "j9jcl":
-				disableAllOptions(selectElement);
-				enableOption(selectElement, "all");
-				enableOption(selectElement, "verboseclass");
-				break;
-
-			case "j9jit":
-				disableAllOptions(selectElement);
-				enableOption(selectElement, "all");
-				enableOption(selectElement, "verbose");
-				break;
-
-			case "j9jni":
-				disableAllOptions(selectElement);
-				enableOption(selectElement, "all");
-				enableOption(selectElement, "checkjni");
-				break;
-
-			case "j9mm":
-				disableAllOptions(selectElement);
-				enableOption(selectElement, "all");
-				enableOption(selectElement, "gclogger");
-				break;
-
-			case "j9prt":
-				disableAllOptions(selectElement);
-				enableOption(selectElement, "all");
-				enableOption(selectElement, "nlsmessage");
-				break;
-
-			case "j9vm":
-				disableAllOptions(selectElement);
-				enableOption(selectElement, "all");
-				enableOption(selectElement, "verboseclass");
-				enableOption(selectElement, "checkjni");
-				enableOption(selectElement, "checkmemory");
-				enableOption(selectElement, "checkvm");
-				break;
-
-			default:
-				disableAllOptions(selectElement);
-				break;
+		if (option.value == "all") {
+			enableAllOptions(selectElement);
+		} else {
+			for (var i = 0; i < tracepointGroups.length; i++) {
+				var group = tracepointGroups[i];
+				var components = group.comps;
+				for (var j = 0; j < components.length; j++) {
+					if (option.value == components[j]) {
+						enableOption(selectElement, "all");
+						enableOption(selectElement, group.name);
+					}
+				} 
+			}
 		}
 
 		// If the currently selected option is now disabled, reset selection to "all"
@@ -481,7 +601,7 @@ function processChange(option) {
 				option.value = option.value.replace(".", "/");
 			}
 		}
-		
+
 		// Remove any whitespace
 		option.value = option.value.replace(/\s/g,'');
 
@@ -534,7 +654,7 @@ function processChange(option) {
 			disableInput(document.getElementById("tp_dest_select_" + tracepointIndex));
 		}
 	}
-	
+
 	// If there is no method tracepoint with tracing enabled, disable all method arguments checkboxes
 	// Returns true if a method trace spec has been added, false otherwise
 	var shouldDisable = !isMethodTracepointEnabledForTracing() && !isAllTracepointEnabledForTracing();
@@ -691,130 +811,55 @@ function addTracepoint(type, defaultComponent) {
 	newTracepoint.setAttribute("id", "tracepoint_" + tracepointCounter);
 	newTracepoint.setAttribute("data-type", type);
 
-	newTracepoint.innerHTML =
+	// Remove icon
+	var html =
 		'<a href="#" title="Remove tracepoint" class="remove" id="remove_tracepoint_' + tracepointCounter + '">&#x274C</a>' +
-		'&nbsp;&nbsp;' +
-		'<select id="tp_dest_select_' + tracepointCounter + '">' +
-		'    <option id="tp_dest_maximal_'   + tracepointCounter + '"  value="maximal"  selected >Trace to buffers (maximal)</option>' +
-		'    <option id="tp_dest_minimal_'   + tracepointCounter + '"  value="minimal"           >Trace to buffers (minimal)</option>' +
-		'    <option id="tp_dest_count_'     + tracepointCounter + '"  value="count"             >Trace to buffers (count only)</option>' +
-		'    <option id="tp_dest_exception_' + tracepointCounter + '"  value="exception"         >Trace to Exception buffers</option>' +
-		'    <option id="tp_dest_print_'     + tracepointCounter + '"  value="print"             >Trace to STDERR (standard)</option>' +
-		'    <option id="tp_dest_iprint_'    + tracepointCounter + '"  value="iprint"            >Trace to STDERR (indented)</option>' +
-		'    <option id="tp_dest_external_'  + tracepointCounter + '"  value="external"          >Trace to external receiver</option>' +
-		'    <option id="tp_dest_none_'      + tracepointCounter + '"  value="none"              >None (disable tracepoint)</option>' +
-		'</select>' +
 		'&nbsp;&nbsp;';
 
+	// Trace destination drop-down list
+	html += '<select id="tp_dest_select_' + tracepointCounter + '">';
+	html += getOptionElements(tracepointDestinations, "tp_dest", tracepointCounter);
+	html += '</select>' + '&nbsp;&nbsp;';
+
+	// Tracepoint ID input
 	if (type == "id") {
-		newTracepoint.innerHTML +=
+		html +=
 			'<label for="tp_id_' + tracepointCounter + '">Tracepoint <a href="https://www.ibm.com/support/knowledgecenter/en/SSYKE2_8.0.0/com.ibm.java.lnx.80.doc/diag/tools/trace_tracepoint.html#trace_tracepoint">ID</a>:&nbsp;</label>' +
 			'<input type="text" id="tp_id_' + tracepointCounter + '" name="tp_id_' + tracepointCounter + '" size="10" value="">' +
 			'&nbsp;&nbsp;';
 	}
 
 	if (type == "component") {
-		newTracepoint.innerHTML +=
-			'<select id="tp_comp_select_'           + tracepointCounter + '">' +
-			'    <option id="tp_comp_all_'          + tracepointCounter + '" value="all" selected >All components</option>' +
-			'    <option id="tp_comp_mt_'           + tracepointCounter + '" value="mt"           >Methods / Stacks (see below)</option>' +
-			'    <option id="tp_comp_ibm_gpu_'      + tracepointCounter + '" value="ibm_gpu"      >JCL - GPU (IBM Java 8 only)</option>' +
-			'    <option id="tp_comp_io_'           + tracepointCounter + '" value="io"           >JCL - IO (IBM Java 8 only)</option>' +
-			'    <option id="tp_comp_JSOR_'         + tracepointCounter + '" value="JSOR"         >JCL - JSOR (IBM Java 8 only)</option>' +
-			'    <option id="tp_comp_JVERBS_'       + tracepointCounter + '" value="JVERBS"       >JCL - jVERBS (IBM Java 8 only)</option>' +
-			'    <option id="tp_comp_net_'          + tracepointCounter + '" value="net"          >JCL - TCP/IP (IBM Java 8 only)</option>' +
-			'    <option id="tp_comp_j9vmchk_'      + tracepointCounter + '" value="j9vmchk"      >JVM - Check command</option>' +
-			'    <option id="tp_comp_cuda4j_'       + tracepointCounter + '" value="cuda4j"       >JVM - CUDA support</option>' +
-			'    <option id="tp_comp_omrvm_'        + tracepointCounter + '" value="omrvm"        >JVM - General (OMR)</option>' +
-			'    <option id="tp_comp_j9vm_'         + tracepointCounter + '" value="j9vm"         >JVM - General (OpenJ9)</option>' +
-			'    <option id="tp_comp_avl_'          + tracepointCounter + '" value="avl"          >JVM - AVL</option>' +
-			'    <option id="tp_comp_j9bcu_'        + tracepointCounter + '" value="j9bcu"        >JVM - Bytecode utilities</option>' +
-			'    <option id="tp_comp_j9bcverify_'   + tracepointCounter + '" value="j9bcverify"   >JVM - Bytecode verifier</option>' +
-			'    <option id="tp_comp_j9codertvm_'   + tracepointCounter + '" value="j9codertvm"   >JVM - Bytecode runtime</option>' +
-			'    <option id="tp_comp_j9utilcore_'   + tracepointCounter + '" value="j9utilcore"   >JVM - Character decoding utilities</option>' +
-			'    <option id="tp_comp_j9dmp_'        + tracepointCounter + '" value="j9dmp"        >JVM - Dump</option>' +
-			'    <option id="tp_comp_hashtable_'    + tracepointCounter + '" value="hashtable"    >JVM - Hashtables</option>' +
-			'    <option id="tp_comp_j9hook_'       + tracepointCounter + '" value="j9hook"       >JVM - Hooks</option>' +
-			'    <option id="tp_comp_j9hshelp_'     + tracepointCounter + '" value="j9hshelp"     >JVM - Hot swap helpers</option>' +
-			'    <option id="tp_comp_dg_'           + tracepointCounter + '" value="dg"           >JVM - Intrinsic tracepoints issued by the trace engine</option>' +
-			'    <option id="tp_comp_j9jcl_'        + tracepointCounter + '" value="j9jcl"        >JVM - JCL</option>' +
-			'    <option id="tp_comp_sunvmi_'       + tracepointCounter + '" value="sunvmi"       >JVM - JCL interface (sunvmi)</option>' +
-			'    <option id="tp_comp_j9scar_'       + tracepointCounter + '" value="j9scar"       >JVM - JCL interface (j9scar)</option>' + // TODO: difference between this and option above?
-			'    <option id="tp_comp_j9jit_'        + tracepointCounter + '" value="j9jit"        >JVM - JIT interface</option>' +
-			'    <option id="tp_comp_j9jni_'        + tracepointCounter + '" value="j9jni"        >JVM - JNI</option>' +
-			'    <option id="tp_comp_j9jvmti_'      + tracepointCounter + '" value="j9jvmti"      >JVM - JVMTI</option>' +
-			'    <option id="tp_comp_omrmm_'        + tracepointCounter + '" value="omrmm"        >JVM - Memory management (OMR)</option>' +
-			'    <option id="tp_comp_j9mm_'         + tracepointCounter + '" value="j9mm"         >JVM - Memory management (OpenJ9)</option>' +
-			'    <option id="tp_comp_map_'          + tracepointCounter + '" value="map"          >JVM - Memory mapping</option>' +
-			'    <option id="tp_comp_module_'       + tracepointCounter + '" value="module"       >JVM - Modularity</option>' +
-			'    <option id="tp_comp_omrport_'      + tracepointCounter + '" value="omrport"      >JVM - Port library (OMR)</option>' +
-			'    <option id="tp_comp_j9prt_'        + tracepointCounter + '" value="j9prt"        >JVM - Port library (OpenJ9)</option>' +
-			'    <option id="tp_comp_rpc_'          + tracepointCounter + '" value="rpc"          >JVM - RPC</option>' +
-			'    <option id="tp_comp_j9shr_'        + tracepointCounter + '" value="j9shr"        >JVM - Shared classes</option>' +
-			'    <option id="tp_comp_srphashtable_' + tracepointCounter + '" value="srphashtable" >JVM - SRP hashtables</option>' +
-			'    <option id="tp_comp_j9vrb_'        + tracepointCounter + '" value="j9vrb"        >JVM - Stack walker</option>' +
-			'    <option id="tp_comp_pool_'         + tracepointCounter + '" value="pool"         >JVM - Storage pool</option>' +
-			'    <option id="tp_comp_simplepool_'   + tracepointCounter + '" value="simplepool"   >JVM - Storage pool (simple)</option>' +
-			'    <option id="tp_comp_j9thr_'        + tracepointCounter + '" value="j9thr"        >JVM - Thread support</option>' +
-			'    <option id="tp_comp_omrti_'        + tracepointCounter + '" value="omrti"        >JVM - Tooling</option>' +
-			'    <option id="tp_comp_j9trc_'        + tracepointCounter + '" value="j9trc"        >JVM - Trace engine</option>' +
-			'    <option id="tp_comp_j9trc_aux_'    + tracepointCounter + '" value="j9trc_aux"    >JVM - Trace engine auxiliary</option>' +
-			'    <option id="tp_comp_j9util_'       + tracepointCounter + '" value="j9util"       >JVM - Utilities (j9util)</option>' + // TODO: what is the difference between this and j9vmutil?
-			'    <option id="tp_comp_j9vmutil_'     + tracepointCounter + '" value="j9vmutil"     >JVM - Utilities (j9vmutil)</option>' +
-			'    <option id="tp_comp_omrutil_'      + tracepointCounter + '" value="omrutil"      >JVM - Utilities (OMR)</option>' +
-			'    <option id="tp_comp_j9vgc_'        + tracepointCounter + '" value="j9vgc"        >JVM - Verbose GC utilities</option>' +
-			'</select>' +
-			'&nbsp;&nbsp;' +
-			'<select id="tp_level_select_' + tracepointCounter + '">' +
-			'    <option id="tp_level_9_'       + tracepointCounter + '" value="9" selected >Level 9</option>' +
-			'    <option id="tp_level_8_'       + tracepointCounter + '" value="8"          >Level 8</option>' +
-			'    <option id="tp_level_7_'       + tracepointCounter + '" value="7"          >Level 7</option>' +
-			'    <option id="tp_level_6_'       + tracepointCounter + '" value="6"          >Level 6</option>' +
-			'    <option id="tp_level_5_'       + tracepointCounter + '" value="5"          >Level 5</option>' +
-			'    <option id="tp_level_4_'       + tracepointCounter + '" value="4"          >Level 4</option>' +
-			'    <option id="tp_level_3_'       + tracepointCounter + '" value="3"          >Level 3</option>' +
-			'    <option id="tp_level_2_'       + tracepointCounter + '" value="2"          >Level 2</option>' +
-			'    <option id="tp_level_1_'       + tracepointCounter + '" value="1"          >Level 1</option>' +
-			'    <option id="tp_level_0_'       + tracepointCounter + '" value="0"          >Level 0</option>' +
-			'</select>' +
-			'&nbsp;&nbsp;' +
+		// Component drop-down list
+		html += '<select id="tp_comp_select_' + tracepointCounter + '">';
+		html += getOptionElements(tracepointComponents, "tp_comp", tracepointCounter);
+		html += '</select>' + '&nbsp;&nbsp;';
+
+		// Level drop-down list
+		html +=	'<select id="tp_level_select_' + tracepointCounter + '">';
+		for (var i = 9; i >= 0; i--) {
+			html += '<option id="tp_level_' + i + '_' + tracepointCounter + '" value="' + i + '">Level ' + i + '</option>';
+		}
+		html += '</select>' + '&nbsp;&nbsp;';
+
+		// Type drop-down list
+		html +=
 			'<input type="radio" id="tp_type_' + tracepointCounter + '" name="tp_type_or_group_' + tracepointCounter + '" value="type" checked>' +
-			'    <select id="tp_type_select_' + tracepointCounter + '">' +
-			'        <option id="tp_type_all_'       + tracepointCounter + '" value="all" selected >All types</option>' +
-			'        <option id="tp_type_entry_'     + tracepointCounter + '" value="entry"        >Entry</option>' +
-			'        <option id="tp_type_exit_'      + tracepointCounter + '" value="exit"         >Exit</option>' +
-			'        <option id="tp_type_event_'     + tracepointCounter + '" value="event"        >Event</option>' +
-			'        <option id="tp_type_exception_' + tracepointCounter + '" value="exception"    >Exception</option>' +
-			'        <option id="tp_type_mem_'       + tracepointCounter + '" value="mem"          >Memory</option>' +
-			'    </select>' +
-			'</input>' +
-			'&nbsp;&nbsp;' +
+			'<select id="tp_type_select_' + tracepointCounter + '">';
+		html += getOptionElements(tracepointTypes, "tp_type", tracepointCounter);
+		html += '</select>' + '</input>' + '&nbsp;&nbsp;';
+
+		// Group drop-down list
+		html +=
 			'<input type="radio" id="tp_group_' + tracepointCounter + '" name="tp_type_or_group_' + tracepointCounter + '" value="group">' +
-			'    <select id="tp_group_select_' + tracepointCounter + '" disabled>' +
-			'        <option id="tp_group_option_all_'                + tracepointCounter + '" value="all" selected       >All applicable groups</option>' +
-			'        <option id="tp_group_option_gclogger_'           + tracepointCounter + '" value="gclogger"           >GC logger</option>' +
-			'        <option id="tp_group_option_regionvalidator_'    + tracepointCounter + '" value="regionvalidator"    >GC region validation</option>' +
-			'        <option id="tp_group_option_stackslotvalidator_' + tracepointCounter + '" value="stackslotvalidator" >GC stack slot validation</option>' +
-			'        <option id="tp_group_option_nlsmessage_'         + tracepointCounter + '" value="nlsmessage"         >NLS messages</option>' +
-			'        <option id="tp_group_option_verbose_'            + tracepointCounter + '" value="verbose"            >Verbose</option>' +
-			'        <option id="tp_group_option_verboseclass_'       + tracepointCounter + '" value="verboseclass"       >Verbose:class</option>' +
-			'        <option id="tp_group_option_checkjni_'           + tracepointCounter + '" value="checkjni"           >Check:JNI</option>' +
-			'        <option id="tp_group_option_checkmemory_'        + tracepointCounter + '" value="checkmemory"        >Check:memory</option>' +
-			'        <option id="tp_group_option_checkvm_'            + tracepointCounter + '" value="checkvm"            >Check:VM</option>' +
-			'        <option id="tp_group_option_profilingbc_'        + tracepointCounter + '" value="profilingbc"        >Bytecode profiling</option>' +
-			'        <option id="tp_group_option_compiledmethods_'    + tracepointCounter + '" value="compiledmethods"    >Compiled methods</option>' +
-			'        <option id="tp_group_option_nativemethods_'      + tracepointCounter + '" value="nativemethods"      >Native methods</option>' +
-			'        <option id="tp_group_option_staticmethods_'      + tracepointCounter + '" value="staticmethods"      >Static methods</option>' +
-			'        <option id="tp_group_option_runtimeexec_'        + tracepointCounter + '" value="runtimeexec"        >Runtime execution</option>' +
-			'        <option id="tp_group_option_j9file_'             + tracepointCounter + '" value="j9file"             >File operations</option>' +
-			'        <option id="tp_group_option_j9sysinfo_'          + tracepointCounter + '" value="j9sysinfo"          >System information operations</option>' +
-			'    </select>' +
-			'</input>' +
-			'&nbsp;&nbsp;';
+			'<select id="tp_group_select_' + tracepointCounter + '" disabled>' +
+			'<option id="tp_group_option_all_' + tracepointCounter + '" value="all" selected>All applicable groups</option>';
+		html += getOptionElements(tracepointGroups, "tp_group", tracepointCounter);
+		html += '</select>' + '</input>' + '&nbsp;&nbsp;';
 	}
 
 	// Trace option
-	newTracepoint.innerHTML +=
+	html +=
 		'<span title="Enable tracepoint tracing">' +
 		'<input type="checkbox" id="tp_trace_' + tracepointCounter + '" name="tp_trace_' + tracepointCounter + '" value="tp_trace_' + tracepointCounter + '" checked>' +
 		'<label for="tp_trace_' + tracepointCounter + '" title="Enable tracepoint tracing">&nbsp;Trace</a></label>' +
@@ -822,14 +867,15 @@ function addTracepoint(type, defaultComponent) {
 		'&nbsp;&nbsp;';
 
 	// Count option
-	newTracepoint.innerHTML +=
+	html +=
 		'<span title="Enable tracepoint counting">' +
 		'<input type="checkbox" id="tp_count_' + tracepointCounter + '" name="tp_count_' + tracepointCounter + '" value="tp_count_' + tracepointCounter + '">' +
 		'<label for="tp_count_' + tracepointCounter + '">&nbsp;<a href="https://www.eclipse.org/openj9/docs/xtrace/#count-tracepoint">Count</a></label>' +
 		'</span>';
 
+	newTracepoint.innerHTML += html;
 	tracepointList.appendChild(newTracepoint);
-	
+
 	// Tooltip: Trace Destination field
 	var tooltipText = "Trace Destination\n" +
 		"\n" +
@@ -844,10 +890,10 @@ function addTracepoint(type, defaultComponent) {
 	// Event listeners for trace destination and tracepoint removal
 	document.getElementById("tp_dest_select_" + tracepointCounter).addEventListener('change', processChange.bind(null, document.getElementById("tp_dest_select_" + tracepointCounter)));
 	document.getElementById("remove_tracepoint_" + tracepointCounter).addEventListener('click', removeTracepoint.bind(null, tracepointCounter));
-	
+
 	if (type == "id") {
 		idInputElement = document.getElementById("tp_id_" + tracepointCounter);
-		
+
 		// Event listeners
 		idInputElement.addEventListener('change', processChange.bind(null, idInputElement));
 		idInputElement.addEventListener('blur', processChange.bind(null, idInputElement));
@@ -870,7 +916,7 @@ function addTracepoint(type, defaultComponent) {
 		typeSelectElement = document.getElementById("tp_type_select_" + tracepointCounter);
 		groupElement = document.getElementById("tp_group_" + tracepointCounter);
 		groupSelectElement = document.getElementById("tp_group_select_" + tracepointCounter);
-		
+
 		// Event listeners
 		compSelectElement.addEventListener('change', processChange.bind(null, compSelectElement));
 		levelSelectElement.addEventListener('change', processChange.bind(null, levelSelectElement));
@@ -878,7 +924,7 @@ function addTracepoint(type, defaultComponent) {
 		typeSelectElement.addEventListener('change', processChange.bind(null, typeSelectElement));
 		groupElement.addEventListener('change', processChange.bind(null, groupElement));
 		groupSelectElement.addEventListener('change', processChange.bind(null, groupSelectElement));
-			
+
 		// Tooltip: Component field
 		tooltipText = "Component to trace";
 		compSelectElement.title = tooltipText;
@@ -947,11 +993,11 @@ function addMethod() {
 
 	var methodList = document.getElementById("method_input");
 	methodList.appendChild(newMethod);
-	
+
 	var methodRemoveElement = document.getElementById("remove_method_" + methodCounter);
 	var methodTextElement = document.getElementById("meth_text_" + methodCounter);
 	var methodArgsElement = document.getElementById("meth_args_" + methodCounter);
-	
+
 	// Event listeners
 	methodRemoveElement.addEventListener('click', removeMethod.bind(null, methodCounter));
 	methodTextElement.addEventListener('change', processChange.bind(null, methodTextElement));
@@ -990,121 +1036,77 @@ function addTrigger(type) {
 	newTrigger.setAttribute("id", "trigger_" + triggerCounter);
 	newTrigger.setAttribute("data-type", type);
 
-	newTrigger.innerHTML =
+	// Remove icon
+	var html =
 		'<a href="#" title="Remove trigger" class="remove" id="remove_trigger_' + triggerCounter + '">&#x274C</a>' +
 		'&nbsp;&nbsp;';
 
 	if (type == "method") {
 		// method{<methodspec>[,<entryAction>[,<exitAction>[,<delayCount>[,<matchcount>]]]]}
-		newTrigger.innerHTML +=
+
+		// Method spec input
+		html +=
 			'<label for="trig_meth_spec_' + triggerCounter + '">Method:&nbsp;</label>' +
 			'<input type="text" id="trig_meth_spec_' + triggerCounter +'" name="trig_meth_spec_1" size="25" value="">' +
-			'&nbsp;&nbsp;' +
-			'<label for="trig_meth_ent_' + triggerCounter + '">Entry:&nbsp;</label>' +
-			'<select id="trig_meth_ent_' + triggerCounter + '">' +
-			'    <option id="trig_meth_ent_none_'        + triggerCounter +'" value="none"        >No action</option>' +
-			'    <option id="trig_meth_ent_javadump_'    + triggerCounter +'" value="javadump"    >Javacore</option>' +
-			'    <option id="trig_meth_ent_sysdump_'     + triggerCounter +'" value="sysdump"     >System dump (core file)</option>' +
-			'    <option id="trig_meth_ent_heapdump_'    + triggerCounter +'" value="heapdump"    >Heap dump</option>' +
-			'    <option id="trig_meth_ent_snap_'        + triggerCounter +'" value="snap"        >Snap trace</option>' +
-			'    <option id="trig_meth_ent_jstacktrace_' + triggerCounter +'" value="jstacktrace" >Java stacktrace</option>' +
-			'    <option id="trig_meth_ent_resumethis_'  + triggerCounter +'" value="resumethis"  >Start trace (current thread)</option>' +
-			'    <option id="trig_meth_ent_suspendthis_' + triggerCounter +'" value="suspendthis" >Stop trace (current thread)</option>' +
-			'    <option id="trig_meth_ent_resume_'      + triggerCounter +'" value="resume"      >Start trace (all threads)</option>' +
-			'    <option id="trig_meth_ent_suspend_'     + triggerCounter +'" value="suspend"     >Stop trace (all threads)</option>' +
-			'    <option id="trig_meth_ent_sleep_'       + triggerCounter +'" value="sleep"       >Thread sleep</option>' +
-			'    <option id="trig_meth_ent_segv_'        + triggerCounter +'" value="segv"        >SIGSEGV/GPF</option>' +
-			'    <option id="trig_meth_ent_abort_'       + triggerCounter +'" value="abort"       >Abort</option>' +
-			'</select>' +
-			'&nbsp;&nbsp;' +
-			'<label for="trig_meth_ex_' + triggerCounter + '">Exit:&nbsp;</label>' +
-			'<select id="trig_meth_ex_' + triggerCounter + '">' +
-			'    <option id="trig_meth_ex_none_'        + triggerCounter +'" value="none"        >No action</option>' +
-			'    <option id="trig_meth_ex_javadump_'    + triggerCounter +'" value="javadump"    >Javacore</option>' +
-			'    <option id="trig_meth_ex_sysdump_'     + triggerCounter +'" value="sysdump"     >System dump (core file)</option>' +
-			'    <option id="trig_meth_ex_heapdump_'    + triggerCounter +'" value="heapdump"    >Heap dump</option>' +
-			'    <option id="trig_meth_ex_snap_'        + triggerCounter +'" value="snap"        >Snap trace</option>' +
-			'    <option id="trig_meth_ex_jstacktrace_' + triggerCounter +'" value="jstacktrace" >Java stacktrace</option>' +
-			'    <option id="trig_meth_ex_resumethis_'  + triggerCounter +'" value="resumethis"  >Start trace (current thread)</option>' +
-			'    <option id="trig_meth_ex_suspendthis_' + triggerCounter +'" value="suspendthis" >Stop trace (current thread)</option>' +
-			'    <option id="trig_meth_ex_resume_'      + triggerCounter +'" value="resume"      >Start trace (all threads)</option>' +
-			'    <option id="trig_meth_ex_suspend_'     + triggerCounter +'" value="suspend"     >Stop trace (all threads)</option>' +
-			'    <option id="trig_meth_ex_sleep_'       + triggerCounter +'" value="sleep"       >Thread sleep</option>' + <!-- TODO: sleeptime -->
-			'    <option id="trig_meth_ex_segv_'        + triggerCounter +'" value="segv"        >SIGSEGV/GPF</option>' +
-			'    <option id="trig_meth_ex_abort_'       + triggerCounter +'" value="abort"       >Abort</option>' +
-			'</select>' +
 			'&nbsp;&nbsp;';
+
+		// Entry action drop-down list
+		html +=
+			'<label for="trig_meth_ent_' + triggerCounter + '">Entry:&nbsp;</label>' +
+			'<select id="trig_meth_ent_' + triggerCounter + '">';
+		html += getOptionElements(triggerActions, "trig_meth_ent", triggerCounter);
+		html += '</select>' + '&nbsp;&nbsp;';
+
+		// Exit action drop-down list
+		html +=
+			'<label for="trig_meth_ex_' + triggerCounter + '">Exit:&nbsp;</label>' +
+			'<select id="trig_meth_ex_' + triggerCounter + '">';
+		html += getOptionElements(triggerActions, "trig_meth_ex", triggerCounter);
+		html += '</select>' + '&nbsp;&nbsp;';
 	}
 
 	if (type == "tracepoint") {
 		// tpnid{<tpnid>|<tpnidRange>,<action>[,<delayCount>[,<matchcount>]]}
-		newTrigger.innerHTML +=
-			'<label for "trig_tp_tpnid_' + tracepointCounter + '">Tracepoint <a href="https://www.ibm.com/support/knowledgecenter/en/SSYKE2_8.0.0/com.ibm.java.lnx.80.doc/diag/tools/trace_tracepoint.html#trace_tracepoint">ID</a>:&nbsp;</label>' +
+
+		// Tracepoint ID input
+		html +=
+			'<label for "trig_tp_tpnid_' + triggerCounter + '">Tracepoint <a href="https://www.ibm.com/support/knowledgecenter/en/SSYKE2_8.0.0/com.ibm.java.lnx.80.doc/diag/tools/trace_tracepoint.html#trace_tracepoint">ID</a>:&nbsp;</label>' +
 			'<input type="text" id="trig_tp_tpnid_'        + triggerCounter +'" name="trig_tp_tpnid_1" size="10" value="">' +
-			'&nbsp;&nbsp;' +
-			'<select id="trig_tp_act_' + triggerCounter + '">' +
-			'    <option id="trig_tp_act_none_'        + triggerCounter +'" value="none"        >No action</option>' +
-			'    <option id="trig_tp_act_javadump_'    + triggerCounter +'" value="javadump"    >Javacore</option>' +
-			'    <option id="trig_tp_act_sysdump_'     + triggerCounter +'" value="sysdump"     >System dump (core file)</option>' +
-			'    <option id="trig_tp_act_heapdump_'    + triggerCounter +'" value="heapdump"    >Heap dump</option>' +
-			'    <option id="trig_tp_act_snap_'        + triggerCounter +'" value="snap"        >Snap trace</option>' +
-			'    <option id="trig_tp_act_jstacktrace_' + triggerCounter +'" value="jstacktrace" >Java stacktrace</option>' +
-			'    <option id="trig_tp_act_resumethis_'  + triggerCounter +'" value="resumethis"  >Start trace (current thread)</option>' +
-			'    <option id="trig_tp_act_suspendthis_' + triggerCounter +'" value="suspendthis" >Stop trace (current thread)</option>' +
-			'    <option id="trig_tp_act_resume_'      + triggerCounter +'" value="resume"      >Start trace (all threads)</option>' +
-			'    <option id="trig_tp_act_suspend_'     + triggerCounter +'" value="suspend"     >Stop trace (all threads)</option>' +
-			'    <option id="trig_tp_act_sleep_'       + triggerCounter +'" value="sleep"       >Thread sleep</option>' + <!-- TODO: sleeptime -->
-			'    <option id="trig_tp_act_segv_'        + triggerCounter +'" value="segv"        >SIGSEGV/GPF</option>' +
-			'    <option id="trig_tp_act_abort_'       + triggerCounter +'" value="abort"       >Abort</option>' +
-			'</select>' +
 			'&nbsp;&nbsp;';
+
+		// Action drop-down list
+		html +=	'<select id="trig_tp_act_' + triggerCounter + '">';
+		html += getOptionElements(triggerActions, "trig_tp_act", triggerCounter);
+		html += '</select>' + '&nbsp;&nbsp;';
 	}
 
 	if (type == "group") {
 		// group{<groupname>,<action>[,<delayCount>[,<matchcount>]]}
-		newTrigger.innerHTML +=
-			'<label for "trig_grp_name_' + tracepointCounter + '">Tracepoint group:&nbsp;</label>' +
-			'<select id="trig_grp_name_' + triggerCounter + '">' +
-			'    <option id="trig_grp_name_gclogger_'        + triggerCounter + '" value="gclogger"        >GC Logger</option>' +
-			'    <option id="trig_grp_name_nlsmessage_'      + triggerCounter + '" value="nlsmessage"      >NLS Messages</option>' +
-			'    <option id="trig_grp_name_verboseclass_'    + triggerCounter + '" value="verboseclass"    >Verbose:class</option>' +
-			'    <option id="trig_grp_name_checkjni_'        + triggerCounter + '" value="checkjni"        >Check:JNI</option>' +
-			'    <option id="trig_grp_name_checkmemory_'     + triggerCounter + '" value="checkmemory"     >Check:memory</option>' +' +' +
-			'    <option id="trig_grp_name_checkvm_'         + triggerCounter + '" value="checkvm"         >Check:VM</option>' +
-			'    <option id="trig_grp_name_verbose_'         + triggerCounter + '" value="verbose"         >Verbose</option>' +
-			'    <option id="trig_grp_name_compiledmethods_' + triggerCounter + '" value="compiledmethods" >Compiled methods</option>' +
-			'    <option id="trig_grp_name_nativemethods_'   + triggerCounter + '" value="nativemethods"   >Native methods</option>' +
-			'    <option id="trig_grp_name_staticmethods_'   + triggerCounter + '" value="staticmethods"   >Static methods</option>' +
-			'</select>' +
-			'&nbsp;&nbsp;' +
-			'<select id="trig_grp_act_' + triggerCounter + '">' +
-			'    <option id="trig_grp_act_none_'        + triggerCounter + '" value="none"        >No action</option>' +
-			'    <option id="trig_grp_act_javadump_'    + triggerCounter + '" value="javadump"    >Javacore</option>' +
-			'    <option id="trig_grp_act_sysdump_'     + triggerCounter + '" value="sysdump"     >System dump (core file)</option>' +
-			'    <option id="trig_grp_act_heapdump_'    + triggerCounter + '" value="heapdump"    >Heap dump</option>' +
-			'    <option id="trig_grp_act_snap_'        + triggerCounter + '" value="snap"        >Snap trace</option>' +
-			'    <option id="trig_grp_act_jstacktrace_' + triggerCounter + '" value="jstacktrace" >Java stacktrace</option>' +
-			'    <option id="trig_grp_act_resumethis_'  + triggerCounter + '" value="resumethis"  >Start trace (current thread)</option>' +
-			'    <option id="trig_grp_act_suspendthis_' + triggerCounter + '" value="suspendthis" >Stop trace (current thread)</option>' +
-			'    <option id="trig_grp_act_resume_'      + triggerCounter + '" value="resume"      >Start trace (all threads)</option>' +
-			'    <option id="trig_grp_act_suspend_'     + triggerCounter + '" value="suspend"     >Stop trace (all threads)</option>' +
-			'    <option id="trig_grp_act_sleep_'       + triggerCounter + '" value="sleep"       >Thread sleep</option>' + <!-- TODO: sleeptime -->
-			'    <option id="trig_grp_act_segv_'        + triggerCounter + '" value="segv"        >SIGSEGV/GPF</option>' +
-			'    <option id="trig_grp_act_abort_'       + triggerCounter + '" value="abort"       >Abort</option>' +
-			'</select>' +
-			'&nbsp;&nbsp;';
+
+		// Group drop-down list
+		html +=
+			'<label for "trig_grp_name_' + triggerCounter + '">Tracepoint group:&nbsp;</label>' +
+			'<select id="trig_grp_name_' + triggerCounter + '">';
+		html += getOptionElements(tracepointGroups, "trig_grp_name", triggerCounter);
+		html += '</select>' + '&nbsp;&nbsp;';
+
+		// Action drop-down list
+		html += '<select id="trig_grp_act_' + triggerCounter + '">';
+		html += getOptionElements(triggerActions, "trig_grp_act", triggerCounter);
+		html +=	'</select>' + '&nbsp;&nbsp;';
 	}
 
 	// Add delay and match/limit fields
-	newTrigger.innerHTML +=
+	html +=
 		'<label for "trig_delay_' + triggerCounter + '">Delay:&nbsp;</label>' +
 		'<input type="number" id="trig_delay_' + triggerCounter + '" min="0" max="9999" value="0" size="4">' +
 		'&nbsp;&nbsp;' +
 		'<label for "trig_match_' + triggerCounter + '">Limit:&nbsp;</label>' +
 		'<input type="number" id="trig_match_' + triggerCounter + '" min="0" max="9999" value="0" size="4">';
 
+	newTrigger.innerHTML += html;
 	triggerList.appendChild(newTrigger);
-	
+
 	// Event listener for trigger removal
 	document.getElementById("remove_trigger_" + triggerCounter).addEventListener('click', removeTrigger.bind(null, triggerCounter));
 
@@ -1112,13 +1114,13 @@ function addTrigger(type) {
 		methodSpecElement = document.getElementById("trig_meth_spec_" + triggerCounter);
 		methodEntryElement = document.getElementById("trig_meth_ent_" + triggerCounter);
 		methodExitElement = document.getElementById("trig_meth_ex_" + triggerCounter);
-		
+
 		// Event listeners
 		methodSpecElement.addEventListener('change', processChange.bind(null, methodSpecElement));
 		methodSpecElement.addEventListener('blur', processChange.bind(null, methodSpecElement));
 		methodEntryElement.addEventListener('change', processChange.bind(null, methodEntryElement));
 		methodExitElement.addEventListener('change', processChange.bind(null, methodExitElement));
-		
+
 		// Tooltip: Method Specification
 		var tooltipText = "Examples:\n" +
 			"    - java/lang/String.indexOf\n" +
@@ -1139,7 +1141,7 @@ function addTrigger(type) {
 		// Give focus to method spec field
 		methodSpecElement.focus();
 	}
-	
+
 	if (type == "tracepoint") {
 		tpnidElement = document.getElementById("trig_tp_tpnid_" + triggerCounter);
 		actElement = document.getElementById("trig_tp_act_" + triggerCounter);
@@ -1148,7 +1150,7 @@ function addTrigger(type) {
 		tpnidElement.addEventListener('change', processChange.bind(null, tpnidElement));
 		tpnidElement.addEventListener('blur', processChange.bind(null, tpnidElement));
 		actElement.addEventListener('change', processChange.bind(null, actElement));
-		
+
 		// Tooltip: Tracepoint ID
 		var tooltipText = "Examples:\n" +
 			"    - j9prt.5\n" +
@@ -1165,11 +1167,11 @@ function addTrigger(type) {
 	if (type == "group") {
 		groupNameElement = document.getElementById("trig_grp_name_" + triggerCounter);
 		actionElement = document.getElementById("trig_grp_act_" + triggerCounter);
-		
+
 		// Event Listeners
 		groupNameElement.addEventListener('change', processChange.bind(null, groupNameElement));
 		actionElement.addEventListener('change', processChange.bind(null, actionElement));
-		
+
 		// Tooltip: Group Name
 		groupNameElement.title = "Tracepoint group";
 
@@ -1179,13 +1181,13 @@ function addTrigger(type) {
 
 	delayElement = document.getElementById("trig_delay_" + triggerCounter);
 	matchElement = document.getElementById("trig_match_" + triggerCounter);
-	
+
 	// Event listeners
 	delayElement.addEventListener('change', processChange.bind(null, delayElement));
 	delayElement.addEventListener('blur', processChange.bind(null, delayElement));
 	matchElement.addEventListener('change', processChange.bind(null, matchElement));
 	matchElement.addEventListener('blur', processChange.bind(null, matchElement));
-	
+
 	// Tooltip: Delay
 	delayElement.title = "The action(s) are only run after the trigger has been satisfied this many times\n";
 
@@ -1200,6 +1202,17 @@ function removeTrigger(triggerIndex) {
 	var trigger = document.getElementById("trigger_" + triggerIndex);
 	trigger.parentNode.removeChild(trigger);
 	processChange("none");
+}
+
+// Construct the option elements for a select input, based on a list of items (tracepoint types, components, groups etc.)
+function getOptionElements(itemList, optionPrefix, counter) {
+	var html = "";
+	for (var i = 0; i < itemList.length; i++) {
+		var name = itemList[i].name;
+		var desc = itemList[i].desc;
+		html += '<option id="' + optionPrefix + '_' + name + '_' + counter +'" value="' + name + '">' + desc + '</option>';
+	}
+	return html;
 }
 
 // Return the currently selected element within a given "select" element
@@ -1436,7 +1449,7 @@ function isIdTracepointEnabledForTracing(specifiedId) {
 			if (traceCheckbox == null || !traceCheckbox.checked) {
 				continue;
 			}
-			
+
 			// Simple case
 			if (tracepointIdElement.value.indexOf(specifiedId) != -1) {
 				return true;
@@ -1712,7 +1725,7 @@ function findInvalidMethodSpec(methodSpecElement) {
 			if (methodSpecValue.indexOf(",") != -1) {
 				invalidSpec += "ERROR: Invalid method specification: must not contain a comma: \"" + escapeHTML(methodSpecElement.value) + "\"<br>";
 			}
-			
+
 			var methodSpecParts = methodSpecValue.split(".");
 			if (methodSpecParts.length != 2) {
 				if (hasInvalidWildcard(methodSpecValue)) {
@@ -1723,7 +1736,7 @@ function findInvalidMethodSpec(methodSpecElement) {
 				if (hasInvalidWildcard(methodSpecClass)) {
 					invalidSpec += "ERROR: Invalid method specification: wildcards can only be used at the beginning and/or end of the class name: \"" + escapeHTML(methodSpecClass) + "\"<br>";
 				}
-				
+
 				var methodSpecMethod = methodSpecParts[1];
 				if (hasInvalidWildcard(methodSpecMethod)) {
 					invalidSpec += "ERROR: Invalid method specification: wildcards can only be used at the beginning and/or end of the method name: \"" + escapeHTML(methodSpecMethod) + "\"<br>";
@@ -1785,10 +1798,10 @@ function buildAndUpdateResult() {
 	if (document.getElementById("wrap_in_quotes").checked) {
 		// Escape backslashes
 		resultString = resultString.replace(/\\/g, "\\\\");
-		
+
 		// Escape quotes
 		resultString = resultString.replace(/"/g, "\\\"");
-		
+
 		// Wrap the entire result string in quotes
 		resultString = "\"" + resultString + "\"";
 	}
@@ -1900,7 +1913,7 @@ function buildAndUpdateResult() {
 			} else {
 				unsetErrorStyle(methodSpecElement);
 			}
-			
+
 			// Check whether argument and return value tracing is enabled.
 			// The warning includes an example JIT exclude option.
 			var argTracingCheckbox = document.getElementById("meth_args_" + i);
@@ -1948,7 +1961,7 @@ function buildAndUpdateResult() {
 			} else {
 				unsetErrorStyle(methodSpecElement);
 			}
-			
+
 			// Check that an entry or exit action is provided
 			var entryActionElement = getSelectedElement(document.getElementById("trig_meth_ent_" + i));
 			var exitActionElement = getSelectedElement(document.getElementById("trig_meth_ex_" + i));
@@ -2365,12 +2378,12 @@ function getTriggerResultString() {
 					if (entryActionString == "sleep" || exitActionString == "sleep") {
 						sleepActionSelected = true;
 					}
-					
+
 					// Resume trace on all threads (resume) action selected?
 					if (entryActionString == "resume" || exitActionString == "resume") {
 						resumeActionSelected = true;
 					}
-					
+
 					// Resume current thread (resumethis) action selected?
 					if (entryActionString == "resumethis" || exitActionString == "resumethis") {
 						resumethisActionSelected = true;
@@ -2400,12 +2413,12 @@ function getTriggerResultString() {
 					if (actionString == "sleep") {
 						sleepActionSelected = true;
 					}
-					
+
 					// Resume all threads (resume) action selected?
 					if (actionString == "resume") {
 						resumeActionSelected = true;
 					}
-					
+
 					// Resume current thread (resumethis) action selected?
 					if (actionString == "resumethis") {
 						resumethisActionSelected = true;
@@ -2432,12 +2445,12 @@ function getTriggerResultString() {
 					if (actionString == "sleep") {
 						sleepActionSelected = true;
 					}
-					
+
 					// Resume all threads (resume) action selected?
 					if (actionString == "resume") {
 						resumeActionSelected = true;
 					}
-					
+
 					// Resume current thread (resumethis) action selected?
 					if (actionString == "resumethis") {
 						resumethisActionSelected = true;
