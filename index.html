@@ -118,43 +118,25 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
 <div class="w3-padding-64 w3-container w3-light-grey">
   <div class="w3-content">
         <div class="w3-center">
-      <h1>Eclipse OpenJ9 version 0.47.0 released</h1>
-<p>September 2024</p>
+      <h1>Eclipse OpenJ9 version 0.48.0 released</h1>
+<p>November 2024</p>
 </div>
-<p>We're pleased to announce the availability of Eclipse OpenJ9 v0.47.0.</p>
-<p>This release supports OpenJDK 23. For more information about supported platforms and OpenJDK versions, see <a class="w3-hover-opacity" href="https://www.eclipse.org/openj9/docs/openj9_support/" target="_blank">Supported environments</a>.</p>
+<p>We're pleased to announce the availability of Eclipse OpenJ9 v0.48.0.</p>
+<p>This release supports OpenJDK 8, 11, 17, 21, and 23. For more information about supported platforms and OpenJDK versions, see <a class="w3-hover-opacity" href="https://www.eclipse.org/openj9/docs/openj9_support/" target="_blank">Supported environments</a>.</p>
 <p>Other updates in this release include the following:</p>
  <ul>
-    <li>The <code>-Xshareclasses</code> option automatically enables the <code>-XX:+ShareOrphans</code> option.</li>
-</ul>   
-  <p>To read more about these and other changes, see the <a class="w3-hover-opacity" href="https://www.eclipse.org/openj9/docs/openj9_releases/" target="_blank">OpenJ9 user documentation</a>.</p>
-  
-  </div>
-</div>
-
-<div class="w3-padding-64 w3-container w3-light-grey">
-  <div class="w3-content">
-        <div class="w3-center">
-      <h1>Eclipse OpenJ9 version 0.46.1 released</h1>
-<p>September 2024</p>
-</div>
-<p>We're pleased to announce the availability of Eclipse OpenJ9 v0.46.1.</p>
-<p>This release supports OpenJDK 8, 11, 17, 21, and 22. For more information about supported platforms and OpenJDK versions, see <a class="w3-hover-opacity" href="https://www.eclipse.org/openj9/docs/openj9_support/" target="_blank">Supported environments</a>.</p>
-<p>Other updates in this release include the following:</p>
- <ul>
-    <li>OpenSSL native cryptographic support is added for the MD5 message digest algorithm, providing improved cryptographic performance.</li>
-    <li>The OpenJ9 VM implementation supports measurement of the total memory allocation for all threads (<code>com.sun.management.ThreadMXBean.getTotalThreadAllocatedBytes()</code> API).</li>
-    <li>The JITServer AOT caching feature is enabled by default at the JITServer server. The client still needs the <code>-XX:+JITServerUseAOTCache</code> option, but it no longer relies on the presence of a shared class cache to take advantage of this feature.</li>
-    <li>A new option <code>-XX:[+|-]EnableExtendedHCR</code> is added to enable or disable the extended Hot Code Replace (HCR) capability in the VM.</li>
-    <li>A new option <code>-XX:[+|-]ShareOrphans</code> is added to enable class sharing from all class loaders, irrespective of whether the class loader implements the shared classes cache API.</li>
-    <li>A new option <code>-XdynamicHeapAdjustment</code> option is added to automatically adjust the maximum and minimum Java heap sizes such that they are within the physical memory limitations on the checkpoint and restore systems.</li>
+    <li>JDWP support on Checkpoint/Restore In Userspace (CRIU) restore is enabled. A new parameter <code>suspendOnRestore</code> for the <code>-Xrunjdwp</code> option is added to control the suspension of the target VM application on restore.</li>
+    <li>Like in OpenJDK 23, the <code>-Xshareclasses</code> option automatically enables the <code>-XX:+ShareOrphans</code> option in OpenJDK 8, 11, 17, and 21 also. This feature was added in OpenJDK 23 in the 0.47.0 release. </li>
 </ul>   
   <p>To read more about these and other changes, see the <a class="w3-hover-opacity" href="https://www.eclipse.org/openj9/docs/openj9_releases/" target="_blank">OpenJ9 user documentation</a>.</p>
   <p><b>Performance highlights include the following:</b></p>
   <ul>
-    <li>Performance of object and array allocation sequences on X86 is improved.</li>
-    <li>Performance of array copying sequences on X86 is improved.</li>
-    <li>VarHandle performance is improved.</li>
+    <li>Performance of <code>java.lang.System.arraycopy</code> on x86 is improved.</li>
+    <li>Performance of <code>java.util.Arrays.hashCode</code> operating on arrays of type <code>byte</code>, <code>char</code>, <code>short</code>, and <code>int</code> is improved on IBM z13&reg; or newer architecture on all platforms for OpenJDK versions 21 and 23.</li>
+    <li>Performance of <code>java.lang.Object.clone</code> operations on arrays is improved on all platforms and versions.</li>
+    <li>Accessing instance fields through methods of the Unsafe classes is improved.</li>
+    <li>Performance of code operating on static final fields of primitive types is improved.</li>
+    <li>VarHandle performance is improved for OpenJDK versions 17 and 21.</li>
   </ul>
   </div>
 </div>
