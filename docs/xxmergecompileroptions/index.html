@@ -367,6 +367,27 @@
   
   
     <li class="md-nav__item">
+      <a href="../version0.49/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Version 0.49.0
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../version0.48/" class="md-nav__link">
         
   
@@ -647,10 +668,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_15" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_16" >
         
           
-          <label class="md-nav__link" for="__nav_5_15" id="__nav_5_15_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_5_16" id="__nav_5_16_label" tabindex="0">
             
   
   <span class="md-ellipsis">
@@ -661,8 +682,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_15_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_5_15">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_16_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_16">
             <span class="md-nav__icon md-icon"></span>
             Earlier releases
           </label>
@@ -6477,6 +6498,27 @@
   
   
     <li class="md-nav__item">
+      <a href="../xxflightrecorder/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    -XX:[+|-]FlightRecorder
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../xxgloballockreservation/" class="md-nav__link">
         
   
@@ -6561,11 +6603,11 @@
   
   
     <li class="md-nav__item">
-      <a href="../xxheapdumponoutofmemory/" class="md-nav__link">
+      <a href="../xxheapdumponoutofmemoryerror/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    -XX:[+|-]HeapDumpOnOutOfMemory
+    -XX:[+|-]HeapDumpOnOutOfMemoryError
   </span>
   
 
@@ -7454,6 +7496,15 @@
   <a href="#both-xxmergecompileroptions-and-xx-mergecompileroptions" class="md-nav__link">
     <span class="md-ellipsis">
       Both -XX:+MergeCompilerOptions and -XX:-MergeCompilerOptions
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#-xnojit-xnoaot-or-xint-options-with-and-without-xxmergecompileroptions" class="md-nav__link">
+    <span class="md-ellipsis">
+      -Xnojit, -Xnoaot, or -Xint options with and without -XX:+MergeCompilerOptions
     </span>
   </a>
   
@@ -8964,6 +9015,15 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#-xnojit-xnoaot-or-xint-options-with-and-without-xxmergecompileroptions" class="md-nav__link">
+    <span class="md-ellipsis">
+      -Xnojit, -Xnoaot, or -Xint options with and without -XX:+MergeCompilerOptions
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -8994,7 +9054,7 @@
 
 
 <!--
-* Copyright (c) 2017, 2024 IBM Corp. and others
+* Copyright (c) 2017, 2025 IBM Corp. and others
 *
 * This program and the accompanying materials are made
 * available under the terms of the Eclipse Public License 2.0
@@ -9044,8 +9104,15 @@
 </table>
 <h2 id="explanation">Explanation</h2>
 <p>By default, if you specify <code>-Xjit</code> option (or <code>-Xaot</code> option) multiple times, only the last option takes effect. Therefore, on adding an <code>-Xjit</code> option, the resultant behavior might not be as expected, if any instance of this option already exists. It is time-consuming to find the existing instances and try combining them manually so that the system behaves as required.</p>
-<p>You can use the <code>-XX:+MergeCompilerOptions</code> option to merge all the existing instances of the <code>-Xjit</code> options logically. To retain the default behavior, whereby only the last option takes effect, you can use the <code>-XX:-MergeCompilerOptions</code> option.</p>
+<p>You can use the <code>-XX:+MergeCompilerOptions</code> option to merge all the existing instances of the <code>-Xjit</code> options (or <code>-Xaot</code> options) logically. To retain the default behavior, whereby only the last option takes effect, you can use the <code>-XX:-MergeCompilerOptions</code> option.</p>
 <p>If both <code>-Xjit</code> and <code>-Xaot</code> options exist and you use the <code>-XX:+MergeCompilerOptions</code> option, then multiple <code>-Xjit</code> options are merged into a single <code>-Xjit</code> option and multiple <code>-Xaot</code> options are merged into a single <code>-Xaot</code> option.</p>
+<p>Typically, <code>-Xjit</code> and <code>-Xaot</code> options are ignored if these options are followed by <code>-Xint</code> or <code>-Xnojit</code> or <code>-Xnoaot</code> options:</p>
+<ul>
+<li><code>-Xint</code> option overrides any <code>-Xjit</code> and <code>-Xaot</code> options</li>
+<li><code>-Xnojit</code> option overrides <code>-Xjit</code> options</li>
+<li><code>-Xnoaot</code> option overrides <code>-Xaot</code> options</li>
+</ul>
+<p>However, with <code>-XX:+MergeCompilerOptions</code> all <code>-Xjit</code> and <code>-Xaot</code> options are merged, even if those options are followed by <code>-Xint</code>, <code>-Xnojit</code>, or <code>-Xnoaot</code> options. At least one <code>-Xjit</code> or <code>-Xaot</code> option must be specified after these options.</p>
 <h2 id="examples">Examples</h2>
 <h3 id="one-xjit-option">One <code>-Xjit</code> option</h3>
 <pre><code>java -Xshareclasses:none  -Xjit:version -version
@@ -9074,7 +9141,17 @@
 <p><code>-Xjit</code> option that is applied - <code>version</code></p>
 <pre><code>java -XX:-MergeCompilerOptions -XX:+MergeCompilerOptions -Xshareclasses:none '-Xjit:verbose={compilePerformance},vlog=vlog' -Xjit:version -version
 </code></pre>
-<p><code>-Xjit</code> options that are applied - <code>{compilePerformance}</code>,<code>vlog=vlog</code>,<code>version</code></p>
+<p><code>-Xjit</code> options that are applied - <code>verbose={compilePerformance}</code>,<code>vlog=vlog</code>,<code>version</code></p>
+<h3 id="-xnojit-xnoaot-or-xint-options-with-and-without-xxmergecompileroptions"><code>-Xnojit</code>, <code>-Xnoaot</code>, or <code>-Xint</code> options with and without <code>-XX:+MergeCompilerOptions</code></h3>
+<pre><code>java -Xshareclasses:none -Xjit:version -Xnojit -version
+</code></pre>
+<p>No <code>-Xjit</code> option is applied</p>
+<pre><code>java -XX:+MergeCompilerOptions -Xshareclasses:none -Xjit:verbose={compilePerformance} -Xjit:vlog=vlog -Xint -Xjit:version -version
+</code></pre>
+<p><code>-Xjit</code> options that are applied - <code>verbose={compilePerformance}</code>,<code>vlog=vlog</code>,<code>version</code></p>
+<pre><code>java -XX:+MergeCompilerOptions -Xshareclasses:none -Xjit:version -Xnojit -version
+</code></pre>
+<p>No <code>-Xjit</code> option is applied because no <code>-Xjit</code> option is specified after the <code>-Xnojit</code> option</p>
 <h2 id="see-also">See also</h2>
 <ul>
 <li><a href="../xjit/">-Xjit</a></li>
@@ -9104,7 +9181,7 @@
       </main>
       
         <!--
-* Copyright (c) 2017, 2024 IBM Corp. and others
+* Copyright (c) 2017, 2025 IBM Corp. and others
 *
 * This program and the accompanying materials are made
 * available under the terms of the Eclipse Public License 2.0

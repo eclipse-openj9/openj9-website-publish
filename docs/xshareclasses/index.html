@@ -367,6 +367,27 @@
   
   
     <li class="md-nav__item">
+      <a href="../version0.49/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Version 0.49.0
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../version0.48/" class="md-nav__link">
         
   
@@ -647,10 +668,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_15" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_16" >
         
           
-          <label class="md-nav__link" for="__nav_5_15" id="__nav_5_15_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_5_16" id="__nav_5_16_label" tabindex="0">
             
   
   <span class="md-ellipsis">
@@ -661,8 +682,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_15_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_5_15">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_16_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_16">
             <span class="md-nav__icon md-icon"></span>
             Earlier releases
           </label>
@@ -5881,6 +5902,15 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#extrastartuphints" class="md-nav__link">
+    <span class="md-ellipsis">
+      extraStartupHints
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#fatal" class="md-nav__link">
     <span class="md-ellipsis">
       fatal
@@ -6064,6 +6094,15 @@
   <a href="#printallstats-cache-utility" class="md-nav__link">
     <span class="md-ellipsis">
       printAllStats (Cache utility)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#printdetails-cache-utility" class="md-nav__link">
+    <span class="md-ellipsis">
+      printDetails (Cache utility)
     </span>
   </a>
   
@@ -7045,6 +7084,27 @@
   
   
     <li class="md-nav__item">
+      <a href="../xxflightrecorder/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    -XX:[+|-]FlightRecorder
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../xxgloballockreservation/" class="md-nav__link">
         
   
@@ -7129,11 +7189,11 @@
   
   
     <li class="md-nav__item">
-      <a href="../xxheapdumponoutofmemory/" class="md-nav__link">
+      <a href="../xxheapdumponoutofmemoryerror/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    -XX:[+|-]HeapDumpOnOutOfMemory
+    -XX:[+|-]HeapDumpOnOutOfMemoryError
   </span>
   
 
@@ -9568,6 +9628,15 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#extrastartuphints" class="md-nav__link">
+    <span class="md-ellipsis">
+      extraStartupHints
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#fatal" class="md-nav__link">
     <span class="md-ellipsis">
       fatal
@@ -9757,6 +9826,15 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#printdetails-cache-utility" class="md-nav__link">
+    <span class="md-ellipsis">
+      printDetails (Cache utility)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#printstats-cache-utility" class="md-nav__link">
     <span class="md-ellipsis">
       printStats (Cache utility)
@@ -9912,7 +9990,7 @@
 
 
 <!--
-* Copyright (c) 2017, 2024 IBM Corp. and others
+* Copyright (c) 2017, 2025 IBM Corp. and others
 *
 * This program and the accompanying materials are made
 * available under the terms of the Eclipse Public License 2.0
@@ -10176,6 +10254,14 @@ case, the VM continues without using shared classes.</dd>
 <dl>
 <dd>Destroys all caches that are unused for the time that is specified before loading shared classes. This option is not a utility option because it does not cause the VM to exit. On Windows systems, which have NTFS file systems, the <code>expire</code> option is accurate to the nearest hour.</dd>
 </dl>
+<h3 id="extrastartuphints"><code>extraStartupHints</code></h3>
+<pre><code>    -Xshareclasses:extraStartupHints=&lt;number&gt;
+</code></pre>
+<dl>
+<dd>where, <code>&lt;number&gt;</code> is greater than or equal to 0.</dd>
+<dd>Adjusts the number of startup hints that can be stored in a shared cache. By default, you can store only up to 64 startup hints in a shared cache. This count decrements by 1 each time a startup hint is stored. After the count reaches 0, no more hints can be added to the cache. You can use <code>-Xshareclasses:extraStartupHints=&lt;number&gt;</code> to adjust this count as needed. For example, <code>-Xshareclasses:extraStartupHints=0</code> prevents any new hints to be stored and <code>-Xshareclasses:extraStartupHints=10</code> allows 10 more new hints in addition to the default number of 64 startup hints.</dd>
+<dd>You can use <a href="#printstats-cache-utility"><code>-Xshareclasses:printStats=startuphint</code></a> to check how many startup hints are already stored in the shared cache. You can also use <a href="#printdetails-cache-utility"><code>-Xshareclasses:printDetails</code></a> to check how many hints in addition to the default startup hints can be stored in the cache. In the output of the <code>printDetails</code> suboption, the number of extra startup hints that can be stored is found on the line <code># Additional startup hints allowed</code>.</dd>
+</dl>
 <h3 id="fatal"><code>fatal</code></h3>
 <pre><code>    -Xshareclasses:fatal
 </code></pre>
@@ -10404,6 +10490,12 @@ behavior, which can improve the performance of class loading from the shared cla
 </code></pre>
 <dl>
 <dd>Displays detailed information about the contents of the cache that is specified in the <a href="#name"><code>name</code></a> suboption. If the name is not specified, statistics are displayed about the default cache. For layered caches, information is shown for all layers (to see information for the top layer cache only, use <a href="#printtoplayerstats-cache-utility"><code>printTopLayerStats=all</code></a>). Every class is listed in chronological order with a reference to the location from which it was loaded. For more information, see <a href="../shrc_diag_util/#shared-classes-cache-diagnostic-utilities">Shared classes cache diagnostic utilities</a>.</dd>
+</dl>
+<h3 id="printdetails-cache-utility"><code>printDetails</code> (Cache utility)</h3>
+<pre><code>    -Xshareclasses:printDetails
+</code></pre>
+<dl>
+<dd>Displays detailed cache statistics. The output of this suboption is similar to the output of <a href="#printstats-cache-utility"><code>-Xshareclasses:printStats</code></a> but with additional information. For example, instead of "AOT bytes" which is a total, the output shows "AOT code bytes", "AOT data bytes", "AOT class hierarchy bytes", and "AOT thunk bytes".</dd>
 </dl>
 <h3 id="printstats-cache-utility"><code>printStats</code> (Cache utility)</h3>
 <pre><code>    -Xshareclasses:printStats=&lt;data_type&gt;[+&lt;data_type&gt;]
@@ -10644,7 +10736,7 @@ For more information about AOT compilation, see the <a href="../aot/">Ahead-Of-T
       </main>
       
         <!--
-* Copyright (c) 2017, 2024 IBM Corp. and others
+* Copyright (c) 2017, 2025 IBM Corp. and others
 *
 * This program and the accompanying materials are made
 * available under the terms of the Eclipse Public License 2.0
