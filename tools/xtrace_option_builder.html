@@ -101,7 +101,7 @@ a.remove {
 <link rel="stylesheet" type="text/css" href="oj9_option_builder.css">
 
 <!--
-Copyright (c) 2017, 2023 IBM Corp. and others
+Copyright (c) 2017, 2025 IBM Corp. and others
 This program and the accompanying materials are made available under the terms of the Eclipse Public License 2.0 which accompanies this distribution and is available at http://eclipse.org/legal/epl-2.0 or the Apache License, Version 2.0 which accompanies this distribution and is available at https://www.apache.org/licenses/LICENSE-2.0.
 This Source Code may also be made available under the following Secondary Licenses when the conditions for such availability set forth in the Eclipse Public License, v. 2.0 are satisfied: GNU General Public License, version 2 with the GNU Classpath Exception [1] and GNU General Public License, version 2 with the OpenJDK Assembly Exception [2].
 [1] https://www.gnu.org/software/classpath/license.html
@@ -141,6 +141,11 @@ The project website pages cannot be redistributed
 			&nbsp;
 			<input disabled type="checkbox" id="disable_predefined" name="disable_predefined" value="disable_predefined" title="Disables all tracepoints that are enabled by default for applicable destinations:&#10;    - Maximal buffers:  all Level 1 and Level 2 tracepoints&#10;    - Exception buffers:  verbose GC logging tracepoints" checked>
 			<label data-disabled="true" for="disable_predefined" title="Disables all tracepoints that are enabled by default for applicable destinations:&#10;    - Maximal buffers:  all Level 1 and Level 2 tracepoints&#10;    - Exception buffers:  verbose GC logging tracepoints">Disable default tracepoints</label>
+		</td>
+		<td title="Maximum number of characters to capture from String objects in &quot;this&quot; references and method trace arguments / return values">
+			&nbsp;
+			<label data-disabled="true" for="max_string_length">Maximum String length: </label>
+			<input disabled type="number" id="max_string_length" min="0" max="128" value="32" size="1">
 		</td>
 	</tr>
 </table>
