@@ -177,6 +177,9 @@ function initialSetup() {
 	document.getElementById("button_add_trigger_tracepoint").addEventListener(  'click',  addTrigger.bind(null, 'tracepoint'));
 	document.getElementById("button_add_trigger_group").addEventListener(       'click',  addTrigger.bind(null, 'group'));
 
+	document.getElementById("max_string_length").addEventListener(              'change', processChange.bind(null, document.getElementById("max_string_length")));
+	document.getElementById("max_string_length").addEventListener(              'blur',   processChange.bind(null, document.getElementById("max_string_length")));
+
 	document.getElementById("trace_initially_disabled").addEventListener(       'change', processChange.bind(null, document.getElementById("trace_initially_disabled")));
 
 	document.getElementById("sleep_time").addEventListener(                     'change', processChange.bind(null, document.getElementById("sleep_time")));
@@ -668,6 +671,13 @@ function processChange(option) {
 			}
 		}
 	}	
+
+	// Enable the max_string_length field if an mt tracepoint is enabled
+	if (isMethodTracepointEnabledForTracing() || isAllTracepointEnabledForTracing()) {
+		enableInput(document.getElementById("max_string_length"));
+	} else {
+		disableInput(document.getElementById("max_string_length"));
+	}
 
 	// Enable the sleeptime field if a thread sleep action is selected
 	if (isThreadSleepActionSelected()) {
@@ -1783,6 +1793,12 @@ function buildAndUpdateResult() {
 		resultString += triggerString + ",";
 	}
 
+	// Maximum String length	
+	var maxStringLengthElement = document.getElementById("max_string_length");
+	if (!maxStringLengthElement.disabled && maxStringLengthElement.value != 32) {
+		resultString += "maxstringlength=" + maxStringLengthElement.value + ",";
+	}
+
 	// Add output and/or exception.output
 	var outputString = getOutputResultString();
 	if (outputString != "") {
@@ -2190,6 +2206,14 @@ function buildAndUpdateResult() {
 		errorsHtml += "ERROR: Invalid stack depth (" + stackDepthElement.value + "): must be > 0, or 0 to set no limit.<br>";
 	} else {
 		unsetErrorStyle(stackDepthElement);
+	}
+	var maxStringLengthElement = document.getElementById("max_string_length");
+	if (maxStringLengthElement.value < 0 || maxStringLengthElement.value > 128) {
+		resultIsGreen = false;
+		setErrorStyle(maxStringLengthElement);
+		errorsHtml += "ERROR: Invalid maximum string length (" + maxStringLengthElement.value + "): valid range is 0-128.<br>";
+	} else {
+		unsetErrorStyle(maxStringLengthElement);
 	}
 
 	// Add the result string in the appropriate colour
