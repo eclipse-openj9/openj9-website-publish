@@ -118,23 +118,24 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
 <div class="w3-padding-64 w3-container w3-light-grey">
   <div class="w3-content">
         <div class="w3-center">
-      <h1>Eclipse OpenJ9 version 0.51.0 released</h1>
-<p>May 2025</p>
+      <h1>Eclipse OpenJ9 version 0.53.0 released</h1>
+<p>July 2025</p>
 </div>
-<p>We're pleased to announce the availability of Eclipse OpenJ9 v0.51.0.</p>
+<p>We're pleased to announce the availability of Eclipse OpenJ9 v0.53.0.</p>
 <p>This release supports OpenJDK 8, 11, 17, and 21. For more information about supported platforms and OpenJDK versions, see <a class="w3-hover-opacity" href="https://www.eclipse.org/openj9/docs/openj9_support/" target="_blank">Supported environments</a>.</p>
 <p>Other updates in this release include the following:</p>
  <ul>
-    <li>Ubuntu 20.04 is out of support. Ubuntu 22.04 is the new minimum operating system level.</li>
-    <li>A new parameter <code>maxstringlength</code> is added to the <code>-Xtrace</code> option to specify the length of the string arguments and return values of a method that are now printed in a trace output in addition to the addresses.</li>
-    <li>XL C++ Runtime 16.1.0.10 or later is required for AIX OpenJ9 builds.</li>
-    <li>Support for JDK Flight Recorder (JFR) in the VM is provided as a technical preview for OpenJDK 11 and later running on all platforms.</li>
+    <li>RHEL 8.8 and 9.2 are out of support. RHEL 8.10 and 9.4 are the new minimum operating system levels.</li>
+    <li>OpenSSL native cryptographic support is added for the Password based key derivation (PBKDF2) algorithm, providing improved cryptographic performance.</li>
+    <li>OpenSSL 3.5.1 is supported and bundled on all platforms. You can use the <code>jdk.native.openssl.skipBundled</code> property to specify whether to load the pre-packaged OpenSSL library or the library available on the system path.</li>
+    <li>Offheap support is added for the <code>balanced</code> GC policy.</li>
 </ul>   
   <p>To read more about these and other changes, see the <a class="w3-hover-opacity" href="https://www.eclipse.org/openj9/docs/openj9_releases/" target="_blank">OpenJ9 user documentation</a>.</p>
   <p><b>Performance highlights include the following:</b></p>
   <ul>
-    <li>The performance of operations that involve the Unsafe APIs are improved across platforms.</li>
-    <li>The performance of long running methods that are called infrequently are improved by ensuring that JIT compilations for such methods that end up with a large number of bytecodes finish quickly.</li>
+    <li>Now the <code>balanced</code> GC policy always uses a contiguous representation of array data, which is stored in a special Offheap area for large arrays. It replaces arraylets, which had a discontiguous representation for large arrays.
+Balanced GC performance is improved for both Java code that deals with any size of array and native code that uses JNI Critical API with large arrays.</li>
+    <li>Several Java Class Library methods were optimized by the VM to increase throughput performance.</li>
   </ul>
   </div>
 </div>
