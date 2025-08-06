@@ -129,6 +129,13 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
     <li>OpenSSL native cryptographic support is added for the Password based key derivation (PBKDF2) algorithm, providing improved cryptographic performance.</li>
     <li>OpenSSL 3.5.1 is supported and bundled on all platforms. You can use the <code>jdk.native.openssl.skipBundled</code> property to specify whether to load the pre-packaged OpenSSL library or the library available on the system path.</li>
     <li>Offheap support is added for the <code>balanced</code> GC policy.</li>
+    <li>The following new JDK Flight Recorder (JFR) events are added in this release:
+      <ul>
+      <li>NativeLibrary (Linux&reg; only)</li>
+      <li>SystemGC</li>
+      <li>SystemProcess (Linux only)</li>
+      <li>YoungGenerationConfiguration</li></ul>
+    </li>
 </ul>   
   <p>To read more about these and other changes, see the <a class="w3-hover-opacity" href="https://www.eclipse.org/openj9/docs/openj9_releases/" target="_blank">OpenJ9 user documentation</a>.</p>
   <p><b>Performance highlights include the following:</b></p>
