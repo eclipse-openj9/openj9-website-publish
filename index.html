@@ -118,22 +118,28 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
 <div class="w3-padding-64 w3-container w3-light-grey">
   <div class="w3-content">
         <div class="w3-center">
-      <h1>Eclipse OpenJ9 version 0.54.0 released</h1>
-<p>August 2025</p>
+      <h1>Eclipse OpenJ9 version 0.55.0 released</h1>
+<p>September 2025</p>
 </div>
-<p>We're pleased to announce the availability of Eclipse OpenJ9 v0.54.0.</p>
-<p>This release supports OpenJDK 24. For more information about supported platforms and OpenJDK versions, see <a class="w3-hover-opacity" href="https://www.eclipse.org/openj9/docs/openj9_support/" target="_blank">Supported environments</a>.</p>
-<p>Other updates in this release include the following:</p>
- <ul>
-    <li>The following new JDK Flight Recorder (JFR) events are added in this release:
-      <ul>
-      <li>ModuleExports</li>
-      <li>ModuleRequires</li>
-      </ul>
+<p>We're pleased to announce the availability of Eclipse OpenJ9 v0.55.0.</p>
+<p>This release supports OpenJDK 25. For more information about supported platforms and OpenJDK versions, see <a class="w3-hover-opacity" href="https://www.eclipse.org/openj9/docs/openj9_support/" target="_blank">Supported environments</a>.</p>
+<p>The 0.54.0 release updates that are applicable in the 0.55.0 release include the following:</p>
+<ul>
+     <li>The new JDK Flight Recorder (JFR) events, ModuleExports and ModuleRequires are added.
+    
     </li>
+  </ul>
+<p>Other updates in the 0.55.0 release include the following:</p>
+ <ul>
+  <li>XL C++ Runtime 17.1.3.0 or later is required for AIX OpenJ9 builds.</li>
+  <li>A new system property, <code>-Djava.security.propertiesList</code> is added that you can use to specify a list of different java.security property files that have the profiles you want instead of putting those different profiles into a single java.security file.
+    <p>This is an OpenJDK change in the OpenJDK versions maintained to support building with OpenJ9.</p>
+    </li>
+    <li>The format of the <code>java.vm.version</code> system property value is updated to be compatible with the Runtime.Version parser.</li>
 </ul>   
   <p>To read more about these and other changes, see the <a class="w3-hover-opacity" href="https://www.eclipse.org/openj9/docs/openj9_releases/" target="_blank">OpenJ9 user documentation</a>.</p>
-  <p><b>Performance highlights include the following:</b></p>
+  
+  <p><b>Performance highlights of the 0.54.0 release that is applicable for the 0.55.0 release also include the following:</b></p>
 
    <ul>
       <li>More Java Class Library intrinsics are being accelerated now across platforms.</li>
