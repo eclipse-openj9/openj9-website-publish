@@ -38,62 +38,63 @@ window.onload = initialSetup();
 
 function initialSetup() {
 	document.getElementById("XdumpForm").addEventListener(                    'submit', handleSubmit);
-	
-	document.getElementById("exec").addEventListener(                         'change', processChange.bind(null, document.getElementById("exec")));
-	document.getElementById("exec").addEventListener(                         'blur', processChange.bind(null, document.getElementById("exec")));
-	
-	document.getElementById("tool_async").addEventListener(                   'change', processChange.bind(null, document.getElementById("tool_async")));
-	document.getElementById("tool_wait").addEventListener(                    'change', processChange.bind(null, document.getElementById("tool_wait")));
-	
-	document.getElementById("priority").addEventListener(                     'change', processChange.bind(null, document.getElementById("priority")));
-	document.getElementById("priority").addEventListener(                     'blur', processChange.bind(null, document.getElementById("priority")));
-	
-	document.getElementById("wrap_in_quotes").addEventListener(               'change', processChange.bind(null, document.getElementById("wrap_in_quotes")));
-	
+
+	document.getElementById("exec").addEventListener(                         'change', processChange.bind(null, document.getElementById("exec"), 'change'));
+	document.getElementById("exec").addEventListener(                         'blur', processChange.bind(null, document.getElementById("exec"), 'blur'));
+
+	document.getElementById("tool_async").addEventListener(                   'change', processChange.bind(null, document.getElementById("tool_async"), 'change'));
+	document.getElementById("tool_wait").addEventListener(                    'change', processChange.bind(null, document.getElementById("tool_wait"), 'change'));
+
+	document.getElementById("priority").addEventListener(                     'change', processChange.bind(null, document.getElementById("priority"), 'change'));
+	document.getElementById("priority").addEventListener(                     'blur', processChange.bind(null, document.getElementById("priority"), 'blur'));
+
+	document.getElementById("wrap_in_quotes").addEventListener(               'change', processChange.bind(null, document.getElementById("wrap_in_quotes"), 'change'));
+
 	document.getElementById("button_copy_to_clipboard").addEventListener(     'click',  copyTextToClipboard.bind(null, document.getElementById('result')));
 	document.getElementById("button_copy_link_to_clipboard").addEventListener('click',  copyLinkToClipboard);
 	document.getElementById("button_reset").addEventListener(                 'click',  reload);
 	document.getElementById("button_clear").addEventListener(                 'click',  clearAndReload);
-	
+
 	var allInputs = document.getElementsByTagName("input");
 	for (var i = 0; i < allInputs.length; i++) {
 		if (allInputs[i].id.indexOf("event_") != -1) {
-			allInputs[i].addEventListener('change', processChange.bind(null, allInputs[i]));
-			allInputs[i].addEventListener('blur', processChange.bind(null, allInputs[i]));
+			allInputs[i].addEventListener('change', processChange.bind(null, allInputs[i], 'change'));
+			allInputs[i].addEventListener('blur', processChange.bind(null, allInputs[i], 'blue'));
 		}
-		
+
 		if (allInputs[i].id.indexOf("agent_") != -1) {
-			allInputs[i].addEventListener('change', processChange.bind(null, allInputs[i]));
+			allInputs[i].addEventListener('change', processChange.bind(null, allInputs[i], 'change'));
 		}
-		
+
 		if (allInputs[i].id.indexOf("agent_tool") != -1) {
 			allInputs[i].addEventListener('mousedown', registerToolExecMouseDown);
 		}
-		
+
 		if (allInputs[i].id.indexOf("exec_button_") != -1) {
-			allInputs[i].addEventListener('mousedown', processChange.bind(null, allInputs[i]));
+			allInputs[i].addEventListener('mousedown', processChange.bind(null, allInputs[i], 'mousedown'));
 			allInputs[i].addEventListener('mousedown', registerToolExecMouseDown);
 		}
-		
+
 		if (allInputs[i].id.indexOf("file_button_") != -1) {
-			allInputs[i].addEventListener('click', processChange.bind(null, allInputs[i]));
+			allInputs[i].addEventListener('click', processChange.bind(null, allInputs[i], 'click'));
 		}
-		
+
 		if (allInputs[i].id.indexOf("request_") != -1) {
-			allInputs[i].addEventListener('change', processChange.bind(null, allInputs[i]));
+			allInputs[i].addEventListener('change', processChange.bind(null, allInputs[i], 'change'));
 		}
-		
+
 		if (allInputs[i].id.indexOf("range_") != -1) {
-			allInputs[i].addEventListener('change', processChange.bind(null, allInputs[i]));
-			allInputs[i].addEventListener('blur', processChange.bind(null, allInputs[i]));
+			allInputs[i].addEventListener('change', processChange.bind(null, allInputs[i], 'change'));
+			allInputs[i].addEventListener('blur', processChange.bind(null, allInputs[i], 'blur'));
 		}
-		
+
 		if (allInputs[i].id.indexOf("_text") != -1) {
-			allInputs[i].addEventListener('change', processChange.bind(null, allInputs[i]));
+			allInputs[i].addEventListener('change', processChange.bind(null, allInputs[i], 'change'));
+			allInputs[i].addEventListener('input', processChange.bind(null, allInputs[i], 'input'));
 			allInputs[i].addEventListener('blur', registerTokenTarget.bind(null, allInputs[i]));
 		}
 	}
-	
+
 	setupTooltips();
 	parseParams();
 }
@@ -137,7 +138,7 @@ function setupTooltips() {
 	            "determined by the priority keyword set for each agent. Higher priority dump agents are started first. The " +
 	            "priorities associated with default dump agents can be viewed by running \"java -Xdump:what\".";
 	document.getElementById("priority").title = titleText;
-	
+
 	titleText = "Specify the range of dump events on which to trigger the specified dump agents. For example, if \"First event\" is set to 5, " +
 				"and \"Last event\" set to 7, the dump event will trigger only on the 5th, 6th and 7th dump events. A value of 0 means " +
 				"\"no limit\"\n\n" +
@@ -198,7 +199,7 @@ function parseParams() {
 					break;
 			}
 
-			processChange(element);
+			processChange(element, null);
 			element.blur();
 		}
 	} else {
@@ -207,7 +208,7 @@ function parseParams() {
 	}
 }
 
-function processChange(option) {
+function processChange(option, event) {
 
 	if (option.name == "agent") {
 		if (option.value == "tool") {
@@ -429,13 +430,6 @@ function processChange(option) {
 		disableInput(fileTextElement);
 	}
 
-	// Enable/disable file/dsn token buttons
-	if (!dsnTextElement.disabled || !fileTextElement.disabled) {
-		enableDumpNameTokenButtons();
-	} else {
-		disableDumpNameTokenButtons();
-	}
-
 	// Insert text in the target text input if one of the token buttons is pressed
 	if (option.type == "button") {
 		if (option.getAttribute("data-target") == null && fileDsnTokenTargetElement != null) {
@@ -445,8 +439,27 @@ function processChange(option) {
 		}
 	}
 
-	// Remove focus from input element (ensures error styling works correctly)
-	if (option.id != null) {
+	// Enable/disable file/dsn token buttons.
+	if (!dsnTextElement.disabled || !fileTextElement.disabled) {
+		if (fileTextElement.value == "/STDOUT/" || fileTextElement.value == "/STDERR/") {
+			disableDumpNameTokenButtons();
+		} else {
+			enableDumpNameTokenButtons();
+		}
+	} else {
+		disableDumpNameTokenButtons();
+	}
+
+	// If file pattern field is set to /STDOUT/ or /STDERR/, disable incompatible agents
+	if (fileTextElement.value == "/STDOUT/" || fileTextElement.value == "/STDERR/") {
+		disableStreamIncompatibleAgents();
+	} else {
+		enableStreamIncompatibleAgents();
+	}
+
+	// Remove focus from element (ensures error styling works correctly)
+	// Leave focus where it is for input events
+	if (event != "input" && option.id != null) {
 		option.blur();
 	}
 
@@ -531,6 +544,20 @@ function fileCompatibleAgentEnabledAndChecked() {
 	}
 }
 
+function streamIncompatibleAgentChecked() {
+	var allInputs = document.getElementsByTagName("input");
+	for (var i = 0; i < allInputs.length; i++) {
+		if (
+			allInputs[i].id.indexOf("agent_") != -1 &&
+			allInputs[i].id != "agent_java" &&
+			allInputs[i].checked
+		) {
+			return true;
+		}
+	}
+	return false;
+}
+
 function disableDsnIncompatibleAgents() {
 	for (var i = 0; i < agentsThatDumpAFileIds.length; i++) {
 		if (agentsThatDumpAFileIds[i] != "agent_system") {
@@ -543,6 +570,24 @@ function enableDsnIncompatibleAgents() {
 	for (var i = 0; i < agentsThatDumpAFileIds.length; i++) {
 		if (agentsThatDumpAFileIds[i] != "agent_system") {
 			enableInput(document.getElementById(agentsThatDumpAFileIds[i]));
+		}
+	}
+}
+
+function disableStreamIncompatibleAgents() {
+	var allInputs = document.getElementsByTagName("input");
+	for (var i = 0; i < allInputs.length; i++) {
+		if (allInputs[i].id.indexOf("agent_") != -1 && allInputs[i].id != "agent_java") {
+			disableInput(allInputs[i]);
+		}
+	}
+}
+
+function enableStreamIncompatibleAgents() {
+	var allInputs = document.getElementsByTagName("input");
+	for (var i = 0; i < allInputs.length; i++) {
+		if (allInputs[i].id.indexOf("agent_") != -1 && allInputs[i].id != "agent_java") {
+			enableInput(allInputs[i]);
 		}
 	}
 }
@@ -620,9 +665,27 @@ function enableInput(inputElement) {
 
 function enableDumpNameTokenButtons() {
 	var allInputs = document.getElementsByTagName("input");
+
+	// STDOUT/STDERR buttons should only be enabled if the file pattern field
+	// is empty, and the only dump agent that's enabled is the Java dump agent
+	var enableStreamButtons = document.getElementById("file_text").value == "" && document.getElementById("agent_java").checked;
+	if (enableStreamButtons) {
+		for (var i = 0; i < allInputs.length; i++) {
+			if (allInputs[i].id.indexOf("agent_") != -1) {
+				if (allInputs[i].id != "agent_java" && allInputs[i].checked) {
+					enableStreamButtons = false;
+				}
+			}
+		}
+	}
+
 	for (var i = 0; i < allInputs.length; i++) {
 		if (allInputs[i].id.indexOf("file_button_") != -1) {
-			allInputs[i].disabled = false;
+			if (allInputs[i].id.indexOf("file_button_std") != -1 && !enableStreamButtons) {
+				allInputs[i].disabled = true;
+			} else {
+				allInputs[i].disabled = false;
+			}
 		}
 	}
 }
@@ -774,7 +837,7 @@ function buildAndUpdateResult() {
 			resultString += ",range=" + rangeFirst + ".." + rangeLast;
 		}	
 	}
-	
+
 	// priority
 	var priority = document.getElementById("priority").value;
 	if (priority != "") {
@@ -787,7 +850,7 @@ function buildAndUpdateResult() {
 		if (execString != "") {
 			resultString += ",exec=" + execString;
 		}
-		
+
 		// opts
 		var optsString = "";
 		var toolAsyncElement = document.getElementById("tool_async");
@@ -831,7 +894,7 @@ function buildAndUpdateResult() {
 			resultString += ",file=" + fileElement.value;
 		}
 	}
-	
+
 	// SYSTDUMP data set name
 	var dsnElement = document.getElementById("dsn_text");
 	if (!dsnElement.disabled) {
@@ -923,7 +986,7 @@ function buildAndUpdateResult() {
 	} else {
 		unsetErrorStyle(execElement);
 	}
-	
+
 	// Check value provided for tool wait time
 	var toolWaitElement = document.getElementById("tool_wait");
 	if (!toolWaitElement.disabled && toolWaitElement.value < 0) {
@@ -944,7 +1007,7 @@ function buildAndUpdateResult() {
 	var throwableClassElement = document.getElementById("event_throwable_class")
 	if (!throwableClassElement.disabled) {
 		var classValue = throwableClassElement.value;
-		
+
 		if (classValue.lastIndexOf("*") > 0) {
 			if (classValue.indexOf("*", 1) != (classValue.length - 1)) {
 				throwableClassHasError = true;
@@ -954,12 +1017,12 @@ function buildAndUpdateResult() {
 				errorsHtml += "ERROR: Invalid Exception class filter: must not end with a wildcard when a method filter is specified<br>";
 			}
 		}
-		
+
 		if (classValue.indexOf(",") != -1) {
 			throwableClassHasError = true;
 			errorsHtml += "ERROR: Invalid Exception class filter: must not contain a comma.<br>";
 		} 
-		
+
 		if (throwableClassHasError) {
 			resultIsGreen = false;
 			setErrorStyle(throwableClassElement);
@@ -1032,7 +1095,11 @@ function buildAndUpdateResult() {
 			unsetErrorStyle(dumpFileTextElement);
 		}
 
-		if (containsReservedChars(dumpFileTextElement.value)) {
+		if (
+			dumpFileTextElement.value != "/STDOUT/" &&
+			dumpFileTextElement.value != "/STDERR/" &&
+			containsReservedChars(dumpFileTextElement.value)
+		) {
 			warningsHtml += "WARNING: Dump file pattern contains a character that is disallowed on some platforms<br>";		
 		}		
 	} else {
@@ -1081,6 +1148,19 @@ function buildAndUpdateResult() {
 		}
 		if (!document.getElementById("request_exclusive").disabled && document.getElementById("request_exclusive").checked) {
 			warningsHtml += "WARNING: Dump agents triggered by a GPF, abort, or internal JVM error may have problems obtaining exclusive JVM access<br>";
+		}		
+	}
+
+	// Check whether an incompatible agent is checked when the file_text element is set to
+	// print to a stream. An invalid option should not be produced, but this warning makes
+	// it clear why incompatible agents have been disabled, even if they're checked.
+	if (streamIncompatibleAgentChecked()) {
+		var fileTextElement = document.getElementById("file_text");
+		if (fileTextElement.value == "/STDOUT/") {
+			warningsHtml += "WARNING: /STDOUT/ file pattern is only compatible with the Java dump agent";
+		}
+		if (fileTextElement.value == "/STDERR/") {
+			warningsHtml += "WARNING: /STDERR/ file pattern is only compatible with the Java dump agent";
 		}		
 	}
 
@@ -1166,10 +1246,10 @@ function clearToolExecMouseDown() {
 // Inserts text in a target text input, replacing the current selected text
 // Target field must be enabled
 function insertText(targetElement, textToInsert) {
-	if (targetElement.disabled) {
+	if (targetElement == null || targetElement.disabled) {
 		return;
 	}
-	
+
 	var oldTextValue = targetElement.value;
 	var selectionStart = targetElement.selectionStart;
 	var selectionEnd = targetElement.selectionEnd;
@@ -1291,6 +1371,6 @@ function clearAndReload() {
 // This is the alternative action to submitting the form when the user presses return in a text field
 function handleSubmit() {
 	event.preventDefault();
-	processChange();
+	processChange(null, null);
 	return false;
 }

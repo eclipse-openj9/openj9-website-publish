@@ -332,7 +332,7 @@ ul {
 						value="ASID" title="Address Space ID (z/OS only)">
 					<input type="button" data-target="exec" data-token="&DS" id="exec_button_ds"            disabled style="width:26px"
 						value="DS" title="Dump Section (64-bit z/OS only)">
-					<input type="button" data-target="exec" data-token="%jobid" id="exec_button_jobid"      disabled style="width:43px"
+					<input type="button" data-target="exec" data-token="%jobid" id="exec_button_jobid"      disabled style="width:44px"
 						value="Job ID" title="Job ID (z/OS only)">
 					
 					&nbsp;
@@ -416,6 +416,8 @@ ul {
 						value="SYSNAME" title="SYSNAME system parameter (z/OS only)">
 					<input type="button" data-token="%job"                 id="file_button_jobname" disabled style="width:59px"
 						value="Job Name" title="Job Name (z/OS only)">
+					<input type="button" data-token="/STDOUT/"             id="file_button_stdout"  disabled style="width:55px"
+						value="STDOUT" title="Print on STDOUT (Java dumps only)">
 				</div>
 				<div>
 					<input type="button" data-token="%uid"                 id="file_button_uname"       disabled style="width:47px"
@@ -434,8 +436,10 @@ ul {
 						value="ASID" title="Address Space ID (z/OS only)">
 					<input type="button" data-token="&DS"                  id="file_button_ds"          disabled style="width:26px"
 						value="DS" title="Dump Section (64-bit z/OS only)">
-					<input type="button" data-token="%jobid"               id="file_button_jobid"       disabled style="width:43px"
+					<input type="button" data-token="%jobid"               id="file_button_jobid"       disabled style="width:44px"
 						value="Job ID" title="Job ID (z/OS only)">
+					<input type="button" data-token="/STDERR/"             id="file_button_stdout"      disabled style="width:55px"
+						value="STDERR" title="Print on STDERR (Java dumps only)">
 				</div>
 			</li>
 		</ul>
