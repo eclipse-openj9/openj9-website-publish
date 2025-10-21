@@ -118,67 +118,31 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
 <div class="w3-padding-64 w3-container w3-light-grey">
   <div class="w3-content">
         <div class="w3-center">
-      <h1>Eclipse OpenJ9 version 0.55.0 released</h1>
-<p>September 2025</p>
+      <h1>Eclipse OpenJ9 version 0.56.0 released</h1>
+<p>October 2025</p>
 </div>
-<p>We're pleased to announce the availability of Eclipse OpenJ9 v0.55.0.</p>
-<p>This release supports OpenJDK 25. For more information about supported platforms and OpenJDK versions, see <a class="w3-hover-opacity" href="https://www.eclipse.org/openj9/docs/openj9_support/" target="_blank">Supported environments</a>.</p>
-<p>The 0.54.0 release updates that are applicable in the 0.55.0 release include the following:</p>
-<ul>
-     <li>The new JDK Flight Recorder (JFR) events, ModuleExports and ModuleRequires are added.
-    
-    </li>
-  </ul>
-<p>Other updates in the 0.55.0 release include the following:</p>
+<p>We're pleased to announce the availability of Eclipse OpenJ9 v0.56.0.</p>
+<p>This release supports OpenJDK 8, 11, 17, 21, and 25. For more information about supported platforms and OpenJDK versions, see <a class="w3-hover-opacity" href="https://www.eclipse.org/openj9/docs/openj9_support/" target="_blank">Supported environments</a>.</p>
+<p>Other updates in this release include the following:</p>
  <ul>
-  <li>XL C++ Runtime 17.1.3.0 or later is required for AIX OpenJ9 builds.</li>
-  <li>A new system property, <code>-Djava.security.propertiesList</code> is added that you can use to specify a list of different java.security property files that have the profiles you want instead of putting those different profiles into a single java.security file.
-    <p>This is an OpenJDK change in the OpenJDK versions maintained to support building with OpenJ9.</p>
-    </li>
-    <li>The format of the <code>java.vm.version</code> system property value is updated to be compatible with the Runtime.Version parser.</li>
-</ul>   
+  <li>For OpenJDK 25 and later binaries, XL C++ Runtime 17.1.3.0 or later is required for AIX&reg; OpenJ9 builds.</li>
+  <li>On all platforms except z/OS&reg;, the <code>getCpuLoad()</code> method now collects two internal samples so that a valid CPU usage value can be returned instead of <code>0</code> return value on the first call. On z/OS, the CPU load that is reported by the <code>getCpuLoad</code> method is obtained directly from the system control blocks, without the need to collect samples.</li>
+  <li>New parameters, <code>enableEstimateFragmentation</code> and <code>disableEstimateFragmentation</code> are added to the <code>-Xgc</code> option to control the calculating and reporting of the estimates of the macro fragmentation.
+  </li>
+  <li>The NativeLibrary and SystemProcess JFR events are supported in all platforms except z/OS. To record and analyze the SystemProcess JFR event on z/OS (2.5 and 3.1), you must install <a class="w3-hover-opacity" href="https://www.ibm.com/support/pages/apar/OA62757" target="_blank">APAR OA62757</a>.</li>
+  <li>The format of the <code>java.vm.version</code> system property value is updated to be compatible with the Runtime.Version parser. This update that was initiated in the 0.55.0 release affects 0.56.0 and all future releases also.</li>
+</ul>
   <p>To read more about these and other changes, see the <a class="w3-hover-opacity" href="https://www.eclipse.org/openj9/docs/openj9_releases/" target="_blank">OpenJ9 user documentation</a>.</p>
   
-  <p><b>Performance highlights of the 0.54.0 release that is applicable for the 0.55.0 release also include the following:</b></p>
+  <p><b>Performance highlights include the following:</b></p>
 
    <ul>
-      <li>More Java Class Library intrinsics are being accelerated now across platforms.</li>
+      <li>Optimization changes are done for higher JIT hotness levels (higher than warm) to improve application throughput.</li>
       </ul>
   
   </div>
 </div>
 
-<div class="w3-padding-64 w3-container w3-light-grey">
-  <div class="w3-content">
-        <div class="w3-center">
-      <h1>Eclipse OpenJ9 version 0.53.0 released</h1>
-<p>July 2025</p>
-</div>
-<p>We're pleased to announce the availability of Eclipse OpenJ9 v0.53.0.</p>
-<p>This release supports OpenJDK 8, 11, 17, and 21. For more information about supported platforms and OpenJDK versions, see <a class="w3-hover-opacity" href="https://www.eclipse.org/openj9/docs/openj9_support/" target="_blank">Supported environments</a>.</p>
-<p>Other updates in this release include the following:</p>
- <ul>
-    <li>RHEL 8.8 and 9.2 are out of support. RHEL 8.10 and 9.4 are the new minimum operating system levels.</li>
-    <li>OpenSSL native cryptographic support is added for the Password based key derivation (PBKDF2) algorithm, providing improved cryptographic performance.</li>
-    <li>OpenSSL 3.5.1 is supported and bundled on all platforms. You can use the <code>jdk.native.openssl.skipBundled</code> property to specify whether to load the pre-packaged OpenSSL library or the library available on the system path.</li>
-    <li>Offheap support is added for the <code>balanced</code> GC policy.</li>
-    <li>The following new JDK Flight Recorder (JFR) events are added in this release:
-      <ul>
-      <li>NativeLibrary (Linux&reg; only)</li>
-      <li>SystemGC</li>
-      <li>SystemProcess (Linux only)</li>
-      <li>YoungGenerationConfiguration</li></ul>
-    </li>
-</ul>   
-  <p>To read more about these and other changes, see the <a class="w3-hover-opacity" href="https://www.eclipse.org/openj9/docs/openj9_releases/" target="_blank">OpenJ9 user documentation</a>.</p>
-  <p><b>Performance highlights include the following:</b></p>
-  <ul>
-    <li>Now the <code>balanced</code> GC policy always uses a contiguous representation of array data, which is stored in a special Offheap area for large arrays. It replaces arraylets, which had a discontiguous representation for large arrays.
-Balanced GC performance is improved for both Java code that deals with any size of array and native code that uses JNI Critical API with large arrays.</li>
-    <li>Several Java Class Library methods were optimized by the VM to increase throughput performance.</li>
-  </ul>
-  </div>
-</div>
 
 <!-- Footer -->
 <footer class="w3-container w3-opacity">  
