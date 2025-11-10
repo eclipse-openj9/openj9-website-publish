@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>quarkus_restcrud_Java17.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<!--
+* Copyright (c) 2017, 2025 IBM Corp. and others
+*
+* This program and the accompanying materials are made
+* available under the terms of the Eclipse Public License 2.0
+* which accompanies this distribution and is available at
+* https://www.eclipse.org/legal/epl-2.0/ or the Apache
+* License, Version 2.0 which accompanies this distribution and
+* is available at https://www.apache.org/licenses/LICENSE-2.0.
+*
+* This Source Code may also be made available under the
+* following Secondary Licenses when the conditions for such
+* availability set forth in the Eclipse Public License, v. 2.0
+* are satisfied: GNU General Public License, version 2 with
+* the GNU Classpath Exception [1] and GNU General Public
+* License, version 2 with the OpenJDK Assembly Exception [2].
+*
+* [1] https://www.gnu.org/software/classpath/license.html
+* [2] https://openjdk.org/legal/assembly-exception.html
+*
+* SPDX-License-Identifier: EPL-2.0 OR Apache-2.0 OR GPL-2.0-only WITH Classpath-exception-2.0 OR GPL-2.0-only WITH OpenJDK-assembly-exception-1.0
+-->
+<h1 id="quarkus-performance-with-eclipse-openj9-instanton">Quarkus Performance with Eclipse OpenJ9 InstantOn</h1>
+<h2 id="table-of-contents">Table of Contents</h2>
+<ul>
+<li><a href="#introduction">Introduction</a></li>
+<li><a href="#metrics-and-configurations">Metrics and configurations</a></li>
+<li><a href="#time-to-first-response">Time to first response</a></li>
+<li><a href="#memory-footprint-after-first-response">Memory footprint after first response</a></li>
+<li><a href="#steady-state-throughput">Steady-state throughput</a></li>
+<li><a href="#throughput-per-mb">Throughput per MB</a></li>
+<li><a href="#conclusion">Conclusion</a></li>
+<li><a href="#benchmark-testing-details">Benchmark testing details</a></li>
+</ul>
+<h2 id="introduction">Introduction</h2>
+<p><a href="https://quarkus.io/">Quarkus</a> is a Kubernetes-native Java framework optimized for cloud-native applications.
+Designed from the ground up for containerized environments, Quarkus supports both traditional Java Virtual Machine (JVM) execution and native image compilation through <a href="https://www.graalvm.org">GraalVM</a>. It offers fast startup times, low memory usage, and compact application sizes, making it an excellent choice for microservices and serverless workloads.
+In this article, we evaluate the performance of a containerized Quarkus-based application, namely <a href="https://github.com/jdmcclur/restCrud">RestCRUD</a>, running in the following two modes:</p>
+<ol>
+<li>As a native image compiled with GraalVM</li>
+<li>On the Eclipse OpenJ9 JVM using <a href="https://blog.openj9.org/2022/09/26/fast-jvm-startup-with-openj9-criu-support/">InstantOn technology</a></li>
+</ol>
+<p>Our experiments reveal the following key findings about InstantOn performance:</p>
+<ul>
+<li>Sub-second startup: OpenJ9 InstantOn delivers a first response in under one second.</li>
+<li>Efficient memory usage: After startup, InstantOn's memory footprint is only slightly larger than the footprint of the native image.</li>
+<li>Superior throughput: InstantOn achieves twice the throughput of the native image.</li>
+<li>Higher throughput-per-MB: This metric is significantly better with InstantOn, enabling greater application density and cost-efficiency in cloud deployments.</li>
+</ul>
+<h2 id="metrics-and-configurations">Metrics and configurations</h2>
+<p>Since Quarkus is mostly used in a Kubernetes setting, we decided to look at performance metrics that are relevant for a cloud environment:</p>
+<ol>
+<li>
+<p><strong>Time to first response:</strong>
+This metric represents the elapsed time from the moment the application process is started until the moment the response to a first query is received by the requester. This approach avoids the startup measuring pitfall that occurs when the Java framework eagerly asserts to be ready even though some needed activities are still happening in the background.</p>
+</li>
+<li>
+<p><strong>Memory footprint after first response:</strong>
+Physical memory consumption is measured immediately after the response to a first query is received. For this purpose, we use the following command:</p>
+</li>
+</ol>
+<pre class="hljs"><code><div>ps -orss --no-headers -–pid JvmPid
+</div></code></pre>
+<ol start="3">
+<li>
+<p><strong>Steady-state throughput:</strong>
+Steady-state throughput is defined as the number of transactions that are processed per second after the VM has fully warmed up.</p>
+</li>
+<li>
+<p><strong>Throughput per MB:</strong>
+While the VM is operating at steady-state, we record the (a) throughput and (b) physical memory used by the VM, and compute the ratio of the two values.</p>
+</li>
+</ol>
+<p>Since Quarkus is geared toward small and quick containers, we limited our containers to 1 CPU and 256 MB of memory.
+In all our experiments, we set the maximum heap size to 128 MB by using <code>-Xmx128m</code>, while leaving the initial heap size unspecified.</p>
+<h2 id="time-to-first-response">Time to first response</h2>
+<p>Eclipse OpenJ9 InstantOn reduces the time to first response for the RestCRUD application to approximately 300 milliseconds. While this time is slightly slower than the Native Image, it is still over 94% faster than HotSpot. This rapid responsiveness is especially valuable in KNative environments, where applications are frequently scaled down to zero and must start quickly on demand.
+Crucially, InstantOn achieves this performance while maintaining full Java compatibility, unlike Native Image, which imposes restrictions on certain Java features.</p>
+<p align="center">
+  <img src="./images/Quarkus_tfr_detail.png" alt="Quarkus RestCRUD time to first response" width="60%" style="max-width:600px">
+  <br>
+  <em>Figure 1: InstantOn vs Native Image vs HotSpot time to first response comparison</em>
+</p>
+<h2 id="memory-footprint-after-first-response">Memory footprint after first response</h2>
+<p>After the first response, OpenJ9 InstantOn uses only 9 MB more memory than the Native Image — a modest 10% increase. However, compared to HotSpot InstantOn uses 40% less memory, making it a more efficient choice for cloud deployments.
+This lean memory profile aligns with Quarkus’s design goals and contributes to lower infrastructure costs in memory-constrained environments.</p>
+<p align="center">
+  <img src="./images/Quarkus_rss_fr_detail.png" alt="Quarkus RestCRUD footprint after first response" width="60%" style="max-width:600px">
+  <br>
+  <em>Figure 2: InstantOn vs Native Image vs HotSpot footprint after first response comparison</em>
+</p>
+<h2 id="steady-state-throughput">Steady-state throughput</h2>
+<p>In steady-state conditions, OpenJ9 InstantOn delivers twice the throughput of the Native Image. This performance advantage directly results in better resource utilization and responsiveness under load.</p>
+<p align="center">
+  <img src="./images/Quarkus_throughput.png" alt="Quarkus Steady-state throughput" width="60%" style="max-width:600px">
+  <br>
+  <em>Figure 3: InstantOn vs Native Image throughput comparison</em>
+</p>
+<h2 id="throughput-per-mb">Throughput per MB</h2>
+<p>In cloud-native environments, scaling services by increasing pod counts can improve aggregate throughput, but often at the expense of higher costs. To optimize for cost-efficiency, it's essential to consider both raw throughput and memory consumption per instance.
+These two factors can be combined into a single metric: throughput-per-MB at steady state.
+As shown in figure 4, OpenJ9 InstantOn achieves 38% higher throughput-per-MB than Native Image. This efficiency enables higher application density, allowing organizations to run more services per node and realize significant cost savings.</p>
+<p align="center">
+  <img src="./images/Quarkus_thrMB.png" alt="Quarkus Steady-state throughput per MB" width="60%" style="max-width:600px">
+  <br>
+  <em>Figure 4: InstantOn vs Native Image throughput/MB comparison</em>
+</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>Our benchmark results with the RestCRUD application running on Quarkus demonstrate that Eclipse OpenJ9 InstantOn offers significant advantages over Native Image in several key performance areas that are important to cloud users:</p>
+<ul>
+<li>Startup performance: InstantOn achieves sub-second startup times, making it highly suitable for serverless and scale-to-zero environments like KNative.</li>
+<li>Memory efficiency: With only a modest increase in memory usage when compared to Native Image — and significantly lower usage than HotSpot — InstantOn supports lean deployments without sacrificing performance.</li>
+<li>Superior throughput: InstantOn consistently delivers double the throughput of Native Image that helps ensure better responsiveness and scalability under load.</li>
+<li>Cost-effective density: Its higher throughput-per-MB metric enables greater application density, which results in tangible cost savings in cloud environments.</li>
+</ul>
+<p>These benefits make Eclipse OpenJ9 InstantOn an excellent choice for organizations seeking resource-efficient, high-performance, and fully Java-compatible solutions in the cloud. Whether you're optimizing for startup latency, runtime efficiency, or infrastructure cost, InstantOn offers a balanced and robust alternative to native compilation.</p>
+<h2 id="benchmark-testing-details">Benchmark testing details</h2>
+<h3 id="system-under-test">System under test</h3>
+<ul>
+<li>Desktop machine with 4-core Intel(R) Core(TM) i7-6700K CPU @ 4.00 GHz</li>
+<li>Hyperthreading enabled</li>
+<li>16 GB RAM</li>
+<li>Ubuntu 20.04 operating system</li>
+</ul>
+<h3 id="benchmark-application">Benchmark application</h3>
+<p>The tests used a simple Quarkus-based <a href="https://github.com/jdmcclur/restCrud">RESTful CRUD application</a>, built with Quarkus version 3.20.3 and packaged into Docker containers.</p>
+<h3 id="native-image-build">Native Image Build</h3>
+<p>The Native Image container was built by using <a href="https://github.com/graalvm/mandrel">mandrel</a> version 23.0.6.0, based on JDK 17.0.13+11. Mandrel is a GraalVM distribution optimized for Quarkus applications.</p>
+<h3 id="openj9-instanton-image-build">OpenJ9 InstantOn Image build</h3>
+<p>For building the InstantOn Image, we used the code from <a href="https://github.com/ibmruntimes/semeru-containers">semeru-containers</a> to create a first layer based on the following OpenJ9 nightly build:</p>
+<pre class="hljs"><code><div>OpenJDK Runtime Environment (build 17.0.17-internal+0-adhoc..BuildJDK17x86-64linuxNightly)
+Eclipse OpenJ9 VM (build 17.0.17-internal+0-adhoc..BuildJDK17x86-64linuxNightly-master-f91a0f0b3cb, JRE 17 Linux amd64-64-Bit Compressed References 20251027_1123 (JIT enabled, AOT enabled)
+OpenJ9   - f91a0f0b3cb
+OMR      - 5be534e8d2c
+JCL      - 524b935753e based on jdk-17.0.17+10)
+</div></code></pre>
+<p>A second layer containing the RestCRUD application binaries was added. The container was then started, checkpointed, and committed to produce the final InstantOn image.</p>
+<h3 id="runtime-configuration-and-load-testing">Runtime configuration and load testing</h3>
+<p>At runtime, application containers were pinned to 1 CPU core and limited to 256 MB of memory. Data persistence was ensured by a <a href="https://www.postgresql.org/">PostgreSQL</a> process (version 12.20) running on the same machine. For throughput experiments, load was applied by using <a href="https://github.com/wg/wrk">wrk</a> with 10 threads and 10 connections in two 2-minute bursts. The first burst served as a warm-up phase and was excluded from performance measurements. Steady-state throughput and memory footprint were recorded during the second burst.</p>
+
+</body>
+</html>

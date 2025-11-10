@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>daytrader8_Java17.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<!--
+* Copyright (c) 2017, 2025 IBM Corp. and others
+*
+* This program and the accompanying materials are made
+* available under the terms of the Eclipse Public License 2.0
+* which accompanies this distribution and is available at
+* https://www.eclipse.org/legal/epl-2.0/ or the Apache
+* License, Version 2.0 which accompanies this distribution and
+* is available at https://www.apache.org/licenses/LICENSE-2.0.
+*
+* This Source Code may also be made available under the
+* following Secondary Licenses when the conditions for such
+* availability set forth in the Eclipse Public License, v. 2.0
+* are satisfied: GNU General Public License, version 2 with
+* the GNU Classpath Exception [1] and GNU General Public
+* License, version 2 with the OpenJDK Assembly Exception [2].
+*
+* [1] https://www.gnu.org/software/classpath/license.html
+* [2] https://openjdk.org/legal/assembly-exception.html
+*
+* SPDX-License-Identifier: EPL-2.0 OR Apache-2.0 OR GPL-2.0-only WITH Classpath-exception-2.0 OR GPL-2.0-only WITH OpenJDK-assembly-exception-1.0
+-->
+<h1 id="openjdk-17-performance-with-eclipse-openj9">OpenJDK 17 performance with Eclipse OpenJ9</h1>
+<h2 id="table-of-contents">Table of Contents</h2>
+<ul>
+<li><a href="#introduction">Introduction</a></li>
+<li><a href="#metrics-and-configurations">Metrics and configurations</a></li>
+<li><a href="#startup-time">Startup time</a></li>
+<li><a href="#memory-footprint-after-startup">Memory footprint after startup</a></li>
+<li><a href="#ramp-up-time-and-peak-throughput">Ramp-up time and peak throughput</a></li>
+<li><a href="#memory-footprint-during-application-ramp-up">Memory footprint during application ramp-up</a></li>
+<li><a href="#conclusion">Conclusion</a></li>
+<li><a href="#benchmark-testing-details">Benchmark testing details</a></li>
+</ul>
+<h2 id="introduction">Introduction</h2>
+<p>Our benchmark results suggest that running an application on Eclipse OpenJ9™ instead of HotSpot delivers reductions in footprint and startup time without sacrificing throughput.</p>
+<p>To evaluate the performance characteristics of OpenJ9, we used the <a href="https://github.com/OpenLiberty/sample.daytrader8">DayTrader8 J2EE application</a> running on top of <a href="https://openliberty.io">Open Liberty</a> framework version 25.0.0.9. The experiments produced the following results:</p>
+<ul>
+<li>10%-30% faster startup time</li>
+<li>31%-38% smaller startup footprint</li>
+<li>48% smaller footprint during application ramp-up</li>
+<li>Comparable throughput</li>
+</ul>
+<h2 id="metrics-and-configurations">Metrics and configurations</h2>
+<p>Because performance means different things to different people, we decided to look at multiple metrics:</p>
+<ol>
+<li>
+<p><strong>Startup time:</strong>
+Startup time is measured from the moment the VM process is started until the moment Open Liberty prints <em>&quot;ready to run a smarter planet&quot;</em>.</p>
+</li>
+<li>
+<p><strong>Memory footprint after startup:</strong>
+Physical memory consumption is measured immediately after startup with the following command:</p>
+</li>
+</ol>
+<pre class="hljs"><code><div>ps -orss --no-headers -–pid JvmPid
+</div></code></pre>
+<ol start="3">
+<li><strong>Footprint during load:</strong>
+We record the physical memory that is used by the VM as load is applied to the benchmark. Memory is measured by using the same command:</li>
+</ol>
+<pre class="hljs"><code><div>ps -orss --no-headers -–pid JvmPid
+</div></code></pre>
+<ol start="4">
+<li>
+<p><strong>Ramp-up time:</strong>
+As load is applied to the application and the VM compiles more methods into native code, throughput improves gradually. Ramp-up time represents the time needed for throughput to reach its peak.</p>
+</li>
+<li>
+<p><strong>Peak throughput:</strong>
+Peak throughput is defined as the number of transactions that are processed per second after the VM has fully 'warmed-up'.</p>
+</li>
+</ol>
+<p>In all our experiments, we set the maximum heap size to 512 MB by using <code>-Xmx512m</code>, while leaving the initial heap size unspecified.</p>
+<p>By default, Open Liberty enables the OpenJ9 <a href="https://eclipse.dev/openj9/docs/shrc/">shared class cache</a> (SCC) and <a href="https://blog.openj9.org/2018/10/10/intro-to-ahead-of-time-compilation/">dynamic Ahead-of-Time</a> (AOT) compilation. These technologies can significantly improve startup and ramp-up of Java applications with minimal effect on throughput.</p>
+<p>The default SCC size that is used by Open Liberty is 80 MB, which we use throughout this document unless otherwise specified. However, because DayTrader8 is a relatively large application, some experiments also evaluate a configuration with a 150 MB SCC (<code>-Xscmx150m</code>) to demonstrate the impact of cache size on performance.</p>
+<h2 id="startup-time">Startup time</h2>
+<p>Thanks to the SCC and AOT compilation, OpenJ9 starts up the DayTrader8 application 10-30% faster than HotSpot. The startup improvement depends on the SCC size: using the default 80 MB cache provides a 10% speedup, while increasing the cache to 150 MB delivers a 30% improvement.</p>
+<p align="center">
+  <img src="./images/DT8_startup_3way.png" alt="OpenJ9 startup time" width="60%" style="max-width:600px">
+  <br>
+  <em>Figure 1: OpenJ9 vs HotSpot startup time comparison</em>
+</p>
+<h2 id="memory-footprint-after-startup">Memory footprint after startup</h2>
+<p>The OpenJ9 VM has always been associated with low memory consumption, and our benchmark results confirm this advantage. OpenJ9 demonstrates a 31%-38% smaller footprint compared to HotSpot, depending on the SCC size.</p>
+<p>Larger caches increase the footprint slightly for two reasons: they use more memory, and AOT-compiled method code is typically larger than JIT-compiled code. However, this modest footprint increase is offset by the significant startup time improvements that larger caches provide, as shown in the previous section.</p>
+<p align="center">
+  <img src="./images/DT8_footprint_3way.png" alt="OpenJ9 footprint after startup" width="60%" style="max-width:600px">
+  <br>
+  <em>Figure 2: OpenJ9 vs HotSpot memory footprint after startup</em>
+</p>
+<h2 id="ramp-up-time-and-peak-throughput">Ramp-up time and peak throughput</h2>
+<p>Both OpenJ9 and HotSpot reach about the same level of peak throughput in the benchmark tests. These results suggest that by running an application on OpenJ9 instead of HotSpot, you can achieve reductions in footprint and startup time without sacrificing throughput.</p>
+<p>With respect to ramp-up time, OpenJ9 reaches peak throughput 250 seconds sooner than HotSpot. Ramp-up time can be improved even further by offloading JIT compilations to a dedicated, remote <a href="https://eclipse.dev/openj9/docs/jitserver">JITServer</a>. This approach eliminates CPU contention between the application and the JIT compiler, allowing the application to reach full speed more quickly.</p>
+<p align="center">
+  <img src="./images/DT8_rampup.png" alt="OpenJ9 throughput" width="60%" style="max-width:600px">
+  <br>
+  <em>Figure 3: OpenJ9 vs HotSpot throughput ramp-up comparison</em>
+</p>
+<h2 id="memory-footprint-during-application-ramp-up">Memory footprint during application ramp-up</h2>
+<p>Footprint during load is arguably a more important performance metric than footprint after startup. As depicted in figure 4, DayTrader8 running on OpenJ9 demonstrates a 48% footprint advantage over HotSpot, making it suited for cloud workloads where memory efficiency directly impacts cost.</p>
+<p>The footprint curve for OpenJ9 shows some spikes during the first 200 seconds of the run. These transient spikes occur because the JIT compiler requires extra memory to perform compilations. After the compilation activity subsides and the application reaches peak throughput, the memory spikes disappear. By offloading JIT compilations to a remote <a href="https://eclipse.dev/openj9/docs/jitserver">JITServer</a>, these footprint spikes can be eliminated, resulting in much smoother memory consumption as shown in the following figure.</p>
+<p align="center">
+  <img src="./images/DT8_footprint_during_load.png" alt="OpenJ9 footprint during load" width="60%" style="max-width:600px">
+  <br>
+  <em>Figure 4: OpenJ9 vs HotSpot memory footprint during load</em>
+</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>Our benchmark results with the DayTrader8 application running on Open Liberty demonstrate that Eclipse OpenJ9 offers significant advantages over HotSpot in several key performance areas:</p>
+<ol>
+<li><strong>Faster startup time</strong>: 10%-30% reduction in startup time</li>
+<li><strong>Smaller memory footprint</strong>: 31%-38% reduction after startup and 48% during application ramp-up</li>
+<li><strong>Faster ramp up</strong>: Reaches peak throughput 250 seconds sooner</li>
+<li><strong>Comparable throughput</strong>: No sacrifice in peak processing capability</li>
+</ol>
+<p>These benefits make Eclipse OpenJ9 an excellent choice for cloud deployments where resource efficiency and quick startup and ramp-up times are critical. The additional capabilities provided by technologies like Shared Class Cache, AOT compilation, and JITServer further enhance OpenJ9's performance characteristics, allowing for fine-tuning based on specific application needs.</p>
+<h2 id="benchmark-testing-details">Benchmark testing details</h2>
+<p>You can replicate these results by using equivalent systems and OpenJDK binary files.</p>
+<h3 id="system-under-test">System under test</h3>
+<ul>
+<li>Desktop machine with 4-core Intel(R) Core(TM) i7-6700K CPU @ 4.00 GHz</li>
+<li>Hyperthreading enabled</li>
+<li>16 GB RAM</li>
+<li>Ubuntu 20.04 operating system</li>
+</ul>
+<h3 id="benchmark-application">Benchmark application</h3>
+<p>Tests were done by using the DayTrader8 application, which models an online stock trading system. DayTrader8 was installed on top of Open Liberty release 25.0.0.9. The Java process was pinned to two full cores (4 HW threads) and running directly on the operating system. Data persistence was ensured by a DB2 process running on a second machine. For throughput experiments, load was applied by using JMeter 5.3 with 50 threads, running on a third machine.</p>
+<p>All performance numbers were collected with an SCC populated by a previous 'cold' run, which is not included in the measurements.</p>
+<h3 id="openjdk-binaries">OpenJDK binaries</h3>
+<p>The following binaries were used for performance testing:</p>
+<p>• OpenJDK 17 with OpenJ9</p>
+<pre class="hljs"><code><div>OpenJDK Runtime Environment (build 17.0.17-internal+0-adhoc..BuildJDK17x86-64linuxNightly)
+Eclipse OpenJ9 VM (build 17.0.17-internal+0-adhoc..BuildJDK17x86-64linuxNightly-master-f91a0f0b3cb, JRE 17 Linux amd64-64-Bit Compressed References 20251027_1123 (JIT enabled, AOT enabled)
+OpenJ9   - f91a0f0b3cb
+OMR      - 5be534e8d2c
+JCL      - 524b935753e based on jdk-17.0.17+10)
+</div></code></pre>
+<p>• OpenJDK 17 with HotSpot</p>
+<pre class="hljs"><code><div>openjdk version &quot;17.0.16&quot; 2025-07-15
+OpenJDK Runtime Environment Temurin-17.0.16+8 (build 17.0.16+8)
+OpenJDK 64-Bit Server VM Temurin-17.0.16+8 (build 17.0.16+8, mixed mode, sharing)
+</div></code></pre>
+
+</body>
+</html>
