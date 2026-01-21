@@ -1,8 +1,13 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>performanceoverpriew17.md</title>
-<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+<title>Eclipse OpenJ9 - Performance Overview</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 <style>
 /* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
@@ -352,11 +357,50 @@ code {
 	page-break-after: always;
 }
 
+body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
+.w3-bar,h1,button {font-family: "Montserrat", sans-serif}
+.fa-anchor,.fa-coffee {font-size:200px}
+
 </style>
 
 <script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
 </head>
 <body>
+
+<!-- Navbar -->
+<div class="w3-top">
+  <div class="w3-bar w3-cyan w3-card w3-left-align w3-large">
+    <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large w3-cyan" href="javascript:void(0);" onclick="myFunction()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>
+    <img class="w3-bar-item w3-padding-large w3-black" src="../../Logo.svg"></img>
+    <a href="../../index.html" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Home</a>
+    <a href="https://eclipse.dev/openj9/docs/" target="_blank" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Docs</a>
+    <a href="https://blog.openj9.org/" target="_blank" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Blog</a>
+    <a href="https://openj9.slack.com/" target="_blank" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Slack</a>
+    <a href="https://openj9.slack.com/join/shared_invite/enQtNDU4MDI4Mjk0MTk2LWVhNTMzMGY1N2JkODQ1OWE0NTNmZjM4ZDcxOTBiMjk3NGFjM2U0ZDNhMmY0MDZlNzU0ZjAyNzQ1ODlmYjg3MjA" target="_blank" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Join Slack</a>
+    <a href="https://github.com/eclipse-openj9/openj9/issues" target="_blank" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">OpenJ9 Issues</a>
+    
+    <div class="w3-right w3-xlarge">
+    <a class="w3-bar-item w3-button w3-hide-small fa fa-twitter w3-hover-opacity" href="https://twitter.com/openj9/" target="_blank"></a>
+    <a class="w3-bar-item w3-button w3-hide-small fa fa-github w3-hover-opacity" href="https://github.com/eclipse-openj9/openj9" target="_blank"></a>
+    <a class="w3-bar-item w3-button w3-hide-small fa fa-slack w3-hover-opacity" href="https://openj9.slack.com/" target="_blank"></a>
+    <a class="w3-bar-item w3-button w3-hide-small fa fa-stack-overflow w3-hover-opacity" href="https://stackoverflow.com/search?q=%23OpenJ9" target="_blank"></a>
+    </div>
+  </div>
+
+  <!-- Navbar on small screens -->
+  <div id="navDemo" class="w3-bar-block w3-white w3-hide w3-hide-large w3-hide-medium w3-large">
+    <a href="../../index.html" class="w3-bar-item w3-button w3-padding-large">Home</a>
+    <a href="https://eclipse.dev/openj9/docs/" target="_blank" class="w3-bar-item w3-button w3-padding-large">Docs</a>
+    <a href="https://blog.openj9.org/" target="_blank" class="w3-bar-item w3-button w3-padding-large">Blog</a>
+    <a href="https://openj9.slack.com/" target="_blank" class="w3-bar-item w3-button w3-padding-large">Slack</a>
+    <a href="https://openj9.slack.com/join/shared_invite/enQtNDU4MDI4Mjk0MTk2LWVhNTMzMGY1N2JkODQ1OWE0NTNmZjM4ZDcxOTBiMjk3NGFjM2U0ZDNhMmY0MDZlNzU0ZjAyNzQ1ODlmYjg3MjA" target="_blank" class="w3-bar-item w3-button w3-padding-large">Join Slack</a>
+    <a href="https://github.com/eclipse-openj9/openj9/issues" target="_blank" class="w3-bar-item w3-button w3-padding-large">OpenJ9 Issues</a>
+  </div>
+</div>
+
+<!-- Content wrapper with top padding to account for fixed navbar -->
+<div class="w3-light-grey" style="margin-top:80px; padding: 32px 0;">
+
   <script>
     mermaid.initialize({
       startOnLoad: true,
@@ -387,6 +431,7 @@ code {
 *
 * SPDX-License-Identifier: EPL-2.0 OR Apache-2.0 OR GPL-2.0-only WITH Classpath-exception-2.0 OR GPL-2.0-only WITH OpenJDK-assembly-exception-1.0
 -->
+
 <h1>Performance Overview </h1>
 <p>Application performance can be measured by using many different metrics, including startup time, ramp-up time, footprint, and response time, as well as throughput. At Eclipse OpenJ9™, we keep a watchful eye on all of these metrics, making sensible tradeoffs and providing tuning options that allow the virtual machine (VM) to be optimized for different workloads. We regularly test and optimize OpenJ9 performance when running the most popular Java frameworks such as <a href="https://openliberty.io">Open Liberty</a>, <a href="https://quarkus.io/">Quarkus</a>, <a href="https://spring.io/projects/spring-boot">Spring Boot</a>, and <a href="https://micronaut.io/">Micronaut</a>. We're proud of our results.</p>
 <h2>OpenJDK 17 performance with Eclipse OpenJ9 </h2>
@@ -413,7 +458,7 @@ code {
     </td>
   </tr>
 </table>
-<p>For more information, see <a href = "daytrader8_java17.html">OpenJDK 17 performance with Eclipse OpenJ9</a>.</p>
+<p>For more information, see <a href="daytrader8_java17.html" style="color: blue; text-decoration: underline;">OpenJDK 17 performance with Eclipse OpenJ9</a>.</p>
 <h2>OpenJDK 17 performance with Quarkus and Eclipse OpenJ9 InstantOn </h2>
 <p>Using Quarkus with OpenJ9 and InstantOn makes Java even more supersonic and subatomic!</p>
 <!-- Image Row - Using table layout for better compatibility with Markdown preview -->
@@ -438,5 +483,40 @@ code {
     </td>
   </tr>
 </table>
-<p>For more information, see <a href = "quarkus_restcrud_java17.html">Quarkus Performance with Eclipse OpenJ9 InstantOn</a>.</p>
+<p>For more information, see <a href="quarkus_restcrud_java17.html" style="color: blue; text-decoration: underline;">Quarkus Performance with Eclipse OpenJ9 InstantOn</a>.</p>
+
+</div>
+<!-- End content wrapper -->
+
+<!-- Footer -->
+<footer class="w3-container w3-opacity">  
+  <div class="w3-large w3-padding-32">
+    <a class="w3-hover-opacity" style="text-decoration:none" href="https://www.eclipse.org/" target="_blank">Eclipse Foundation Website</a> &nbsp;&nbsp;
+    <a class="w3-hover-opacity" style="text-decoration:none" href="https://www.eclipse.org/legal/privacy.php" target="_blank">Privacy Policy</a> &nbsp;&nbsp;
+    <a class="w3-hover-opacity" style="text-decoration:none" href="https://www.eclipse.org/legal/termsofuse.php" target="_blank">Terms of Use</a> &nbsp;&nbsp;
+    <a class="w3-hover-opacity" style="text-decoration:none" href="https://www.eclipse.org/legal/copyright.php" target="_blank">Copyright Agent</a> &nbsp;&nbsp;
+    <a class="w3-hover-opacity" style="text-decoration:none" href="https://www.eclipse.org/legal/" target="_blank">Legal</a>
+    <div class="w3-right w3-xlarge">
+    <a class="w3-button fa fa-twitter w3-hover-opacity" href="https://twitter.com/openj9/" target="_blank"></a>
+    <a class="w3-button fa fa-github w3-hover-opacity" href="https://github.com/eclipse-openj9/openj9" target="_blank"></a>
+    <a class="w3-button fa fa-slack w3-hover-opacity" href="https://openj9.slack.com/" target="_blank"></a>
+    <a class="w3-button fa fa-stack-overflow w3-hover-opacity" href="https://stackoverflow.com/search?q=%23OpenJ9" target="_blank"></a>
+    </div>
+    <p><a class="w3-right w3-hover-opacity" style="text-decoration:none" href="https://wiki.eclipse.org/Development_Resources/Process_Guidelines/What_is_Incubation" target="_blank">OpenJ9 is an Eclipse Incubator Project</a></p>
+ </div>
+</footer>
+
+<script>
+// Used to toggle the menu on small screens when clicking on the menu button
+function myFunction() {
+  var x = document.getElementById("navDemo");
+  if (x.className.indexOf("w3-show") == -1) {
+    x.className += " w3-show";
+  } else { 
+    x.className = x.className.replace(" w3-show", "");
+  }
+}
+</script>
+
+</body>
 </html>

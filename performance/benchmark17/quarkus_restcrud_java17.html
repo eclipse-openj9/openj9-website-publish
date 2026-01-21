@@ -1,8 +1,13 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>quarkus_restcrud_Java17.md</title>
-<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+<title>Eclipse OpenJ9 - Quarkus Performance with Eclipse OpenJ9 InstantOn</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 <style>
 /* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
@@ -352,11 +357,54 @@ code {
 	page-break-after: always;
 }
 
+body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
+.w3-bar,h1,button {font-family: "Montserrat", sans-serif}
+.fa-anchor,.fa-coffee {font-size:200px}
+
+/* Offset anchor links to account for fixed header */
+h2[id], h3[id] {
+  scroll-margin-top: 100px;
+}
+
 </style>
 
 <script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
 </head>
 <body>
+
+<!-- Navbar -->
+<div class="w3-top">
+  <div class="w3-bar w3-cyan w3-card w3-left-align w3-large">
+    <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large w3-cyan" href="javascript:void(0);" onclick="myFunction()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>
+    <img class="w3-bar-item w3-padding-large w3-black" src="../../Logo.svg"></img>
+    <a href="../../index.html" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Home</a>
+    <a href="https://eclipse.dev/openj9/docs/" target="_blank" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Docs</a>
+    <a href="https://blog.openj9.org/" target="_blank" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Blog</a>
+    <a href="https://openj9.slack.com/" target="_blank" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Slack</a>
+    <a href="https://openj9.slack.com/join/shared_invite/enQtNDU4MDI4Mjk0MTk2LWVhNTMzMGY1N2JkODQ1OWE0NTNmZjM4ZDcxOTBiMjk3NGFjM2U0ZDNhMmY0MDZlNzU0ZjAyNzQ1ODlmYjg3MjA" target="_blank" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Join Slack</a>
+    <a href="https://github.com/eclipse-openj9/openj9/issues" target="_blank" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">OpenJ9 Issues</a>
+    <div class="w3-right w3-xlarge">
+    <a class="w3-bar-item w3-button w3-hide-small fa fa-twitter w3-hover-opacity" href="https://twitter.com/openj9/" target="_blank"></a>
+    <a class="w3-bar-item w3-button w3-hide-small fa fa-github w3-hover-opacity" href="https://github.com/eclipse-openj9/openj9" target="_blank"></a>
+    <a class="w3-bar-item w3-button w3-hide-small fa fa-slack w3-hover-opacity" href="https://openj9.slack.com/" target="_blank"></a>
+    <a class="w3-bar-item w3-button w3-hide-small fa fa-stack-overflow w3-hover-opacity" href="https://stackoverflow.com/search?q=%23OpenJ9" target="_blank"></a>
+    </div>
+  </div>
+
+  <!-- Navbar on small screens -->
+  <div id="navDemo" class="w3-bar-block w3-white w3-hide w3-hide-large w3-hide-medium w3-large">
+    <a href="../../index.html" class="w3-bar-item w3-button w3-padding-large">Home</a>
+    <a href="https://eclipse.dev/openj9/docs/" target="_blank" class="w3-bar-item w3-button w3-padding-large">Docs</a>
+    <a href="https://blog.openj9.org/" target="_blank" class="w3-bar-item w3-button w3-padding-large">Blog</a>
+    <a href="https://openj9.slack.com/" target="_blank" class="w3-bar-item w3-button w3-padding-large">Slack</a>
+    <a href="https://openj9.slack.com/join/shared_invite/enQtNDU4MDI4Mjk0MTk2LWVhNTMzMGY1N2JkODQ1OWE0NTNmZjM4ZDcxOTBiMjk3NGFjM2U0ZDNhMmY0MDZlNzU0ZjAyNzQ1ODlmYjg3MjA" target="_blank" class="w3-bar-item w3-button w3-padding-large">Join Slack</a>
+    <a href="https://github.com/eclipse-openj9/openj9/issues" target="_blank" class="w3-bar-item w3-button w3-padding-large">OpenJ9 Issues</a>
+  </div>
+</div>
+
+<!-- Content wrapper with top padding to account for fixed navbar -->
+<div class="w3-light-grey" style="margin-top:80px; padding: 32px 0;">
+
   <script>
     mermaid.initialize({
       startOnLoad: true,
@@ -390,22 +438,22 @@ code {
 <h1 id="quarkus-performance-with-eclipse-openj9-instanton">Quarkus Performance with Eclipse OpenJ9 InstantOn</h1>
 <h2 id="table-of-contents">Table of Contents</h2>
 <ul>
-<li><a href="#introduction">Introduction</a></li>
-<li><a href="#metrics-and-configurations">Metrics and configurations</a></li>
-<li><a href="#time-to-first-response">Time to first response</a></li>
-<li><a href="#memory-footprint-after-first-response">Memory footprint after first response</a></li>
-<li><a href="#steady-state-throughput">Steady-state throughput</a></li>
-<li><a href="#throughput-per-mb">Throughput per MB</a></li>
-<li><a href="#conclusion">Conclusion</a></li>
-<li><a href="#benchmark-testing-details">Benchmark testing details</a></li>
+<li><a href="#introduction" style="color: blue; text-decoration: underline;">Introduction</a></li>
+<li><a href="#metrics-and-configurations" style="color: blue; text-decoration: underline;">Metrics and configurations</a></li>
+<li><a href="#time-to-first-response" style="color: blue; text-decoration: underline;">Time to first response</a></li>
+<li><a href="#memory-footprint-after-first-response" style="color: blue; text-decoration: underline;">Memory footprint after first response</a></li>
+<li><a href="#steady-state-throughput" style="color: blue; text-decoration: underline;">Steady-state throughput</a></li>
+<li><a href="#throughput-per-mb" style="color: blue; text-decoration: underline;">Throughput per MB</a></li>
+<li><a href="#conclusion" style="color: blue; text-decoration: underline;">Conclusion</a></li>
+<li><a href="#benchmark-testing-details" style="color: blue; text-decoration: underline;">Benchmark testing details</a></li>
 </ul>
 <h2 id="introduction">Introduction</h2>
-<p><a href="https://quarkus.io/">Quarkus</a> is a Kubernetes-native Java framework optimized for cloud-native applications.
-Designed from the ground up for containerized environments, Quarkus supports both traditional Java Virtual Machine (JVM) execution and native image compilation through <a href="https://www.graalvm.org">GraalVM</a>. It offers fast startup times, low memory usage, and compact application sizes, making it an excellent choice for microservices and serverless workloads.
-In this article, we evaluate the performance of a containerized Quarkus-based application, namely <a href="https://github.com/jdmcclur/restCrud">RestCRUD</a>, running in the following two modes:</p>
+<p><a href="https://quarkus.io/" style="color: blue; text-decoration: underline;">Quarkus</a> is a Kubernetes-native Java framework optimized for cloud-native applications.
+Designed from the ground up for containerized environments, Quarkus supports both traditional Java Virtual Machine (JVM) execution and native image compilation through <a href="https://www.graalvm.org" style="color: blue; text-decoration: underline;">GraalVM</a>. It offers fast startup times, low memory usage, and compact application sizes, making it an excellent choice for microservices and serverless workloads.
+In this article, we evaluate the performance of a containerized Quarkus-based application, namely <a href="https://github.com/jdmcclur/restCrud" style="color: blue; text-decoration: underline;">RestCRUD</a>, running in the following two modes:</p>
 <ol>
 <li>As a native image compiled with GraalVM</li>
-<li>On the Eclipse OpenJ9 JVM using <a href="https://blog.openj9.org/2022/09/26/fast-jvm-startup-with-openj9-criu-support/">InstantOn technology</a></li>
+<li>On the Eclipse OpenJ9 JVM using <a href="https://blog.openj9.org/2022/09/26/fast-jvm-startup-with-openj9-criu-support/" style="color: blue; text-decoration: underline;">InstantOn technology</a></li>
 </ol>
 <p>Our experiments reveal the following key findings about InstantOn performance:</p>
 <ul>
@@ -450,7 +498,7 @@ Crucially, InstantOn achieves this performance while maintaining full Java compa
 </p>
 <h2 id="memory-footprint-after-first-response">Memory footprint after first response</h2>
 <p>After the first response, OpenJ9 InstantOn uses only 9 MB more memory than the Native Image — a modest 10% increase. However, compared to HotSpot InstantOn uses 40% less memory, making it a more efficient choice for cloud deployments.
-This lean memory profile aligns with Quarkus’s design goals and contributes to lower infrastructure costs in memory-constrained environments.</p>
+This lean memory profile aligns with Quarkus's design goals and contributes to lower infrastructure costs in memory-constrained environments.</p>
 <p align="center">
   <img src="./images/Quarkus_rss_fr_detail.png" alt="Quarkus RestCRUD footprint after first response" width="60%" style="max-width:600px">
   <br>
@@ -490,11 +538,11 @@ As shown in figure 4, OpenJ9 InstantOn achieves 38% higher throughput-per-MB tha
 <li>Ubuntu 20.04 operating system</li>
 </ul>
 <h3 id="benchmark-application">Benchmark application</h3>
-<p>The tests used a simple Quarkus-based <a href="https://github.com/jdmcclur/restCrud">RESTful CRUD application</a>, built with Quarkus version 3.20.3 and packaged into Docker containers.</p>
+<p>The tests used a simple Quarkus-based <a href="https://github.com/jdmcclur/restCrud" style="color: blue; text-decoration: underline;">RESTful CRUD application</a>, built with Quarkus version 3.20.3 and packaged into Docker containers.</p>
 <h3 id="native-image-build">Native Image Build</h3>
-<p>The Native Image container was built by using <a href="https://github.com/graalvm/mandrel">mandrel</a> version 23.0.6.0, based on JDK 17.0.13+11. Mandrel is a GraalVM distribution optimized for Quarkus applications.</p>
+<p>The Native Image container was built by using <a href="https://github.com/graalvm/mandrel" style="color: blue; text-decoration: underline;">mandrel</a> version 23.0.6.0, based on JDK 17.0.13+11. Mandrel is a GraalVM distribution optimized for Quarkus applications.</p>
 <h3 id="openj9-instanton-image-build">OpenJ9 InstantOn Image build</h3>
-<p>For building the InstantOn Image, we used the code from <a href="https://github.com/ibmruntimes/semeru-containers">semeru-containers</a> to create a first layer based on the following OpenJ9 nightly build:</p>
+<p>For building the InstantOn Image, we used the code from <a href="https://github.com/ibmruntimes/semeru-containers" style="color: blue; text-decoration: underline;">semeru-containers</a> to create a first layer based on the following OpenJ9 nightly build:</p>
 <pre class="hljs"><code><div>OpenJDK Runtime Environment (build 17.0.17-internal+0-adhoc..BuildJDK17x86-64linuxNightly)
 Eclipse OpenJ9 VM (build 17.0.17-internal+0-adhoc..BuildJDK17x86-64linuxNightly-master-f91a0f0b3cb, JRE 17 Linux amd64-64-Bit Compressed References 20251027_1123 (JIT enabled, AOT enabled)
 OpenJ9   - f91a0f0b3cb
@@ -503,7 +551,40 @@ JCL      - 524b935753e based on jdk-17.0.17+10)
 </div></code></pre>
 <p>A second layer containing the RestCRUD application binaries was added. The container was then started, checkpointed, and committed to produce the final InstantOn image.</p>
 <h3 id="runtime-configuration-and-load-testing">Runtime configuration and load testing</h3>
-<p>At runtime, application containers were pinned to 1 CPU core and limited to 256 MB of memory. Data persistence was ensured by a <a href="https://www.postgresql.org/">PostgreSQL</a> process (version 12.20) running on the same machine. For throughput experiments, load was applied by using <a href="https://github.com/wg/wrk">wrk</a> with 10 threads and 10 connections in two 2-minute bursts. The first burst served as a warm-up phase and was excluded from performance measurements. Steady-state throughput and memory footprint were recorded during the second burst.</p>
+<p>At runtime, application containers were pinned to 1 CPU core and limited to 256 MB of memory. Data persistence was ensured by a <a href="https://www.postgresql.org/" style="color: blue; text-decoration: underline;">PostgreSQL</a> process (version 12.20) running on the same machine. For throughput experiments, load was applied by using <a href="https://github.com/wg/wrk" style="color: blue; text-decoration: underline;">wrk</a> with 10 threads and 10 connections in two 2-minute bursts. The first burst served as a warm-up phase and was excluded from performance measurements. Steady-state throughput and memory footprint were recorded during the second burst.</p>
+
+</div>
+<!-- End content wrapper -->
+
+<!-- Footer -->
+<footer class="w3-container w3-opacity">  
+  <div class="w3-large w3-padding-32">
+    <a class="w3-hover-opacity" style="text-decoration:none" href="https://www.eclipse.org/" target="_blank">Eclipse Foundation Website</a> &nbsp;&nbsp;
+    <a class="w3-hover-opacity" style="text-decoration:none" href="https://www.eclipse.org/legal/privacy.php" target="_blank">Privacy Policy</a> &nbsp;&nbsp;
+    <a class="w3-hover-opacity" style="text-decoration:none" href="https://www.eclipse.org/legal/termsofuse.php" target="_blank">Terms of Use</a> &nbsp;&nbsp;
+    <a class="w3-hover-opacity" style="text-decoration:none" href="https://www.eclipse.org/legal/copyright.php" target="_blank">Copyright Agent</a> &nbsp;&nbsp;
+    <a class="w3-hover-opacity" style="text-decoration:none" href="https://www.eclipse.org/legal/" target="_blank">Legal</a>
+    <div class="w3-right w3-xlarge">
+    <a class="w3-button fa fa-twitter w3-hover-opacity" href="https://twitter.com/openj9/" target="_blank"></a>
+    <a class="w3-button fa fa-github w3-hover-opacity" href="https://github.com/eclipse-openj9/openj9" target="_blank"></a>
+    <a class="w3-button fa fa-slack w3-hover-opacity" href="https://openj9.slack.com/" target="_blank"></a>
+    <a class="w3-button fa fa-stack-overflow w3-hover-opacity" href="https://stackoverflow.com/search?q=%23OpenJ9" target="_blank"></a>
+    </div>
+    <p><a class="w3-right w3-hover-opacity" style="text-decoration:none" href="https://wiki.eclipse.org/Development_Resources/Process_Guidelines/What_is_Incubation" target="_blank">OpenJ9 is an Eclipse Incubator Project</a></p>
+ </div>
+</footer>
+
+<script>
+// Used to toggle the menu on small screens when clicking on the menu button
+function myFunction() {
+  var x = document.getElementById("navDemo");
+  if (x.className.indexOf("w3-show") == -1) {
+    x.className += " w3-show";
+  } else { 
+    x.className = x.className.replace(" w3-show", "");
+  }
+}
+</script>
 
 </body>
 </html>
