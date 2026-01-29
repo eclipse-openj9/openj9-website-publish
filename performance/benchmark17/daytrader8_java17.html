@@ -1,8 +1,13 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>daytrader8_Java17.md</title>
-<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+<title>Eclipse OpenJ9 - OpenJDK 17 Performance with Eclipse OpenJ9</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 <style>
 /* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
@@ -352,11 +357,54 @@ code {
 	page-break-after: always;
 }
 
+body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
+.w3-bar,h1,button {font-family: "Montserrat", sans-serif}
+.fa-anchor,.fa-coffee {font-size:200px}
+
+/* Offset anchor links to account for fixed header */
+h2[id] {
+  scroll-margin-top: 100px;
+}
+
 </style>
 
 <script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
 </head>
 <body>
+
+<!-- Navbar -->
+<div class="w3-top">
+  <div class="w3-bar w3-cyan w3-card w3-left-align w3-large">
+    <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large w3-cyan" href="javascript:void(0);" onclick="myFunction()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>
+    <img class="w3-bar-item w3-padding-large w3-black" src="../../Logo.svg"></img>
+    <a href="../../index.html" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Home</a>
+    <a href="https://eclipse.dev/openj9/docs/" target="_blank" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Docs</a>
+    <a href="https://blog.openj9.org/" target="_blank" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Blog</a>
+    <a href="https://openj9.slack.com/" target="_blank" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Slack</a>
+    <a href="https://openj9.slack.com/join/shared_invite/enQtNDU4MDI4Mjk0MTk2LWVhNTMzMGY1N2JkODQ1OWE0NTNmZjM4ZDcxOTBiMjk3NGFjM2U0ZDNhMmY0MDZlNzU0ZjAyNzQ1ODlmYjg3MjA" target="_blank" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Join Slack</a>
+    <a href="https://github.com/eclipse-openj9/openj9/issues" target="_blank" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">OpenJ9 Issues</a>
+    <div class="w3-right w3-xlarge">
+    <a class="w3-bar-item w3-button w3-hide-small fa fa-twitter w3-hover-opacity" href="https://twitter.com/openj9/" target="_blank"></a>
+    <a class="w3-bar-item w3-button w3-hide-small fa fa-github w3-hover-opacity" href="https://github.com/eclipse-openj9/openj9" target="_blank"></a>
+    <a class="w3-bar-item w3-button w3-hide-small fa fa-slack w3-hover-opacity" href="https://openj9.slack.com/" target="_blank"></a>
+    <a class="w3-bar-item w3-button w3-hide-small fa fa-stack-overflow w3-hover-opacity" href="https://stackoverflow.com/search?q=%23OpenJ9" target="_blank"></a>
+    </div>
+  </div>
+
+  <!-- Navbar on small screens -->
+  <div id="navDemo" class="w3-bar-block w3-white w3-hide w3-hide-large w3-hide-medium w3-large">
+    <a href="../../index.html" class="w3-bar-item w3-button w3-padding-large">Home</a>
+    <a href="https://eclipse.dev/openj9/docs/" target="_blank" class="w3-bar-item w3-button w3-padding-large">Docs</a>
+    <a href="https://blog.openj9.org/" target="_blank" class="w3-bar-item w3-button w3-padding-large">Blog</a>
+    <a href="https://openj9.slack.com/" target="_blank" class="w3-bar-item w3-button w3-padding-large">Slack</a>
+    <a href="https://openj9.slack.com/join/shared_invite/enQtNDU4MDI4Mjk0MTk2LWVhNTMzMGY1N2JkODQ1OWE0NTNmZjM4ZDcxOTBiMjk3NGFjM2U0ZDNhMmY0MDZlNzU0ZjAyNzQ1ODlmYjg3MjA" target="_blank" class="w3-bar-item w3-button w3-padding-large">Join Slack</a>
+    <a href="https://github.com/eclipse-openj9/openj9/issues" target="_blank" class="w3-bar-item w3-button w3-padding-large">OpenJ9 Issues</a>
+  </div>
+</div>
+
+<!-- Content wrapper with top padding to account for fixed navbar -->
+<div class="w3-light-grey" style="margin-top:80px; padding: 32px 0;">
+
   <script>
     mermaid.initialize({
       startOnLoad: true,
@@ -390,18 +438,18 @@ code {
 <h1 id="openjdk-17-performance-with-eclipse-openj9">OpenJDK 17 performance with Eclipse OpenJ9</h1>
 <h2 id="table-of-contents">Table of Contents</h2>
 <ul>
-<li><a href="#introduction">Introduction</a></li>
-<li><a href="#metrics-and-configurations">Metrics and configurations</a></li>
-<li><a href="#startup-time">Startup time</a></li>
-<li><a href="#memory-footprint-after-startup">Memory footprint after startup</a></li>
-<li><a href="#ramp-up-time-and-peak-throughput">Ramp-up time and peak throughput</a></li>
-<li><a href="#memory-footprint-during-application-ramp-up">Memory footprint during application ramp-up</a></li>
-<li><a href="#conclusion">Conclusion</a></li>
-<li><a href="#benchmark-testing-details">Benchmark testing details</a></li>
+<li><a href="#introduction" style="color: blue; text-decoration: underline;">Introduction</a></li>
+<li><a href="#metrics-and-configurations" style="color: blue; text-decoration: underline;">Metrics and configurations</a></li>
+<li><a href="#startup-time" style="color: blue; text-decoration: underline;">Startup time</a></li>
+<li><a href="#memory-footprint-after-startup" style="color: blue; text-decoration: underline;">Memory footprint after startup</a></li>
+<li><a href="#ramp-up-time-and-peak-throughput" style="color: blue; text-decoration: underline;">Ramp-up time and peak throughput</a></li>
+<li><a href="#memory-footprint-during-application-ramp-up" style="color: blue; text-decoration: underline;">Memory footprint during application ramp-up</a></li>
+<li><a href="#conclusion" style="color: blue; text-decoration: underline;">Conclusion</a></li>
+<li><a href="#benchmark-testing-details" style="color: blue; text-decoration: underline;">Benchmark testing details</a></li>
 </ul>
 <h2 id="introduction">Introduction</h2>
 <p>Our benchmark results suggest that running an application on Eclipse OpenJ9™ instead of HotSpot delivers reductions in footprint and startup time without sacrificing throughput.</p>
-<p>To evaluate the performance characteristics of OpenJ9, we used the <a href="https://github.com/OpenLiberty/sample.daytrader8">DayTrader8 J2EE application</a> running on top of <a href="https://openliberty.io">Open Liberty</a> framework version 25.0.0.9. The experiments produced the following results:</p>
+<p>To evaluate the performance characteristics of OpenJ9, we used the <a href="https://github.com/OpenLiberty/sample.daytrader8" style="color: blue; text-decoration: underline;">DayTrader8 J2EE application</a> running on top of <a href="https://openliberty.io" style="color: blue; text-decoration: underline;">Open Liberty</a> framework version 25.0.0.9. The experiments produced the following results:</p>
 <ul>
 <li>10%-30% faster startup time</li>
 <li>31%-38% smaller startup footprint</li>
@@ -413,7 +461,7 @@ code {
 <ol>
 <li>
 <p><strong>Startup time:</strong>
-Startup time is measured from the moment the VM process is started until the moment Open Liberty prints <em>&quot;ready to run a smarter planet&quot;</em>.</p>
+Startup time is measured from the moment the VM process is started until the moment Open Liberty prints <em>"ready to run a smarter planet"</em>.</p>
 </li>
 <li>
 <p><strong>Memory footprint after startup:</strong>
@@ -439,7 +487,7 @@ Peak throughput is defined as the number of transactions that are processed per 
 </li>
 </ol>
 <p>In all our experiments, we set the maximum heap size to 512 MB by using <code>-Xmx512m</code>, while leaving the initial heap size unspecified.</p>
-<p>By default, Open Liberty enables the OpenJ9 <a href="https://eclipse.dev/openj9/docs/shrc/">shared class cache</a> (SCC) and <a href="https://blog.openj9.org/2018/10/10/intro-to-ahead-of-time-compilation/">dynamic Ahead-of-Time</a> (AOT) compilation. These technologies can significantly improve startup and ramp-up of Java applications with minimal effect on throughput.</p>
+<p>By default, Open Liberty enables the OpenJ9 <a href="https://eclipse.dev/openj9/docs/shrc/" style="color: blue; text-decoration: underline;">shared class cache</a> (SCC) and <a href="https://blog.openj9.org/2018/10/10/intro-to-ahead-of-time-compilation/" style="color: blue; text-decoration: underline;">dynamic Ahead-of-Time</a> (AOT) compilation. These technologies can significantly improve startup and ramp-up of Java applications with minimal effect on throughput.</p>
 <p>The default SCC size that is used by Open Liberty is 80 MB, which we use throughout this document unless otherwise specified. However, because DayTrader8 is a relatively large application, some experiments also evaluate a configuration with a 150 MB SCC (<code>-Xscmx150m</code>) to demonstrate the impact of cache size on performance.</p>
 <h2 id="startup-time">Startup time</h2>
 <p>Thanks to the SCC and AOT compilation, OpenJ9 starts up the DayTrader8 application 10-30% faster than HotSpot. The startup improvement depends on the SCC size: using the default 80 MB cache provides a 10% speedup, while increasing the cache to 150 MB delivers a 30% improvement.</p>
@@ -458,7 +506,7 @@ Peak throughput is defined as the number of transactions that are processed per 
 </p>
 <h2 id="ramp-up-time-and-peak-throughput">Ramp-up time and peak throughput</h2>
 <p>Both OpenJ9 and HotSpot reach about the same level of peak throughput in the benchmark tests. These results suggest that by running an application on OpenJ9 instead of HotSpot, you can achieve reductions in footprint and startup time without sacrificing throughput.</p>
-<p>With respect to ramp-up time, OpenJ9 reaches peak throughput 250 seconds sooner than HotSpot. Ramp-up time can be improved even further by offloading JIT compilations to a dedicated, remote <a href="https://eclipse.dev/openj9/docs/jitserver">JITServer</a>. This approach eliminates CPU contention between the application and the JIT compiler, allowing the application to reach full speed more quickly.</p>
+<p>With respect to ramp-up time, OpenJ9 reaches peak throughput 250 seconds sooner than HotSpot. Ramp-up time can be improved even further by offloading JIT compilations to a dedicated, remote <a href="https://eclipse.dev/openj9/docs/jitserver" style="color: blue; text-decoration: underline;">JITServer</a>. This approach eliminates CPU contention between the application and the JIT compiler, allowing the application to reach full speed more quickly.</p>
 <p align="center">
   <img src="./images/DT8_rampup.png" alt="OpenJ9 throughput" width="60%" style="max-width:600px">
   <br>
@@ -466,7 +514,7 @@ Peak throughput is defined as the number of transactions that are processed per 
 </p>
 <h2 id="memory-footprint-during-application-ramp-up">Memory footprint during application ramp-up</h2>
 <p>Footprint during load is arguably a more important performance metric than footprint after startup. As depicted in figure 4, DayTrader8 running on OpenJ9 demonstrates a 48% footprint advantage over HotSpot, making it suited for cloud workloads where memory efficiency directly impacts cost.</p>
-<p>The footprint curve for OpenJ9 shows some spikes during the first 200 seconds of the run. These transient spikes occur because the JIT compiler requires extra memory to perform compilations. After the compilation activity subsides and the application reaches peak throughput, the memory spikes disappear. By offloading JIT compilations to a remote <a href="https://eclipse.dev/openj9/docs/jitserver">JITServer</a>, these footprint spikes can be eliminated, resulting in much smoother memory consumption as shown in the following figure.</p>
+<p>The footprint curve for OpenJ9 shows some spikes during the first 200 seconds of the run. These transient spikes occur because the JIT compiler requires extra memory to perform compilations. After the compilation activity subsides and the application reaches peak throughput, the memory spikes disappear. By offloading JIT compilations to a remote <a href="https://eclipse.dev/openj9/docs/jitserver" style="color: blue; text-decoration: underline;">JITServer</a>, these footprint spikes can be eliminated, resulting in much smoother memory consumption as shown in the following figure.</p>
 <p align="center">
   <img src="./images/DT8_footprint_during_load.png" alt="OpenJ9 footprint during load" width="60%" style="max-width:600px">
   <br>
@@ -503,10 +551,43 @@ OMR      - 5be534e8d2c
 JCL      - 524b935753e based on jdk-17.0.17+10)
 </div></code></pre>
 <p>• OpenJDK 17 with HotSpot</p>
-<pre class="hljs"><code><div>openjdk version &quot;17.0.16&quot; 2025-07-15
+<pre class="hljs"><code><div>openjdk version "17.0.16" 2025-07-15
 OpenJDK Runtime Environment Temurin-17.0.16+8 (build 17.0.16+8)
 OpenJDK 64-Bit Server VM Temurin-17.0.16+8 (build 17.0.16+8, mixed mode, sharing)
 </div></code></pre>
+
+</div>
+<!-- End content wrapper -->
+
+<!-- Footer -->
+<footer class="w3-container w3-opacity">  
+  <div class="w3-large w3-padding-32">
+    <a class="w3-hover-opacity" style="text-decoration:none" href="https://www.eclipse.org/" target="_blank">Eclipse Foundation Website</a> &nbsp;&nbsp;
+    <a class="w3-hover-opacity" style="text-decoration:none" href="https://www.eclipse.org/legal/privacy.php" target="_blank">Privacy Policy</a> &nbsp;&nbsp;
+    <a class="w3-hover-opacity" style="text-decoration:none" href="https://www.eclipse.org/legal/termsofuse.php" target="_blank">Terms of Use</a> &nbsp;&nbsp;
+    <a class="w3-hover-opacity" style="text-decoration:none" href="https://www.eclipse.org/legal/copyright.php" target="_blank">Copyright Agent</a> &nbsp;&nbsp;
+    <a class="w3-hover-opacity" style="text-decoration:none" href="https://www.eclipse.org/legal/" target="_blank">Legal</a>
+    <div class="w3-right w3-xlarge">
+    <a class="w3-button fa fa-twitter w3-hover-opacity" href="https://twitter.com/openj9/" target="_blank"></a>
+    <a class="w3-button fa fa-github w3-hover-opacity" href="https://github.com/eclipse-openj9/openj9" target="_blank"></a>
+    <a class="w3-button fa fa-slack w3-hover-opacity" href="https://openj9.slack.com/" target="_blank"></a>
+    <a class="w3-button fa fa-stack-overflow w3-hover-opacity" href="https://stackoverflow.com/search?q=%23OpenJ9" target="_blank"></a>
+    </div>
+    <p><a class="w3-right w3-hover-opacity" style="text-decoration:none" href="https://wiki.eclipse.org/Development_Resources/Process_Guidelines/What_is_Incubation" target="_blank">OpenJ9 is an Eclipse Incubator Project</a></p>
+ </div>
+</footer>
+
+<script>
+// Used to toggle the menu on small screens when clicking on the menu button
+function myFunction() {
+  var x = document.getElementById("navDemo");
+  if (x.className.indexOf("w3-show") == -1) {
+    x.className += " w3-show";
+  } else { 
+    x.className = x.className.replace(" w3-show", "");
+  }
+}
+</script>
 
 </body>
 </html>

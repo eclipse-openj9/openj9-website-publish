@@ -26,6 +26,7 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
     <a href="https://openj9.slack.com/" target="_blank" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Slack</a>
     <a href="https://openj9.slack.com/join/shared_invite/enQtNDU4MDI4Mjk0MTk2LWVhNTMzMGY1N2JkODQ1OWE0NTNmZjM4ZDcxOTBiMjk3NGFjM2U0ZDNhMmY0MDZlNzU0ZjAyNzQ1ODlmYjg3MjA" target="_blank" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Join Slack</a>
     <a href="https://github.com/eclipse-openj9/openj9/issues" target="_blank" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">OpenJ9 Issues</a>
+    <a href="performance/benchmark17/performanceoverpriew17.html" target="_blank" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Performance</a>
     <div class="w3-right w3-xlarge">
     <a class="w3-bar-item w3-button w3-hide-small fa fa-twitter w3-hover-opacity" href="https://twitter.com/openj9/" target="_blank"></a>
     <a class="w3-bar-item w3-button w3-hide-small fa fa-github w3-hover-opacity" href="https://github.com/eclipse-openj9/openj9" target="_blank"></a>
@@ -118,27 +119,26 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
 <div class="w3-padding-64 w3-container w3-light-grey">
   <div class="w3-content">
         <div class="w3-center">
-      <h1 id="news">Eclipse OpenJ9 version 0.56.0 released</h1>
-<p>October 2025</p>
+      <h1 id="news">Eclipse OpenJ9 version 0.57.0 released</h1>
+<p>January 2026</p>
 </div>
-<p>We're pleased to announce the availability of Eclipse OpenJ9 v0.56.0.</p>
+<p>We're pleased to announce the availability of Eclipse OpenJ9 v0.57.0.</p>
 <p>This release supports OpenJDK 8, 11, 17, 21, and 25. For more information about supported platforms and OpenJDK versions, see <a class="w3-hover-opacity" href="https://eclipse.dev/openj9/docs/openj9_support/" target="_blank">Supported environments</a>.</p>
 <p>Other updates in this release include the following:</p>
  <ul>
-  <li>For OpenJDK 25 and later binaries, XL C++ Runtime 17.1.3.0 or later is required for AIX&reg; OpenJ9 builds.</li>
-  <li>On all platforms except z/OS&reg;, the <code>getCpuLoad()</code> method now collects two internal samples so that a valid CPU usage value can be returned instead of <code>0</code> return value on the first call. On z/OS, the CPU load that is reported by the <code>getCpuLoad</code> method is obtained directly from the system control blocks, without the need to collect samples.</li>
-  <li>New parameters, <code>enableEstimateFragmentation</code> and <code>disableEstimateFragmentation</code> are added to the <code>-Xgc</code> option to control the calculating and reporting of the estimates of the macro fragmentation.
-  </li>
-  <li>The NativeLibrary and SystemProcess JFR events are supported in all platforms except z/OS. To record and analyze the SystemProcess JFR event on z/OS (2.5 and 3.1), you must install <a class="w3-hover-opacity" href="https://www.ibm.com/support/pages/apar/OA62757" target="_blank">APAR OA62757</a>.</li>
-  <li>The format of the <code>java.vm.version</code> system property value is updated to be compatible with the Runtime.Version parser. This update that was initiated in the 0.55.0 release affects 0.56.0 and all future releases also.</li>
+  <li>The <code>zlib</code> compression library is now bundled on all Linux platforms except Linux on IBM Z. You don't have to specifically install the <code>zlib</code> library with the operating system for data compression and decompression.</li>
+<li>On all platforms except Windows, when an asynchronous signal <code>SIGABRT</code>, <code>SIGQUIT</code>, or <code>SIGUSR2</code> occurs, the process ID (pid) and the name of the process that sent the signal is recorded and reported in a tracepoint and in the javacore.</li>
+<li>On the Windows platform, a feature that uses the x86-64 hardware and signal handler for improving the performance of null object checks and integer division overflows is temporarily disabled by default because of recent VM crashes that were observed on Windows 11 and Windows Server 2022. Disabling this signal handling optimization feature is a temporary measure while the root cause of the problem is determined.</li>
+<li>In Java 11 of this release, a New Input/Output (NIO) channel selector provider, which is based on the pollset system facility, is implemented on AIX. The new implementation provides significant performance benefits when reading from, writing to, or managing multiple network sockets.<br>This feature is not enabled by default. You can configure it by specifying <code>-Djava.nio.channels.spi.SelectorProvider=sun.nio.ch.PollsetSelectorProvider</code> on the command line.</li>
 </ul>
   <p>To read more about these and other changes, see the <a class="w3-hover-opacity" href="https://eclipse.dev/openj9/docs/openj9_releases/" target="_blank">OpenJ9 user documentation</a>.</p>
   
   <p><b>Performance highlights include the following:</b></p>
 
    <ul>
-      <li>Optimization changes are done for higher JIT hotness levels (higher than warm) to improve application throughput.</li>
-      </ul>
+      <li>Throughput improvements are made to optimize several operations such as parking of threads, allocation of multi dimensional arrays, and var handles in general.</li>
+      <li>Depending on the workload, performance degradation from 0-10% on Windows was observed because of disabling of the signal handling optimization feature that uses the x86-64 hardware and signal handler for improving the performance of null object checks and integer division overflows.</li>
+    </ul>
   
   </div>
 </div>
