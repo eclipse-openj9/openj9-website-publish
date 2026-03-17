@@ -23,7 +23,7 @@
       
       
       <link rel="icon" href="../cr/openj9-logo.svg">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.2">
     
     
       
@@ -401,6 +401,34 @@
     
   
     Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../version0.58/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Version 0.58.0
   
 
     
@@ -1073,10 +1101,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_18" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_19" >
         
           
-          <label class="md-nav__link" for="__nav_5_18" id="__nav_5_18_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_5_19" id="__nav_5_19_label" tabindex="0">
             
   
   
@@ -1094,8 +1122,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_18_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_5_18">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_19_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_19">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -10436,6 +10464,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../xxdebuglocalmap.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    -XX:[+|-]UseDebugLocalMap
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../xxusegcstartuphints/" class="md-nav__link">
         
   
@@ -11328,9 +11384,64 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api-jdk26/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Java 26 API
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../openj9glossary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Glossary
+  
+
+    
+  </span>
+  
+  
+
+      </a>
     </li>
   
 
@@ -11609,7 +11720,7 @@
 <p>For more information, see <a href="../xxjitserveruseaotcache/"> <code>-XX:[+|-]JITServerUseAOTCache</code></a>.</p>
 <h3 id="the-extended-hot-code-replace-hcr-capability-disabled-and-xx-enableextendedhcr-option-added">The extended Hot Code Replace (HCR) capability disabled and <code>-XX:[+|-]EnableExtendedHCR</code> option added</h3>
 <p>By default, the extended HCR capability in the VM is disabled for all OpenJDK versions, which is a change from the previous releases. You can enable the HCR capability by using the new option, <a href="../xxenableextendedhcr/"><code>-XX:+EnableExtendedHCR</code></a> option.</p>
-<p>The extended HCR feature is deprecated in this release and will be removed in a future release. From OpenJDK 25 onwards, extended HCR will not be supported. Following that, the extended HCR support will be removed from other earlier OpenJDK versions also.</p>
+<p>The extended HCR feature is deprecated in this release and will be removed in a future release. From OpenJDK 29 onwards, extended HCR will not be supported. Following that, the extended HCR support will be removed from other earlier OpenJDK versions also.</p>
 <h3 id="new-system-property-added-to-improve-jcmd-attaching-in-case-of-the-socketexception-error-on-windows-platform">New system property added to improve <code>jcmd</code> attaching in case of the <code>SocketException</code> error on Windows platform</h3>
 <p>When the <code>jcmd</code> tool sends a command to a running VM, the command might throw the <code>Socket Exception</code> error on Windows platform. Instead of failing the attaching request, you can specify the number of times the tool retries attaching to the target VM with the new system property, <a href="../dcomibmtoolsattachretry/"><code>-Dcom.ibm.tools.attach.retry</code></a>.</p>
 <h3 id="-xtgcallocation-report-includes-core-allocation-cache-statistics-per-thread"><code>-Xtgc:allocation</code> report includes core allocation cache statistics per thread</h3>
@@ -11620,7 +11731,7 @@
 <p>For more information, see <a href="../xxshareorphans/"><code>-XX:[+|-]ShareOrphans</code></a>.</p>
 <h3 id="new-xx-jitserveraotcacheignorelocalscc-option-added">New <code>-XX:[+|-]JITServerAOTCacheIgnoreLocalSCC</code> option added</h3>
 <p>From this release onwards, the default behavior of the client when it uses the JITServer AOT cache is to bypass its local shared classes cache (if one is set up) during JITServer AOT cache compilations. You can control how the JITServer AOT cache feature interacts with the local cache at JITServer client VMs with the <a href="../xxjitserveraotcacheignorelocalscc/"><code>-XX:[+|-]JITServerAOTCacheIgnoreLocalSCC</code></a> option.</p>
-<h3 id="new-xdynamicheapadjustment-option-added"><img alt="Java 11 (LTS) and later" src="docs/cr/java11plus.png" /> New <code>-XdynamicHeapAdjustment</code> option added</h3>
+<h3 id="new-xdynamicheapadjustment-option-added"><img alt="Java 11 (LTS) and later" src="../cr/java11plus.png" /> New <code>-XdynamicHeapAdjustment</code> option added</h3>
 <p>By default, if a checkpoint is taken in a container with no memory limits and then restored in a container with memory limits, the restored VM instance does not detect the memory limits.</p>
 <p>You can now create a single image file and restore it on various nodes with different memory limits. The new option <a href="../xdynamicheapadjustment/"><code>-XdynamicHeapAdjustment</code></a> automatically adjusts the maximum Java heap size (<a href="../xms/"><code>-Xmx</code></a>) and minimum Java heap size (<a href="../xms/"><code>-Xms</code></a>) values such that they are within the physical memory limitations on the system. <img alt="End of content that applies only to Java 11 and later" src="../cr/java_close.png" /></p>
 <h3 id="a-new-data-access-accelerator-library-api-comibmdataaccessexternaldecimalcheckexternaldecimal-added">A new Data Access Accelerator library API <code>com/ibm/dataaccess/ExternalDecimal.checkExternalDecimal</code> added</h3>
