@@ -30,6 +30,9 @@ var tracepointComponents = [
 	{ name: "JSOR",         desc: "JCL - JSOR (IBM Java 8 only)" },
 	{ name: "JVERBS",       desc: "JCL - jVERBS (IBM Java 8 only)" },
 	{ name: "net",          desc: "JCL - TCP/IP (IBM Java 8 only)" },
+	{ name: "jcl_java",     desc: "JCL - IO (IBM Semeru only)" },
+	{ name: "jcl_net",      desc: "JCL - TCP/IP (IBM Semeru only)" },
+	{ name: "jcl_nio",      desc: "JCL - NIO (IBM Semeru only)" },
 	{ name: "j9vmchk",      desc: "JVM - Check command" },
 	{ name: "cuda4j",       desc: "JVM - CUDA support" },
 	{ name: "omrvm",        desc: "JVM - General (OMR)" },
@@ -1449,61 +1452,81 @@ function isAllTracepointEnabledForTracing() {
 	return false;
 }
 
-// Returns true if a tracepoint including the specified tracepoint ID is enabled, with trace checkbox enabled, false otherwise
+// Returns true if all of the tracepoints described by the specified tracepoint
+// specification are enabled for tracing, false otherwise
 function isIdTracepointEnabledForTracing(specifiedId) {
-	for (var i = 0; i < tracepointCounter; i++) {
-		var tracepointIdElement = document.getElementById("tp_id_" + i);
-		if (tracepointIdElement != null) {
-			// If tracing is not enabled skip to the next tracepoint
-			var traceCheckbox = document.getElementById("tp_trace_" + i);
-			if (traceCheckbox == null || !traceCheckbox.checked) {
-				continue;
-			}
+	var specifiedComponent;
+	var specifiedRangeStart;
+	var specifiedRangeEnd;
+	var regexArray;
 
-			// Simple case
-			if (tracepointIdElement.value.indexOf(specifiedId) != -1) {
-				return true;
-			}
+	if (regexArray = specifiedId.match(/^([a-zA-Z0-9_]+)\.(\d+)-(\d+)$/)) {
+		// Specified tracepoint specification defines a range
+		specifiedComponent = regexArray[1];
+		specifiedRangeStart = parseInt(regexArray[2]);
+		specifiedRangeEnd = parseInt(regexArray[3]);
+	} else if (regexArray = specifiedId.match(/^([a-zA-Z0-9_]+)\.(\d+)$/)) {
+		// Specified tracepoint specification defines a single tracepoint
+		specifiedComponent = regexArray[1];
+		specifiedRangeStart = parseInt(regexArray[2]);
+		specifiedRangeEnd = specifiedRangeStart;
+	}
 
-			// Deal with ranges
-			var ids = tracepointIdElement.value.split(",");
-			for (var j = 0; j < ids.length; j++) {
-				if (ids[j].indexOf("-") != -1) {
-					var regexArray = ids[j].match(/([a-zA-Z0-9]+)\.(\d+)-(\d+)/);
-					var component = regexArray[1];
-					var rangeStart = regexArray[2];
-					var rangeEnd = regexArray[3];
-					if (specifiedId.indexOf("-") == -1) {
-						// Specified ID is not a range
-						regexArray = specifiedId.match(/([a-zA-Z0-9]+)\.(\d+)$/);
-						var specifiedComponent = regexArray[1]
-						var specifiedIndex = parseInt(regexArray[2]);
-						if (specifiedComponent == component
-							&& specifiedIndex >= rangeStart
-							&& specifiedIndex <= rangeEnd)
-						{
-							return true;
-						}
-					} else {
-						// Specified ID is a range
-						regexArray = specifiedId.match(/([a-zA-Z0-9]+)\.(\d+)-(\d+)/);
-						var specifiedComponent = regexArray[1]
-						var specifiedRangeStart = parseInt(regexArray[2]);
-						var specifiedRangeEnd = parseInt(regexArray[3]);
-						if (specifiedComponent == component
-							&& specifiedRangeStart >= rangeStart
-							&& specifiedRangeStart <= rangeEnd
-							&& specifiedRangeEnd >= rangeStart
-							&& specifiedRangeEnd <= rangeEnd)
-						{
-							return true;
-						}
+	// Check each ID in the range against the specifications that are enabled for tracing
+	for (var specifiedNumber = specifiedRangeStart; specifiedNumber <= specifiedRangeEnd; specifiedNumber++) {
+		var found = false;
+		tpcLoop: for (var i = 0; i < tracepointCounter; i++) {
+			var tracepointIdElement = document.getElementById("tp_id_" + i);
+			if (tracepointIdElement != null && tracepointIdElement.value != "") {
+				// If tracing is not enabled skip to the next tracepoint
+				var traceCheckbox = document.getElementById("tp_trace_" + i);
+				if (traceCheckbox == null || !traceCheckbox.checked) {
+					continue;
+				}
+
+				// Simple case - exact match
+				if (tracepointIdElement.value.indexOf(specifiedId) != -1) {
+					found = true;
+					break tpcLoop;
+				}
+
+				// Slow path - check each traced specification exhaustively
+				var tracedIds = tracepointIdElement.value.split(",");
+				for (var j = 0; j < tracedIds.length; j++) {
+					var tracedComponent;
+					var tracedRangeStart;
+					var tracedRangeEnd;
+
+					if (regexArray = tracedIds[j].match(/^([a-zA-Z0-9_]+)\.(\d+)-(\d+)$/)) {
+						// Traced specification defines a range
+						tracedComponent = regexArray[1];
+						tracedRangeStart = regexArray[2];
+						tracedRangeEnd = regexArray[3];
+					} else if (regexArray = tracedIds[j].match(/^([a-zA-Z0-9_]+)\.(\d+)$/)) {
+						// Traced specification defines a single tracepoint
+						tracedComponent = regexArray[1];
+						tracedRangeStart = regexArray[2];
+						tracedRangeEnd = tracedRangeStart;
+					}
+
+					if (specifiedComponent == tracedComponent
+						&& specifiedNumber >= tracedRangeStart
+						&& specifiedNumber <= tracedRangeEnd)
+					{
+						found = true;
+						break tpcLoop;
 					}
 				}
 			}
 		}
+		
+		if (!found) {
+			return false;
+		}
 	}
-	return false;
+		
+	// If we reach here all tracepoint IDs in the specified range were found
+	return true;
 }
 
 // Returns true if the "maximal" or "exception" tracepoint destinations are enabled
@@ -1580,6 +1603,9 @@ function fixTracepointIdCase(id) {
 		"j9vmchk",
 		"j9vmutil",
 		"j9vrb",
+		"jcl_java",
+		"jcl_net",
+		"jcl_nio",
 		"map",
 		"module",
 		"mt",
@@ -1598,7 +1624,7 @@ function fixTracepointIdCase(id) {
 
 	// If the ID looks valid and the specified component matches an component in the table
 	// (case insensitive match), return the correct form
-	if (id.match(/^([a-zA-Z0-9])+\.\d+(-\d+)?$/) != null) {
+	if (id.match(/^([a-zA-Z0-9_])+\.\d+(-\d+)?$/) != null) {
 		var idArray = id.split(".");
 		var component = idArray[0];
 		var tracepointNumber = idArray[1];
@@ -1709,7 +1735,7 @@ function findInvalidTracepointSpecs(value) {
 		if (specs[i] == "") {
 			invalidSpecs += "ERROR: Empty tracepoint specification<br>";
 		} else {
-			if (specs[i].match(/^([a-zA-Z0-9])+\.\d+(-\d+)?$/) == null) {
+			if (specs[i].match(/^([a-zA-Z0-9_])+\.\d+(-\d+)?$/) == null) {
 				invalidSpecs += "ERROR: Invalid tracepoint specification: \"" + specs[i] + "\"<br>";
 			}
 		}
