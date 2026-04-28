@@ -119,42 +119,32 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
 <div class="w3-padding-64 w3-container w3-light-grey">
   <div class="w3-content">
         <div class="w3-center">
-      <h1 id="news">Eclipse OpenJ9 version 0.58.0 released</h1>
-<p>March 2026</p>
+      <h1 id="news">Eclipse OpenJ9 version 0.59.0 released</h1>
+<p>April 2026</p>
 </div>
-<p>We're pleased to announce the availability of Eclipse OpenJ9 v0.58.0.</p>
-<p>This release supports OpenJDK 26. For more information about supported platforms and OpenJDK versions, see <a class="w3-hover-opacity" href="https://eclipse.dev/openj9/docs/openj9_support/" target="_blank">Supported environments</a>.</p>
+<p>We're pleased to announce the availability of Eclipse OpenJ9 v0.59.0.</p>
+<p>This release supports OpenJDK 8, 11, 17, 21, 25, and 26. For more information about supported platforms and OpenJDK versions, see <a class="w3-hover-opacity" href="https://eclipse.dev/openj9/docs/openj9_support/" target="_blank">Supported environments</a>.</p>
 <p>Other updates in this release include the following:</p>
  <ul>
-  <li>The <code>-XX:[+|-]UseDebugLocalMap</code> option is added to enable the debug local mapper without running the entire VM in debug mode.</li>
-</ul>
-  <p>To read more about these and other changes, see the <a class="w3-hover-opacity" href="https://eclipse.dev/openj9/docs/openj9_releases/" target="_blank">OpenJ9 user documentation</a>.</p>
-  
-  </div>
-</div>
-
-<div class="w3-containerw3-light-grey">
-  <div class="w3-content">
-        <div class="w3-center">
-      <h1 id="news">Eclipse OpenJ9 version 0.57.0 released</h1>
-<p>January 2026</p>
-</div>
-<p>We're pleased to announce the availability of Eclipse OpenJ9 v0.57.0.</p>
-<p>This release supports OpenJDK 8, 11, 17, 21, and 25. For more information about supported platforms and OpenJDK versions, see <a class="w3-hover-opacity" href="https://eclipse.dev/openj9/docs/openj9_support/" target="_blank">Supported environments</a>.</p>
-<p>Other updates in this release include the following:</p>
- <ul>
-  <li>The <code>zlib</code> compression library is now bundled on all Linux platforms except Linux on IBM Z. You don't have to specifically install the <code>zlib</code> library with the operating system for data compression and decompression.</li>
-<li>On all platforms except Windows, when an asynchronous signal <code>SIGABRT</code>, <code>SIGQUIT</code>, or <code>SIGUSR2</code> occurs, the process ID (pid) and the name of the process that sent the signal is recorded and reported in a tracepoint and in the javacore.</li>
-<li>On the Windows platform, a feature that uses the x86-64 hardware and signal handler for improving the performance of null object checks and integer division overflows is temporarily disabled by default because of recent VM crashes that were observed on Windows 11 and Windows Server 2022. Disabling this signal handling optimization feature is a temporary measure while the root cause of the problem is determined.</li>
-<li>In Java 11 of this release, a New Input/Output (NIO) channel selector provider, which is based on the pollset system facility, is implemented on AIX. The new implementation provides significant performance benefits when reading from, writing to, or managing multiple network sockets.<br>This feature is not enabled by default. You can configure it by specifying <code>-Djava.nio.channels.spi.SelectorProvider=sun.nio.ch.PollsetSelectorProvider</code> on the command line.</li>
+  <li>The new <code>-XX:[+|-]UseMediumPageSize</code> option is added to enable or disable the default setting of the <code>LDR_CNTRL</code> environment variable on AIX systems whereby medium page sizes (64 KB) are configured for text, data, stack, and shared memory segments.</li>
+<li>A signal handler optimization feature that was temporarily disabled on Windows in the 0.57.0 release is enabled again.</li>
+<li>Linux&reg; x86 64-bit, Linux on POWER&reg; LE 64-bit, and Linux on IBM Z&reg; 64-bit builds on all OpenJDK versions now use gcc 14.2 compiler.</li>
+<li>For OpenJDK versions 8 and 11, Linux x86 64-bit is now compiled on CentOS 7 and RHEL 7, modifying the minimum glibc version to 2.17 from 2.12. The VM will fail to start on CentOS 6 and RHEL 6 from this release onwards.</li>
+<li>The <code>-XX:StartFlightRecording</code> command-line option is added to start the JDK Flight Recorder (JFR) recording in the VM.</li>
+<li>The following new JFR events are added in this release:
+  <ul><li>GarbageCollection</li>
+<li>OldGarbageCollection</li>
+<li>YoungGarbageCollection</li></ul>
+</li>
+<li>When <code>jcmd Dump.heap</code> is used to request a heap dump, the <code>compact</code> option is added to the dump request by default. The default request for heap dumps is now: <code>request=exclusive+compact+prepwalk</code>.</li>
 </ul>
   <p>To read more about these and other changes, see the <a class="w3-hover-opacity" href="https://eclipse.dev/openj9/docs/openj9_releases/" target="_blank">OpenJ9 user documentation</a>.</p>
   
   <p><b>Performance highlights include the following:</b></p>
 
    <ul>
-      <li>Throughput improvements are made to optimize several operations such as parking of threads, allocation of multi dimensional arrays, and var handles in general.</li>
-      <li>Depending on the workload, performance degradation from 0-10% on Windows was observed because of disabling of the signal handling optimization feature that uses the x86-64 hardware and signal handler for improving the performance of null object checks and integer division overflows.</li>
+      <li>The performance of multidimensional array allocation is improved across platforms.</li>
+      <li>Incremental improvements in the performance of Java Class Library methods and interface method dispatch sequences.</li>
     </ul>
   
   </div>
