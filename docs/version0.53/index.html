@@ -421,6 +421,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../version0.60/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Version 0.60.0
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../version0.59/" class="md-nav__link">
         
   
@@ -720,6 +748,17 @@
     <span class="md-ellipsis">
       
         The default maximum heap size is automatically adjusted based on the initial heap size
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#compiler-changes-for-macos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Compiler changes for macOS
       
     </span>
   </a>
@@ -1074,10 +1113,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_20" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_21" >
         
           
-          <label class="md-nav__link" for="__nav_5_20" id="__nav_5_20_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_5_21" id="__nav_5_21_label" tabindex="0">
             
   
   
@@ -1095,8 +1134,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_20_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_5_20">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_21_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_21">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -7694,14 +7733,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../xtunevirtualized/" class="md-nav__link">
+      <a href="../xtune/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    -Xtune:virtualized
+    -Xtune
   
 
     
@@ -10710,6 +10749,34 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../xxyieldpinnedvirtualthreads/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    -XX:[+|-]YieldPinnedVirtualThreads
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -11606,6 +11673,17 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#compiler-changes-for-macos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Compiler changes for macOS
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -11671,6 +11749,7 @@
 <li><a href="#offheap-support-is-added-for-the-balanced-gc-policy">Offheap support is added for the <code>balanced</code> GC policy</a></li>
 <li><img alt="Start of content that applies to Java 11 (LTS) and later" src="../cr/java11plus.png" /> <a href="#new-jdk-flight-recorder-jfr-events-are-added-in-this-release">New JDK Flight Recorder (JFR) events are added in this release</a> <img alt="End of content that applies only to Java 11 and later" src="../cr/java_close.png" /></li>
 <li><a href="#the-default-maximum-heap-size-is-automatically-adjusted-based-on-the-initial-heap-size">The default maximum heap size is automatically adjusted based on the initial heap size</a></li>
+<li><a href="#compiler-changes-for-macos">Compiler changes for macOS&reg;</a></li>
 </ul>
 <h2 id="features-and-changes">Features and changes</h2>
 <h3 id="binaries-and-supported-environments">Binaries and supported environments</h3>
@@ -11697,6 +11776,9 @@
 <h3 id="the-default-maximum-heap-size-is-automatically-adjusted-based-on-the-initial-heap-size">The default maximum heap size is automatically adjusted based on the initial heap size</h3>
 <p>If the maximum object heap size is not explicitly set with the <code>-Xmx</code> option and the VM uses the default value of <code>-Xmx</code>, then even if <code>-Xms</code> is greater than <code>-Xmx</code> initially, the VM starts successfully. The VM starts because the default <code>-Xmx</code> value is increased automatically to match <code>-Xms</code>.</p>
 <p>Until the 0.53.0 release, if <code>-Xms</code> was greater than <code>-Xmx</code>, the VM used to fail. For more information, see <a href="../xms/"><code>-Xms</code> / <code>-Xmx</code></a>.</p>
+<h3 id="compiler-changes-for-macos">Compiler changes for macOS</h3>
+<p>macOS x86 64-bit and macOS AArch64 now compiles on minimum macOS 13 with xcode 15.2 and clang 15.0.0.</p>
+<p>For more information, see <a href="../openj9_support/">Supported environments</a>.</p>
 <h2 id="known-problems-and-full-release-information">Known problems and full release information</h2>
 <p>To see known problems and a complete list of changes between Eclipse OpenJ9 v0.51.0 and v0.53.0 releases, see the <a href="https://github.com/eclipse-openj9/openj9/blob/master/doc/release-notes/0.53/0.53.md">Release notes</a>.</p>
 <!-- ==== END OF TOPIC ==== version0.53.md ==== -->

@@ -10,13 +10,13 @@
       
       
       
-        <link rel="canonical" href="https://eclipse.dev/openj9/docs/xtunevirtualized/">
+        <link rel="canonical" href="https://eclipse.dev/openj9/docs/version0.60/">
       
       
-        <link rel="prev" href="../xtrace/">
+        <link rel="prev" href="../openj9_releases/">
       
       
-        <link rel="next" href="../xverbosegclog/">
+        <link rel="next" href="../version0.59/">
       
       
         
@@ -27,7 +27,7 @@
     
     
       
-        <title>-Xtune:virtualized -  </title>
+        <title>Version 0.60.0 -  </title>
       
     
     
@@ -78,7 +78,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#-xtunevirtualized" class="md-skip">
+        <a href="#whats-new-in-version-0600" class="md-skip">
           Skip to content
         </a>
       
@@ -117,7 +117,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              -Xtune:virtualized
+              Version 0.60.0
             
           </span>
         </div>
@@ -341,18 +341,20 @@
       
   
   
+    
   
   
+  
     
     
     
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
         
           
           <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
@@ -373,7 +375,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_5">
             <span class="md-nav__icon md-icon"></span>
             
@@ -407,6 +409,164 @@
   
 
       </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Version 0.60.0
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Version 0.60.0
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#features-and-changes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Features and changes
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Features and changes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#binaries-and-supported-environments" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Binaries and supported environments
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-xcheckdump-option-is-enhanced-on-zos-systems" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The -Xcheck:dump option is enhanced on z/OS systems
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#compiler-changes-for-linux-aarch64-64-bit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Compiler changes for Linux AArch64 64-bit
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#new-jdk-flight-recorder-jfr-events-are-added-in-this-release" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        New JDK Flight Recorder (JFR) events are added in this release
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#new-parameter-footprint-added-to-the-xtune-command-line-option" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        New parameter footprint added to the -Xtune command-line option
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#known-problems-and-full-release-information" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Known problems and full release information
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -931,10 +1091,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_20" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_21" >
         
           
-          <label class="md-nav__link" for="__nav_5_20" id="__nav_5_20_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_5_21" id="__nav_5_21_label" tabindex="0">
             
   
   
@@ -952,8 +1112,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_20_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_5_20">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_21_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_21">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -3759,20 +3919,18 @@
       
   
   
-    
   
   
-  
     
     
     
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_18" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_18" >
         
           
           <label class="md-nav__link" for="__nav_18" id="__nav_18_label" tabindex="0">
@@ -3793,7 +3951,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_18_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_18_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_18">
             <span class="md-nav__icon md-icon"></span>
             
@@ -5291,20 +5449,18 @@
                 
   
   
-    
   
   
-  
     
     
     
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_18_5" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_18_5" >
         
           
           <label class="md-nav__link" for="__nav_18_5" id="__nav_18_5_label" tabindex="0">
@@ -5325,7 +5481,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_18_5_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_18_5_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_18_5">
             <span class="md-nav__icon md-icon"></span>
             
@@ -7552,44 +7708,17 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    -Xtune:virtualized
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../xtune/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    -Xtune:virtualized
+    -Xtune
   
 
     
@@ -7598,48 +7727,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#syntax" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Syntax
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#see-also" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        See also
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -10640,6 +10727,34 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../xxyieldpinnedvirtualthreads/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    -XX:[+|-]YieldPinnedVirtualThreads
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -11459,21 +11574,82 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#syntax" class="md-nav__link">
+  <a href="#features-and-changes" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Syntax
+        Features and changes
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Features and changes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#binaries-and-supported-environments" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Binaries and supported environments
       
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#see-also" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#the-xcheckdump-option-is-enhanced-on-zos-systems" class="md-nav__link">
     <span class="md-ellipsis">
       
-        See also
+        The -Xcheck:dump option is enhanced on z/OS systems
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#compiler-changes-for-linux-aarch64-64-bit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Compiler changes for Linux AArch64 64-bit
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#new-jdk-flight-recorder-jfr-events-are-added-in-this-release" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        New JDK Flight Recorder (JFR) events are added in this release
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#new-parameter-footprint-added-to-the-xtune-command-line-option" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        New parameter footprint added to the -Xtune command-line option
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#known-problems-and-full-release-information" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Known problems and full release information
       
     </span>
   </a>
@@ -11520,19 +11696,39 @@
 * SPDX-License-Identifier: EPL-2.0 OR Apache-2.0 OR GPL-2.0-only WITH Classpath-exception-2.0 OR GPL-2.0-only WITH OpenJDK-assembly-exception-1.0
 -->
 
-<h1 id="-xtunevirtualized">-Xtune:virtualized</h1>
-<p>Optimizes Eclipse OpenJ9&trade; VM function for virtualized environments, such as a cloud, by reducing OpenJ9 VM CPU consumption when idle.</p>
-<p><span aria-hidden="true" class="twemoji note"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M36.4 353.2c4.1-14.6 11.8-27.9 22.6-38.7l181.2-181.2 33.9-33.9 104 104 33.9 33.9-33.9 33.9-181.2 181.2c-10.7 10.7-24.1 18.5-38.7 22.6L30.4 510.6c-8.3 2.3-17.3 0-23.4-6.2S-1.4 489.3.9 481zm55.6-3.7c-4.4 4.7-7.6 10.4-9.3 16.6L58.6 453l86.9-24.1c6.4-1.8 12.2-5.1 17-9.7l-70.6-69.7zm354-146.1-104-104-34-33.9 44.9-44.9C366.4 7 384.8-.6 404-.6s37.6 7.6 51.1 21.2l35.7 35.7c13.6 13.6 21.2 32 21.2 51.1s-7.6 37.6-21.2 51.1l-44.9 44.9z"/></svg></span> <strong>Note:</strong> Performance is optimized if there is a large shared classes cache (SCC) and AOT space in the SCC is not capped.</p>
-<h2 id="syntax">Syntax</h2>
-<pre><code>    -Xtune:virtualized
-</code></pre>
-<p>This option is recommended for CPU-constrained environments, such as those found in cloud deployments that use containers. Internally, the option makes the JIT compiler more conservative with inlining and recompilation decisions, which saves CPU resources. The Garbage Collector also reduces the rate of heap expansion, which reduces the memory footprint. These changes to reduce the amount of CPU that is consumed are at the expense of a small loss in throughput.</p>
-<p>When <code>-Xtune:virtualized</code> is used in conjunction with the <a href="../xshareclasses/"><code>-Xshareclasses</code></a> option, the JIT compiler is more aggressive with its use of <a href="../aot/">AOT-compiled code</a> compared to setting only <code>-Xshareclasses</code>. This action provides additional CPU savings during application start-up and ramp-up, but comes at the expense of an additional small loss in throughput.</p>
-<h2 id="see-also">See also</h2>
+<h1 id="whats-new-in-version-0600">What's new in version 0.60.0</h1>
+<p>The following new features and notable changes since version 0.59.0 are included in this release:</p>
 <ul>
-<li>For an example of the effect of using this option, see: <a href="https://github.com/eclipse-openj9/openj9-website/blob/master/benchmark/daytrader3.md">Measuring the strengths of OpenJDK with Eclipse OpenJ9</a></li>
+<li><a href="#binaries-and-supported-environments">New binaries and changes to supported environments</a></li>
+<li><img alt="Start of content that applies to Java 11 (LTS) and later" src="../cr/java11plus.png" /> <a href="#the-xcheckdump-option-is-enhanced-on-zos-systems">The <code>-Xcheck:dump</code> option is enhanced on z/OS systems</a> <img alt="End of content that applies only to Java 11 and later" src="../cr/java_close_lts.png" /></li>
+<li><a href="#compiler-changes-for-linux-aarch64-64-bit">Compiler changes for Linux AArch64 64-bit</a></li>
+<li><img alt="Start of content that applies to Java 11 (LTS) and later" src="../cr/java11plus.png" /> <a href="#new-jdk-flight-recorder-jfr-events-are-added-in-this-release">New JDK Flight Recorder (JFR) events are added in this release</a> <img alt="End of content that applies only to Java 11 and later" src="../cr/java_close.png" /></li>
+<li><a href="#new-parameter-footprint-added-to-the-xtune-command-line-option">New parameter <code>footprint</code> added to the <code>-Xtune</code> command-line option</a></li>
 </ul>
-<!-- ==== END OF TOPIC ==== xtunevirtualized.md ==== -->
+<h2 id="features-and-changes">Features and changes</h2>
+<h3 id="binaries-and-supported-environments">Binaries and supported environments</h3>
+<p>Eclipse OpenJ9&trade; release 0.60.0 supports OpenJDK 8, 11, 17, 21, 25, and 26.</p>
+<p>RHEL 9.4 is out of Extended Update Support (EUS) and is removed from the list of supported platforms. RHEL 9.6 is the new minimum operating system level.</p>
+<p>To learn more about support for OpenJ9 releases, including OpenJDK levels and platform support, see <a href="../openj9_support/">Supported environments</a>.</p>
+<h3 id="the-xcheckdump-option-is-enhanced-on-zos-systems"><img alt="Start of content that applies to Java 11 (LTS) and later" src="../cr/java11plus.png" /> The <code>-Xcheck:dump</code> option is enhanced on z/OS systems</h3>
+<p>The <code>-Xcheck:dump</code> option is enhanced on z/OS systems to trigger extra checking for <code>-Xdump:system</code> agents. When this option is used, the VM now validates dataset names that are specified in <code>-Xdump:system</code> options. This validation allows earlier detection of improper VM options and prevents deployment of misconfigured applications. You can ensure that when system dumps are triggered, your diagnostic dumps will be created successfully and will not fail because of invalid dataset names.</p>
+<p>For more information, see <a href="../xcheck/#dump"><code>-Xcheck:dump</code></a>. <img alt="End of content that applies only to Java 11 and later" src="../cr/java_close_lts.png" /></p>
+<h3 id="compiler-changes-for-linux-aarch64-64-bit">Compiler changes for Linux AArch64 64-bit</h3>
+<p>Linux AArch64 64-bit builds on all OpenJDK versions now use the gcc 14.2 compiler.</p>
+<p>For more information, see <a href="../openj9_support/">Supported environments</a>.</p>
+<h3 id="new-jdk-flight-recorder-jfr-events-are-added-in-this-release"><img alt="Start of content that applies to Java 11 (LTS) and later" src="../cr/java11plus.png" /> New JDK Flight Recorder (JFR) events are added in this release</h3>
+<p>In this release, the following new JFR events are added:</p>
+<ul>
+<li>GCHeapSummary</li>
+<li>NetworkUtilization</li>
+</ul>
+<p>For more information, see <a href="../xxflightrecorder/"><code>-XX:[+|-]FlightRecorder</code></a>. <img alt="End of content that applies only to Java 11 and later" src="../cr/java_close.png" /></p>
+<h3 id="new-parameter-footprint-added-to-the-xtune-command-line-option">New parameter <code>footprint</code> added to the <code>-Xtune</code> command-line option</h3>
+<p>The new <code>-Xtune:footprint</code> option added in this release is used to optimize Eclipse OpenJ9 VM function by minimizing OpenJ9 VM memory usage.</p>
+<p>For more information, see <a href="../xtune/">`-Xtune'</a>.</p>
+<h2 id="known-problems-and-full-release-information">Known problems and full release information</h2>
+<p>To see known problems and a complete list of changes between Eclipse OpenJ9 v0.59.0 and v0.60.0 releases, see the <a href="https://github.com/eclipse-openj9/openj9/blob/master/doc/release-notes/0.60/0.60.md">Release notes</a>.</p>
+<!-- ==== END OF TOPIC ==== version0.60.md ==== -->
 
 
 

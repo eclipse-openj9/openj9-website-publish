@@ -50,7 +50,7 @@ loadScripts(document, 'script');</script>
 <ul class="sub-nav-list">
 <li>Summary:&nbsp;</li>
 <li><a href="#nested-class-summary">Nested</a>&nbsp;|&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#field-summary">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor-summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method-summary">Method</a></li>
 </ul>
@@ -90,6 +90,12 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">WalkJ9PoolCommand</span>
 <span class="extends-implements">extends <a href="../../../../tools/ddrinteractive/Command.html" title="class in com.ibm.j9ddr.tools.ddrinteractive">Command</a></span></div>
+<div class="block">Implementation of DDR extension !walkj9pool.
+
+ This extension takes a J9Pool address and an optional type argument,
+ and prints the address of each element in the pool as a runnable DDR command.
+ The type argument is used to derive the DDR command prefix to prepend to each
+ element's address. If not provided, the default DDR command prefix is "!j9x".</div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -100,6 +106,15 @@ loadScripts(document, 'script');</script>
 <div class="inherited-list">
 <h2 id="nested-classes-inherited-from-class-com.ibm.j9ddr.tools.ddrinteractive.Command">Nested classes/interfaces declared in class&nbsp;com.ibm.j9ddr.tools.ddrinteractive.<a href="../../../../tools/ddrinteractive/Command.html" title="class in com.ibm.j9ddr.tools.ddrinteractive">Command</a></h2>
 <code><a href="../../../../tools/ddrinteractive/Command.CommandDescription.html" title="class in com.ibm.j9ddr.tools.ddrinteractive">Command.CommandDescription</a></code></div>
+</section>
+</li>
+<!-- =========== FIELD SUMMARY =========== -->
+<li>
+<section class="field-summary" id="field-summary">
+<h2>Field Summary</h2>
+<div class="inherited-list">
+<h3 id="fields-inherited-from-class-com.ibm.j9ddr.tools.ddrinteractive.Command">Fields declared in class&nbsp;com.ibm.j9ddr.tools.ddrinteractive.<a href="../../../../tools/ddrinteractive/Command.html" title="class in com.ibm.j9ddr.tools.ddrinteractive">Command</a></h3>
+<code><a href="../../../../tools/ddrinteractive/Command.html#nl">nl</a></code></div>
 </section>
 </li>
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
@@ -183,7 +198,7 @@ loadScripts(document, 'script');</script>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>command</code> - !walkj9pool</dd>
-<dd><code>args</code> - args passed by !walkj9pool extension.</dd>
+<dd><code>args</code> - args passed by !walkj9pool extension</dd>
 <dd><code>context</code> - Context</dd>
 <dd><code>out</code> - PrintStream</dd>
 <dt>Throws:</dt>

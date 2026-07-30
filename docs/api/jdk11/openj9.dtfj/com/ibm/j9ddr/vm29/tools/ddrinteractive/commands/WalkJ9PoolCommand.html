@@ -94,7 +94,7 @@ loadScripts(document, 'script');</script>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
 <li><a href="#nested.class.summary">Nested</a>&nbsp;|&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#field.summary">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
 </ul>
@@ -148,6 +148,12 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <hr>
 <pre>public class <span class="typeNameLabel">WalkJ9PoolCommand</span>
 extends <a href="../../../../tools/ddrinteractive/Command.html" title="class in com.ibm.j9ddr.tools.ddrinteractive">Command</a></pre>
+<div class="block">Implementation of DDR extension !walkj9pool.
+
+ This extension takes a J9Pool address and an optional type argument,
+ and prints the address of each element in the pool as a runnable DDR command.
+ The type argument is used to derive the DDR command prefix to prepend to each
+ element's address. If not provided, the default DDR command prefix is "!j9x".</div>
 </li>
 </ul>
 </div>
@@ -167,6 +173,23 @@ extends <a href="../../../../tools/ddrinteractive/Command.html" title="class in 
 </a>
 <h3>Nested classes/interfaces declared in class&nbsp;com.ibm.j9ddr.tools.ddrinteractive.<a href="../../../../tools/ddrinteractive/Command.html" title="class in com.ibm.j9ddr.tools.ddrinteractive">Command</a></h3>
 <code><a href="../../../../tools/ddrinteractive/Command.CommandDescription.html" title="class in com.ibm.j9ddr.tools.ddrinteractive">Command.CommandDescription</a></code></li>
+</ul>
+</li>
+</ul>
+</section>
+<!-- =========== FIELD SUMMARY =========== -->
+<section>
+<ul class="blockList">
+<li class="blockList"><a id="field.summary">
+<!--   -->
+</a>
+<h3>Field Summary</h3>
+<ul class="blockList">
+<li class="blockList"><a id="fields.inherited.from.class.com.ibm.j9ddr.tools.ddrinteractive.Command">
+<!--   -->
+</a>
+<h3>Fields declared in class&nbsp;com.ibm.j9ddr.tools.ddrinteractive.<a href="../../../../tools/ddrinteractive/Command.html" title="class in com.ibm.j9ddr.tools.ddrinteractive">Command</a></h3>
+<code><a href="../../../../tools/ddrinteractive/Command.html#nl">nl</a></code></li>
 </ul>
 </li>
 </ul>
@@ -291,7 +314,7 @@ extends <a href="../../../../tools/ddrinteractive/Command.html" title="class in 
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>command</code> - !walkj9pool</dd>
-<dd><code>args</code> - args passed by !walkj9pool extension.</dd>
+<dd><code>args</code> - args passed by !walkj9pool extension</dd>
 <dd><code>context</code> - Context</dd>
 <dd><code>out</code> - PrintStream</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>

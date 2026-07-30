@@ -419,6 +419,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../version0.60/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Version 0.60.0
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../version0.59/" class="md-nav__link">
         
   
@@ -931,10 +959,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_20" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_21" >
         
           
-          <label class="md-nav__link" for="__nav_5_20" id="__nav_5_20_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_5_21" id="__nav_5_21_label" tabindex="0">
             
   
   
@@ -952,8 +980,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_20_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_5_20">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_21_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_21">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -7553,14 +7581,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../xtunevirtualized/" class="md-nav__link">
+      <a href="../xtune/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    -Xtune:virtualized
+    -Xtune
   
 
     
@@ -10127,6 +10155,17 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#see-also" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        See also
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -10627,6 +10666,34 @@
     
   
     -XX:[+|-]VMLockClassLoader
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../xxyieldpinnedvirtualthreads/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    -XX:[+|-]YieldPinnedVirtualThreads
   
 
     
@@ -11480,6 +11547,17 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#see-also" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        See also
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -11556,6 +11634,12 @@
 <p>Virtual threads require platform threads to run because the operating system identifies only platform threads. Therefore, a VM maintains multiple platform threads that are used as carrier threads to run the virtual threads. The VM assigns a virtual thread to a platform thread in a process called <strong>mounting</strong>.</p>
 <p>Although the virtual thread runs on a carrier thread, the stack trace of the virtual thread and its carrier thread are separate. If an exception occurs on running the virtual threads, the thread dumps do not include stack frames from the carrier thread's stack.</p>
 <p>You can use the <code>-XX:+ShowCarrierFrames</code> option to add the stack trace of the carrier thread in addition to the virtual thread stack trace to the <code>Throwable.getStackTrace()</code> method, if an exception occurs. <img alt="End of content that applies to Java 21 (LTS) and later" src="../cr/java_close_lts.png" /></p>
+<h2 id="see-also">See also</h2>
+<ul>
+<li><a href="../xxcontinuationcache/"><code>-XX:ContinuationCache</code></a></li>
+<li><a href="../xxshowunmountedthreadstacks/"><code>-XX:[+|-]ShowUnmountedThreadStacks</code></a></li>
+<li><a href="../xxyieldpinnedvirtualthreads/"><code>-XX:[+|-]YieldPinnedVirtualThreads</code></a></li>
+</ul>
 <!-- ==== END OF TOPIC ==== xxshowcarrierframes.md ==== -->
 
 

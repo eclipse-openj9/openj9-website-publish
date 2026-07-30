@@ -626,6 +626,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../version0.60/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Version 0.60.0
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../version0.59/" class="md-nav__link">
         
   
@@ -1138,10 +1166,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_20" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_21" >
         
           
-          <label class="md-nav__link" for="__nav_5_20" id="__nav_5_20_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_5_21" id="__nav_5_21_label" tabindex="0">
             
   
   
@@ -1159,8 +1187,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_20_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_5_20">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_21_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_21">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -7758,14 +7786,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../xtunevirtualized/" class="md-nav__link">
+      <a href="../xtune/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    -Xtune:virtualized
+    -Xtune
   
 
     
@@ -10774,6 +10802,34 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../xxyieldpinnedvirtualthreads/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    -XX:[+|-]YieldPinnedVirtualThreads
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -11834,7 +11890,7 @@
 <p>Use a shared classes cache (<code>-Xshareclasses -XX:SharedCacheHardLimit=200m -Xscmx60m</code>) with Ahead-Of-Time (AOT) compilation to improve your startup time. For persistence, store the cache in a volume that you map to your container. For more information, see <a href="../shrc/">Introduction to class data sharing</a> and <a href="../aot/">AOT Compiler</a>.</p>
 </li>
 <li>
-<p>Use the <a href="../xtunevirtualized/">-Xtune:virtualized</a> option, which configures OpenJ9 for typical cloud deployments where VM guests are provisioned with a small number of virtual CPUs to maximize the number of applications that can be run. When enabled, OpenJ9 adapts its internal processes to reduce the amount of CPU consumed and trim down the memory footprint. These changes come at the expense of only a small loss in throughput.</p>
+<p>Use the <a href="xtunevirtualized.md">-Xtune:virtualized</a> option, which configures OpenJ9 for typical cloud deployments where VM guests are provisioned with a small number of virtual CPUs to maximize the number of applications that can be run. When enabled, OpenJ9 adapts its internal processes to reduce the amount of CPU consumed and trim down the memory footprint. These changes come at the expense of only a small loss in throughput.</p>
 </li>
 <li>
 <p>Provide access to the <code>/proc</code> file system for container detection on Linux systems since the detection code requires access to the <code>/proc/1/cgroup</code> and <code>/proc/1/sched</code> files. If you mount the <code>/proc</code> file system with the <code>hidepid=2</code> option on Linux systems and the VM does not have root privileges, it cannot access the <code>/proc</code> file system and the container detection fails. Even though the container detection fails, the VM does start with a warning message. For example:</p>

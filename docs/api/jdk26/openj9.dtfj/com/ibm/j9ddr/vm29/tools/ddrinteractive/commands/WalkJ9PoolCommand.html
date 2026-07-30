@@ -67,6 +67,7 @@ initTheme();
 <ol class="toc-list" tabindex="-1">
 <li><a href="#" tabindex="0">Description</a></li>
 <li><a href="#nested-class-summary" tabindex="0">Nested Class Summary</a></li>
+<li><a href="#field-summary" tabindex="0">Field Summary</a></li>
 <li><a href="#constructor-summary" tabindex="0">Constructor Summary</a></li>
 <li><a href="#method-summary" tabindex="0">Method Summary</a></li>
 <li><a href="#constructor-detail" tabindex="0">Constructor Details</a>
@@ -100,6 +101,12 @@ initTheme();
 <div class="horizontal-scroll">
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">WalkJ9PoolCommand</span>
 <span class="extends-implements">extends <a href="../../../../tools/ddrinteractive/Command.html" title="class in com.ibm.j9ddr.tools.ddrinteractive">Command</a></span></div>
+<div class="block">Implementation of DDR extension !walkj9pool.
+
+This extension takes a J9Pool address and an optional type argument,
+and prints the address of each element in the pool as a runnable DDR command.
+The type argument is used to derive the DDR command prefix to prepend to each
+element's address. If not provided, the default DDR command prefix is "!j9x".</div>
 </div>
 </section>
 <section class="summary">
@@ -117,6 +124,24 @@ initTheme();
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code>protected class&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="../../../../tools/ddrinteractive/Command.CommandDescription.html" class="type-name-link" title="class in com.ibm.j9ddr.tools.ddrinteractive">Command.CommandDescription</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+</div>
+</div>
+</section>
+</li>
+<!-- =========== FIELD SUMMARY =========== -->
+<li>
+<section class="field-summary" id="field-summary">
+<h2>Field Summary</h2>
+<div class="inherited-list">
+<h3 id="fields-inherited-from-class-com.ibm.j9ddr.tools.ddrinteractive.Command">Fields declared in class&nbsp;<a href="../../../../tools/ddrinteractive/Command.html#field-summary" title="class in com.ibm.j9ddr.tools.ddrinteractive">Command</a></h3>
+<code><a href="../../../../tools/ddrinteractive/Command.html#nl">nl</a></code>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Field</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>protected static final <a href="https://docs.oracle.com/en/java/javase/26/docs/api/java.base/java/lang/String.html" title="class in java.lang" class="external-link" target="_blank">String</a></code></div>
+<div class="col-second even-row-color"><code><a href="../../../../tools/ddrinteractive/Command.html#nl" class="member-name-link">nl</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 </div>
 </div>
@@ -250,7 +275,7 @@ matches the command passed in by the user</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>command</code> - !walkj9pool</dd>
-<dd><code>args</code> - args passed by !walkj9pool extension.</dd>
+<dd><code>args</code> - args passed by !walkj9pool extension</dd>
 <dd><code>context</code> - Context</dd>
 <dd><code>out</code> - PrintStream</dd>
 <dt>Throws:</dt>
