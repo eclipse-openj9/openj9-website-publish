@@ -4,519 +4,304 @@
 <title>Eclipse OpenJ9 - Performance Overview</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 <style>
-/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
-/*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
- *  Licensed under the MIT License. See License.txt in the project root for license information.
- *--------------------------------------------------------------------------------------------*/
+  :root {
+    --primary:        #5e35b1;
+    --primary-dark:   #4527a0;
+    --primary-light:  #7e57c2;
+    --accent:         #00897b;
+    --accent-light:   #4db6ac;
+    --bg:             #ffffff;
+    --surface:        #f5f3fb;
+    --surface-alt:    #ede7f6;
+    --text:           #1a1a2e;
+    --text-muted:     #5f5f7a;
+    --border:         #d1c4e9;
+    --nav-height:     60px;
+    --radius:         10px;
+    --shadow:         0 2px 12px rgba(94,53,177,0.10);
+  }
 
-body {
-	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
-	font-size: var(--vscode-markdown-font-size, 14px);
-	padding: 0 26px;
-	line-height: var(--vscode-markdown-line-height, 22px);
-	word-wrap: break-word;
-}
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-#code-csp-warning {
-	position: fixed;
-	top: 0;
-	right: 0;
-	color: white;
-	margin: 16px;
-	text-align: center;
-	font-size: 12px;
-	font-family: sans-serif;
-	background-color:#444444;
-	cursor: pointer;
-	padding: 6px;
-	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
-}
+  body {
+    font-family: -apple-system, "Segoe UI", system-ui, sans-serif;
+    font-size: 15px;
+    line-height: 1.7;
+    color: var(--text);
+    background: var(--bg);
+  }
 
-#code-csp-warning:hover {
-	text-decoration: none;
-	background-color:#007acc;
-	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
-}
+  a { color: var(--primary); text-decoration: none; }
+  a:hover { color: var(--accent); text-decoration: underline; }
 
-body.scrollBeyondLastLine {
-	margin-bottom: calc(100vh - 22px);
-}
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--primary-dark);
+    height: var(--nav-height);
+    display: flex;
+    align-items: center;
+    padding: 0 32px;
+    gap: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+  }
 
-body.showEditorSelection .code-line {
-	position: relative;
-}
+  .nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #fff;
+    font-weight: 700;
+    font-size: 17px;
+    letter-spacing: -0.2px;
+    text-decoration: none;
+    flex-shrink: 0;
+  }
 
-body.showEditorSelection .code-active-line:before,
-body.showEditorSelection .code-line:hover:before {
-	content: "";
-	display: block;
-	position: absolute;
-	top: 0;
-	left: -12px;
-	height: 100%;
-}
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-left: auto;
+    list-style: none;
+  }
+  .nav-links a {
+    color: rgba(255,255,255,0.85);
+    font-size: 13.5px;
+    padding: 6px 12px;
+    border-radius: 6px;
+    transition: background 0.15s, color 0.15s;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .nav-links a:hover { background: rgba(255,255,255,0.15); color: #fff; }
+  .nav-cta { background: var(--accent) !important; color: #fff !important; font-weight: 600; border-radius: 6px !important; }
+  .nav-cta:hover { background: #00796b !important; }
 
-body.showEditorSelection li.code-active-line:before,
-body.showEditorSelection li.code-line:hover:before {
-	left: -30px;
-}
+  .logo-nav  { display: block; height: 34px; width: auto; filter: brightness(0) invert(1); }
+  .logo-footer { display: block; height: 28px; width: auto; filter: brightness(0) invert(1); opacity: 0.9; }
 
-.vscode-light.showEditorSelection .code-active-line:before {
-	border-left: 3px solid rgba(0, 0, 0, 0.15);
-}
+  .icon-x { width: 14px; height: 14px; fill: currentColor; display: inline-block; vertical-align: middle; }
 
-.vscode-light.showEditorSelection .code-line:hover:before {
-	border-left: 3px solid rgba(0, 0, 0, 0.40);
-}
+  /* Page content */
+  .page-content {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 48px 32px 64px;
+  }
 
-.vscode-light.showEditorSelection .code-line .code-line:hover:before {
-	border-left: none;
-}
+  .page-content h1 {
+    font-size: clamp(1.6rem, 3vw, 2.2rem);
+    font-weight: 700;
+    color: var(--primary-dark);
+    border-bottom: 2px solid var(--border);
+    padding-bottom: 0.3em;
+    margin-bottom: 24px;
+    line-height: 1.2;
+  }
 
-.vscode-dark.showEditorSelection .code-active-line:before {
-	border-left: 3px solid rgba(255, 255, 255, 0.4);
-}
+  .page-content h2 {
+    font-size: clamp(1.2rem, 2.5vw, 1.6rem);
+    font-weight: 700;
+    color: var(--primary-dark);
+    margin-top: 48px;
+    margin-bottom: 16px;
+    line-height: 1.2;
+  }
 
-.vscode-dark.showEditorSelection .code-line:hover:before {
-	border-left: 3px solid rgba(255, 255, 255, 0.60);
-}
+  .page-content p {
+    color: var(--text);
+    font-size: 15px;
+    line-height: 1.7;
+    margin-bottom: 16px;
+  }
 
-.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
-	border-left: none;
-}
+  .page-content a {
+    color: var(--primary);
+  }
+  .page-content a:hover {
+    color: var(--accent);
+    text-decoration: underline;
+  }
 
-.vscode-high-contrast.showEditorSelection .code-active-line:before {
-	border-left: 3px solid rgba(255, 160, 0, 0.7);
-}
+  .page-content table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 24px 0;
+  }
 
-.vscode-high-contrast.showEditorSelection .code-line:hover:before {
-	border-left: 3px solid rgba(255, 160, 0, 1);
-}
+  .page-content table td {
+    padding: 10px;
+    vertical-align: top;
+    text-align: center;
+  }
 
-.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
-	border-left: none;
-}
+  .page-content table img {
+    max-width: 100%;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+  }
 
-img {
-	max-width: 100%;
-	max-height: 100%;
-}
+  .page-content table td p {
+    font-size: 13.5px;
+    color: var(--text-muted);
+    margin-top: 10px;
+    margin-bottom: 0;
+  }
 
-a {
-	text-decoration: none;
-}
-
-a:hover {
-	text-decoration: underline;
-}
-
-a:focus,
-input:focus,
-select:focus,
-textarea:focus {
-	outline: 1px solid -webkit-focus-ring-color;
-	outline-offset: -1px;
-}
-
-hr {
-	border: 0;
-	height: 2px;
-	border-bottom: 2px solid;
-}
-
-h1 {
-	padding-bottom: 0.3em;
-	line-height: 1.2;
-	border-bottom-width: 1px;
-	border-bottom-style: solid;
-}
-
-h1, h2, h3 {
-	font-weight: normal;
-}
-
-table {
-	border-collapse: collapse;
-}
-
-table > thead > tr > th {
-	text-align: left;
-	border-bottom: 1px solid;
-}
-
-table > thead > tr > th,
-table > thead > tr > td,
-table > tbody > tr > th,
-table > tbody > tr > td {
-	padding: 5px 10px;
-}
-
-table > tbody > tr + tr > td {
-	border-top: 1px solid;
-}
-
-blockquote {
-	margin: 0 7px 0 5px;
-	padding: 0 16px 0 10px;
-	border-left-width: 5px;
-	border-left-style: solid;
-}
-
-code {
-	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
-	font-size: 1em;
-	line-height: 1.357em;
-}
-
-body.wordWrap pre {
-	white-space: pre-wrap;
-}
-
-pre:not(.hljs),
-pre.hljs code > div {
-	padding: 16px;
-	border-radius: 3px;
-	overflow: auto;
-}
-
-pre code {
-	color: var(--vscode-editor-foreground);
-	tab-size: 4;
-}
-
-/** Theming */
-
-.vscode-light pre {
-	background-color: rgba(220, 220, 220, 0.4);
-}
-
-.vscode-dark pre {
-	background-color: rgba(10, 10, 10, 0.4);
-}
-
-.vscode-high-contrast pre {
-	background-color: rgb(0, 0, 0);
-}
-
-.vscode-high-contrast h1 {
-	border-color: rgb(0, 0, 0);
-}
-
-.vscode-light table > thead > tr > th {
-	border-color: rgba(0, 0, 0, 0.69);
-}
-
-.vscode-dark table > thead > tr > th {
-	border-color: rgba(255, 255, 255, 0.69);
-}
-
-.vscode-light h1,
-.vscode-light hr,
-.vscode-light table > tbody > tr + tr > td {
-	border-color: rgba(0, 0, 0, 0.18);
-}
-
-.vscode-dark h1,
-.vscode-dark hr,
-.vscode-dark table > tbody > tr + tr > td {
-	border-color: rgba(255, 255, 255, 0.18);
-}
-
+  /* Footer */
+  footer { background: var(--primary-dark); color: rgba(255,255,255,0.72); padding: 48px 32px 28px; }
+  .footer-inner { max-width: 1080px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 36px; }
+  @media (max-width: 760px) { .footer-inner { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 480px) { .footer-inner { grid-template-columns: 1fr; } }
+  .footer-brand { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+  .footer-tagline { font-size: 13px; line-height: 1.6; }
+  .footer-col h4 { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255,255,255,0.5); margin-bottom: 14px; }
+  .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+  .footer-col a { font-size: 13px; color: rgba(255,255,255,0.72); text-decoration: none; display: flex; align-items: center; gap: 6px; }
+  .footer-col a:hover { color: var(--accent-light); }
+  .footer-bottom { max-width: 1080px; margin: 32px auto 0; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.12); display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: rgba(255,255,255,0.45); flex-wrap: wrap; gap: 8px; }
 </style>
-
-<style>
-/* Tomorrow Theme */
-/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
-/* Original theme - https://github.com/chriskempson/tomorrow-theme */
-
-/* Tomorrow Comment */
-.hljs-comment,
-.hljs-quote {
-	color: #8e908c;
-}
-
-/* Tomorrow Red */
-.hljs-variable,
-.hljs-template-variable,
-.hljs-tag,
-.hljs-name,
-.hljs-selector-id,
-.hljs-selector-class,
-.hljs-regexp,
-.hljs-deletion {
-	color: #c82829;
-}
-
-/* Tomorrow Orange */
-.hljs-number,
-.hljs-built_in,
-.hljs-builtin-name,
-.hljs-literal,
-.hljs-type,
-.hljs-params,
-.hljs-meta,
-.hljs-link {
-	color: #f5871f;
-}
-
-/* Tomorrow Yellow */
-.hljs-attribute {
-	color: #eab700;
-}
-
-/* Tomorrow Green */
-.hljs-string,
-.hljs-symbol,
-.hljs-bullet,
-.hljs-addition {
-	color: #718c00;
-}
-
-/* Tomorrow Blue */
-.hljs-title,
-.hljs-section {
-	color: #4271ae;
-}
-
-/* Tomorrow Purple */
-.hljs-keyword,
-.hljs-selector-tag {
-	color: #8959a8;
-}
-
-.hljs {
-	display: block;
-	overflow-x: auto;
-	color: #4d4d4c;
-	padding: 0.5em;
-}
-
-.hljs-emphasis {
-	font-style: italic;
-}
-
-.hljs-strong {
-	font-weight: bold;
-}
-</style>
-
-<style>
-/*
- * Markdown PDF CSS
- */
-
- body {
-	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
-	padding: 0 12px;
-}
-
-pre {
-	background-color: #f8f8f8;
-	border: 1px solid #cccccc;
-	border-radius: 3px;
-	overflow-x: auto;
-	white-space: pre-wrap;
-	overflow-wrap: break-word;
-}
-
-pre:not(.hljs) {
-	padding: 23px;
-	line-height: 19px;
-}
-
-blockquote {
-	background: rgba(127, 127, 127, 0.1);
-	border-color: rgba(0, 122, 204, 0.5);
-}
-
-.emoji {
-	height: 1.4em;
-}
-
-code {
-	font-size: 14px;
-	line-height: 19px;
-}
-
-/* for inline code */
-:not(pre):not(.hljs) > code {
-	color: #C9AE75; /* Change the old color so it seems less like an error */
-	font-size: inherit;
-}
-
-/* Page Break : use <div class="page"/> to insert page break
--------------------------------------------------------- */
-.page {
-	page-break-after: always;
-}
-
-body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
-.w3-bar,h1,button {font-family: "Montserrat", sans-serif}
-.fa-anchor,.fa-coffee {font-size:200px}
-
-</style>
-
-<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
 </head>
 <body>
 
-<!-- Navbar -->
-<div class="w3-top">
-  <div class="w3-bar w3-cyan w3-card w3-left-align w3-large">
-    <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large w3-cyan" href="javascript:void(0);" onclick="myFunction()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>
-    <img class="w3-bar-item w3-padding-large w3-black" src="../../Logo.svg"></img>
-    <a href="../../index.html" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Home</a>
-    <a href="https://eclipse.dev/openj9/docs/" target="_blank" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Docs</a>
-    <a href="https://blog.openj9.org/" target="_blank" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Blog</a>
-    <a href="https://openj9.slack.com/" target="_blank" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Slack</a>
-    <a href="https://openj9.slack.com/join/shared_invite/enQtNDU4MDI4Mjk0MTk2LWVhNTMzMGY1N2JkODQ1OWE0NTNmZjM4ZDcxOTBiMjk3NGFjM2U0ZDNhMmY0MDZlNzU0ZjAyNzQ1ODlmYjg3MjA" target="_blank" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Join Slack</a>
-    <a href="https://github.com/eclipse-openj9/openj9/issues" target="_blank" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">OpenJ9 Issues</a>
-    
-    <div class="w3-right w3-xlarge">
-    <a class="w3-bar-item w3-button w3-hide-small fa fa-twitter w3-hover-opacity" href="https://twitter.com/openj9/" target="_blank"></a>
-    <a class="w3-bar-item w3-button w3-hide-small fa fa-github w3-hover-opacity" href="https://github.com/eclipse-openj9/openj9" target="_blank"></a>
-    <a class="w3-bar-item w3-button w3-hide-small fa fa-slack w3-hover-opacity" href="https://openj9.slack.com/" target="_blank"></a>
-    <a class="w3-bar-item w3-button w3-hide-small fa fa-stack-overflow w3-hover-opacity" href="https://stackoverflow.com/search?q=%23OpenJ9" target="_blank"></a>
-    </div>
-  </div>
+<!-- Nav -->
+<nav>
+  <a class="nav-logo" href="https://eclipse.dev/openj9/">
+    <img src="../../Logo.svg" class="logo-nav" alt="Eclipse OpenJ9" />
+  </a>
+  <ul class="nav-links">
+    <li><a href="https://eclipse.dev/openj9/docs/">Docs</a></li>
+    <li><a href="https://eclipse.dev/openj9/performance/benchmark17/performanceoverpriew17.html">Performance</a></li>
+    <li><a href="https://blog.openj9.org/">Blog</a></li>
+    <li><a href="https://openj9.slack.com/">Slack</a></li>
+    <li><a href="https://x.com/openj9">
+      <svg class="icon-x" xmlns="http://www.w3.org/2000/svg"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.736-8.844L2.25 2.25h6.894l4.254 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path></svg>
+      @openj9
+    </a></li>
+    <li><a href="https://github.com/eclipse-openj9/openj9/issues">Issues</a></li>
+    <li><a class="nav-cta" href="https://developer.ibm.com/languages/java/semeru-runtimes/">Get OpenJ9 →</a></li>
+  </ul>
+</nav>
 
-  <!-- Navbar on small screens -->
-  <div id="navDemo" class="w3-bar-block w3-white w3-hide w3-hide-large w3-hide-medium w3-large">
-    <a href="../../index.html" class="w3-bar-item w3-button w3-padding-large">Home</a>
-    <a href="https://eclipse.dev/openj9/docs/" target="_blank" class="w3-bar-item w3-button w3-padding-large">Docs</a>
-    <a href="https://blog.openj9.org/" target="_blank" class="w3-bar-item w3-button w3-padding-large">Blog</a>
-    <a href="https://openj9.slack.com/" target="_blank" class="w3-bar-item w3-button w3-padding-large">Slack</a>
-    <a href="https://openj9.slack.com/join/shared_invite/enQtNDU4MDI4Mjk0MTk2LWVhNTMzMGY1N2JkODQ1OWE0NTNmZjM4ZDcxOTBiMjk3NGFjM2U0ZDNhMmY0MDZlNzU0ZjAyNzQ1ODlmYjg3MjA" target="_blank" class="w3-bar-item w3-button w3-padding-large">Join Slack</a>
-    <a href="https://github.com/eclipse-openj9/openj9/issues" target="_blank" class="w3-bar-item w3-button w3-padding-large">OpenJ9 Issues</a>
-  </div>
-</div>
+<!-- Page content -->
+<div class="page-content">
 
-<!-- Content wrapper with top padding to account for fixed navbar -->
-<div class="w3-light-grey" style="margin-top:80px; padding: 32px 0;">
-
-  <script>
-    mermaid.initialize({
-      startOnLoad: true,
-      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
-          ? 'dark'
-          : 'default'
-    });
-  </script>
-<!--
-* Copyright (c) 2017, 2025 IBM Corp. and others
-*
-* This program and the accompanying materials are made
-* available under the terms of the Eclipse Public License 2.0
-* which accompanies this distribution and is available at
-* https://www.eclipse.org/legal/epl-2.0/ or the Apache
-* License, Version 2.0 which accompanies this distribution and
-* is available at https://www.apache.org/licenses/LICENSE-2.0.
-*
-* This Source Code may also be made available under the
-* following Secondary Licenses when the conditions for such
-* availability set forth in the Eclipse Public License, v. 2.0
-* are satisfied: GNU General Public License, version 2 with
-* the GNU Classpath Exception [1] and GNU General Public
-* License, version 2 with the OpenJDK Assembly Exception [2].
-*
-* [1] https://www.gnu.org/software/classpath/license.html
-* [2] https://openjdk.org/legal/assembly-exception.html
-*
-* SPDX-License-Identifier: EPL-2.0 OR Apache-2.0 OR GPL-2.0-only WITH Classpath-exception-2.0 OR GPL-2.0-only WITH OpenJDK-assembly-exception-1.0
--->
-
-<h1>Performance Overview </h1>
+<h1>Performance Overview</h1>
 <p>Application performance can be measured by using many different metrics, including startup time, ramp-up time, footprint, and response time, as well as throughput. At Eclipse OpenJ9™, we keep a watchful eye on all of these metrics, making sensible tradeoffs and providing tuning options that allow the virtual machine (VM) to be optimized for different workloads. We regularly test and optimize OpenJ9 performance when running the most popular Java frameworks such as <a href="https://openliberty.io">Open Liberty</a>, <a href="https://quarkus.io/">Quarkus</a>, <a href="https://spring.io/projects/spring-boot">Spring Boot</a>, and <a href="https://micronaut.io/">Micronaut</a>. We're proud of our results.</p>
-<h2>OpenJDK 17 performance with Eclipse OpenJ9 </h2>
+
+<h2>OpenJDK 17 performance with Eclipse OpenJ9</h2>
 <p>OpenJDK 17 with OpenJ9 significantly outperforms HotSpot on Open Liberty startup, ramp-up, and footprint.</p>
 <!-- Image Row - Using table layout for better compatibility with Markdown preview -->
 <table width="100%" border="0" cellspacing="0" cellpadding="10">
   <tr>
     <td width="25%" align="center" valign="top">
-      <img src="./images/DT8_startup.png" alt="OpenJ9 Startup Time" style="width: 100%; max-width: 250px; border: 1px solid #ddd;" />
+      <img src="./images/DT8_startup.png" alt="OpenJ9 Startup Time" style="width: 100%; max-width: 250px;" />
       <p>By using shared classes cache and AOT technology, OpenJ9 starts in 70% of the time it takes HotSpot.</p>
     </td>
     <td width="25%" align="center" valign="top">
-      <img src="./images/DT8_footprint_after_startup.png" alt="OpenJ9 Footprint after startup" style="width: 100%; max-width: 250px; border: 1px solid #ddd;" />
+      <img src="./images/DT8_footprint_after_startup.png" alt="OpenJ9 Footprint after startup" style="width: 100%; max-width: 250px;" />
       <p>After startup, the OpenJ9 footprint is 69% the size of HotSpot, which makes it ideal for cloud workloads.</p>
     </td>
     <td width="25%" align="center" valign="top">
-      <img src="./images/DT8_rampup.png" alt="OpenJ9 Throughput" style="width: 100%; max-width: 250px; border: 1px solid #ddd;" />
+      <img src="./images/DT8_rampup.png" alt="OpenJ9 Throughput" style="width: 100%; max-width: 250px;" />
       <p>OpenJ9 reaches peak throughput much faster than HotSpot making it especially suitable for running short-lived applications.
          The JITServer Technology speeds up rampup further.</p>
     </td>
     <td width="25%" align="center" valign="top">
-      <img src="./images/DT8_footprint_during_load.png" alt="OpenJ9 footprint during load" style="width: 100%; max-width: 250px; border: 1px solid #ddd;" />
+      <img src="./images/DT8_footprint_during_load.png" alt="OpenJ9 footprint during load" style="width: 100%; max-width: 250px;" />
       <p>When load is applied, the OpenJ9 footprint is only 52% the footprint taken by HotSpot. JITServer Technology eliminates the footprint spikes caused by JIT compilations.</p>
     </td>
   </tr>
 </table>
-<p>For more information, see <a href="daytrader8_java17.html" style="color: blue; text-decoration: underline;">OpenJDK 17 performance with Eclipse OpenJ9</a>.</p>
-<h2>OpenJDK 17 performance with Quarkus and Eclipse OpenJ9 InstantOn </h2>
+<p>For more information, see <a href="daytrader8_java17.html">OpenJDK 17 performance with Eclipse OpenJ9</a>.</p>
+
+<h2>OpenJDK 17 performance with Quarkus and Eclipse OpenJ9 InstantOn</h2>
 <p>Using Quarkus with OpenJ9 and InstantOn makes Java even more supersonic and subatomic!</p>
 <!-- Image Row - Using table layout for better compatibility with Markdown preview -->
 <table width="100%" border="0" cellspacing="0" cellpadding="10">
   <tr>
     <td width="25%" align="center" valign="top">
-      <img src="./images/Quarkus_tfr.png" alt="Quarkus Time to first response" style="width: 100%; max-width: 250px; border: 1px solid #ddd;" />
+      <img src="./images/Quarkus_tfr.png" alt="Quarkus Time to first response" style="width: 100%; max-width: 250px;" />
       <p>InstantOn reduces the time to first response to ~300 ms. While this time is larger than the time needed for Native Image, it
           represents only 6% of the time needed by HotSpot.</p>
     </td>
     <td width="25%" align="center" valign="top">
-      <img src="./images/Quarkus_rss_fr.png" alt="Quarkus Footprint after first response" style="width: 100%; max-width: 250px; border: 1px solid #ddd;" />
+      <img src="./images/Quarkus_rss_fr.png" alt="Quarkus Footprint after first response" style="width: 100%; max-width: 250px;" />
       <p>After first response, the InstantOn footprint is just a little larger (+9 MB) than the footprint needed by the Native Image.</p>
     </td>
     <td width="25%" align="center" valign="top">
-      <img src="./images/Quarkus_throughput.png" alt="Quarkus Throughput" style="width: 100%; max-width: 250px; border: 1px solid #ddd;" />
+      <img src="./images/Quarkus_throughput.png" alt="Quarkus Throughput" style="width: 100%; max-width: 250px;" />
       <p>InstantOn has a significant throughput advantage over the Native Image solution.</p>
     </td>
     <td width="25%" align="center" valign="top">
-      <img src="./images/Quarkus_thrMB.png" alt="Quarkus throughput per MB" style="width: 100%; max-width: 250px; border: 1px solid #ddd;" />
+      <img src="./images/Quarkus_thrMB.png" alt="Quarkus throughput per MB" style="width: 100%; max-width: 250px;" />
       <p>The large throughput advantage and relatively low footprint of InstantOn allows users to increase application density in the cloud by 38%.</p>
     </td>
   </tr>
 </table>
-<p>For more information, see <a href="quarkus_restcrud_java17.html" style="color: blue; text-decoration: underline;">Quarkus Performance with Eclipse OpenJ9 InstantOn</a>.</p>
+<p>For more information, see <a href="quarkus_restcrud_java17.html">Quarkus Performance with Eclipse OpenJ9 InstantOn</a>.</p>
 
 </div>
-<!-- End content wrapper -->
+<!-- End page content -->
 
 <!-- Footer -->
-<footer class="w3-container w3-opacity">  
-  <div class="w3-large w3-padding-32">
-    <a class="w3-hover-opacity" style="text-decoration:none" href="https://www.eclipse.org/" target="_blank">Eclipse Foundation Website</a> &nbsp;&nbsp;
-    <a class="w3-hover-opacity" style="text-decoration:none" href="https://www.eclipse.org/legal/privacy.php" target="_blank">Privacy Policy</a> &nbsp;&nbsp;
-    <a class="w3-hover-opacity" style="text-decoration:none" href="https://www.eclipse.org/legal/termsofuse.php" target="_blank">Terms of Use</a> &nbsp;&nbsp;
-    <a class="w3-hover-opacity" style="text-decoration:none" href="https://www.eclipse.org/legal/copyright.php" target="_blank">Copyright Agent</a> &nbsp;&nbsp;
-    <a class="w3-hover-opacity" style="text-decoration:none" href="https://www.eclipse.org/legal/" target="_blank">Legal</a>
-    <div class="w3-right w3-xlarge">
-    <a class="w3-button fa fa-twitter w3-hover-opacity" href="https://twitter.com/openj9/" target="_blank"></a>
-    <a class="w3-button fa fa-github w3-hover-opacity" href="https://github.com/eclipse-openj9/openj9" target="_blank"></a>
-    <a class="w3-button fa fa-slack w3-hover-opacity" href="https://openj9.slack.com/" target="_blank"></a>
-    <a class="w3-button fa fa-stack-overflow w3-hover-opacity" href="https://stackoverflow.com/search?q=%23OpenJ9" target="_blank"></a>
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-brand">
+        <img src="../../Logo.svg" class="logo-footer" alt="Eclipse OpenJ9" />
+      </div>
+      <p class="footer-tagline">A high-performance, scalable Java Virtual Machine implementation for enterprise and cloud-native workloads.</p>
     </div>
-    <p><a class="w3-right w3-hover-opacity" style="text-decoration:none" href="https://wiki.eclipse.org/Development_Resources/Process_Guidelines/What_is_Incubation" target="_blank">OpenJ9 is an Eclipse Incubator Project</a></p>
- </div>
+    <div class="footer-col">
+      <h4>Project</h4>
+      <ul>
+        <li><a href="https://eclipse.dev/openj9/docs/">Documentation</a></li>
+        <li><a href="https://eclipse.dev/openj9/performance/benchmark17/performanceoverpriew17.html">Performance</a></li>
+        <li><a href="https://blog.openj9.org/">Blog</a></li>
+        <li><a href="https://github.com/eclipse-openj9/openj9/releases">Releases</a></li>
+        <li><a href="https://eclipse.dev/openj9/docs/openj9_support/">Supported Platforms</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Community</h4>
+      <ul>
+        <li><a href="https://openj9.slack.com/">Slack</a></li>
+        <li><a href="https://x.com/openj9">
+          <svg class="icon-x"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.736-8.844L2.25 2.25h6.894l4.254 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path></svg>
+          @openj9 on X
+        </a></li>
+        <li><a href="https://github.com/eclipse-openj9/openj9/issues">GitHub Issues</a></li>
+        <li><a href="https://github.com/eclipse-openj9/openj9/blob/master/CONTRIBUTING.md">Contribute</a></li>
+        <li><a href="https://www.youtube.com/channel/UCN3mR03nrndbD2fYqvfD7AQ">YouTube Recordings</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Resources</h4>
+      <ul>
+        <li><a href="https://developer.ibm.com/languages/java/semeru-runtimes/">IBM Semeru Runtimes</a></li>
+        <li><a href="https://github.com/eclipse-openj9/openj9">GitHub Repository</a></li>
+        <li><a href="https://projects.eclipse.org/projects/technology.openj9">Eclipse Project Page</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© Eclipse Foundation. Eclipse OpenJ9™ is available under the <a href="https://www.eclipse.org/legal/eplfaq.php" style="color:rgba(255,255,255,0.5)">Eclipse Public License 2.0</a>.</span>
+    <span style="display:flex;flex-wrap:wrap;gap:12px;align-items:center;">
+      <a href="https://www.eclipse.org/" style="color:rgba(255,255,255,0.5)">Eclipse Foundation Website</a>
+      <a href="https://www.eclipse.org/legal/privacy.php" style="color:rgba(255,255,255,0.5)">Privacy Policy</a>
+      <a href="https://www.eclipse.org/legal/termsofuse.php" style="color:rgba(255,255,255,0.5)">Terms of Use</a>
+      <a href="https://www.eclipse.org/legal/compliance/" style="color:rgba(255,255,255,0.5)">Compliance</a>
+      <a href="https://www.eclipse.org/legal" style="color:rgba(255,255,255,0.5)">Legal Resources</a>
+    </span>
+  </div>
 </footer>
-
-<script>
-// Used to toggle the menu on small screens when clicking on the menu button
-function myFunction() {
-  var x = document.getElementById("navDemo");
-  if (x.className.indexOf("w3-show") == -1) {
-    x.className += " w3-show";
-  } else { 
-    x.className = x.className.replace(" w3-show", "");
-  }
-}
-</script>
 
 </body>
 </html>

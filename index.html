@@ -1,167 +1,547 @@
-<!DOCTYPE html>
+
 <html lang="en">
 <head>
-<title>Eclipse OpenJ9</title>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Eclipse OpenJ9™ — High Performance Java Virtual Machine</title>
 <style>
-body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
-.w3-bar,h1,button {font-family: "Montserrat", sans-serif}
-.fa-anchor,.fa-coffee {font-size:200px}
+  :root {
+    --primary:        #5e35b1;
+    --primary-dark:   #4527a0;
+    --primary-light:  #7e57c2;
+    --accent:         #00897b;
+    --accent-light:   #4db6ac;
+    --bg:             #ffffff;
+    --surface:        #f5f3fb;
+    --surface-alt:    #ede7f6;
+    --text:           #1a1a2e;
+    --text-muted:     #5f5f7a;
+    --border:         #d1c4e9;
+    --nav-height:     60px;
+    --radius:         10px;
+    --shadow:         0 2px 12px rgba(94,53,177,0.10);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: -apple-system, "Segoe UI", system-ui, sans-serif;
+    font-size: 15px;
+    line-height: 1.7;
+    color: var(--text);
+    background: var(--bg);
+  }
+
+  a { color: var(--primary); text-decoration: none; }
+  a:hover { color: var(--accent); text-decoration: underline; }
+
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--primary-dark);
+    height: var(--nav-height);
+    display: flex;
+    align-items: center;
+    padding: 0 32px;
+    gap: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+  }
+
+  .nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #fff;
+    font-weight: 700;
+    font-size: 17px;
+    letter-spacing: -0.2px;
+    text-decoration: none;
+    flex-shrink: 0;
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-left: auto;
+    list-style: none;
+  }
+  .nav-links a {
+    color: rgba(255,255,255,0.85);
+    font-size: 13.5px;
+    padding: 6px 12px;
+    border-radius: 6px;
+    transition: background 0.15s, color 0.15s;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .nav-links a:hover { background: rgba(255,255,255,0.15); color: #fff; }
+  .nav-cta { background: var(--accent) !important; color: #fff !important; font-weight: 600; border-radius: 6px !important; }
+  .nav-cta:hover { background: #00796b !important; }
+
+  .hero {
+    background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 55%, var(--primary-light) 100%);
+    color: #fff;
+    padding: 80px 32px 72px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 70% 60% at 50% 110%, rgba(0,137,123,0.28) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-logo { display: block; margin: 0 auto 12px; width: 120px; height: auto; position: relative; filter: drop-shadow(0 4px 16px rgba(0,0,0,0.25)); }
+  .logo-nav  { display: block; height: 34px; width: auto; filter: brightness(0) invert(1); }
+  .logo-footer { display: block; height: 28px; width: auto; filter: brightness(0) invert(1); opacity: 0.9; }
+  .hero-badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.3);
+    color: #fff;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 4px 14px;
+    border-radius: 20px;
+    margin-bottom: 22px;
+    position: relative;
+  }
+  .hero h1 { font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 800; line-height: 1.15; letter-spacing: -0.5px; margin-bottom: 22px; position: relative; }
+  .hero h1 span { color: var(--accent-light); }
+  .hero p { max-width: 640px; margin: 0 auto 36px; font-size: 17px; line-height: 1.65; color: rgba(255,255,255,0.88); position: relative; }
+  .hero-actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; position: relative; }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 12px 26px;
+    border-radius: 8px;
+    font-size: 14.5px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.15s, box-shadow 0.15s, background 0.15s;
+    border: none;
+    text-decoration: none !important;
+  }
+  .btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.2); }
+  .btn-primary { background: var(--accent); color: #fff; }
+  .btn-primary:hover { background: #00796b; color: #fff; }
+  .btn-outline { background: transparent; color: #fff; border: 2px solid rgba(255,255,255,0.7); }
+  .btn-outline:hover { background: rgba(255,255,255,0.12); color: #fff; }
+
+  .release-banner {
+    background: var(--surface-alt);
+    border-left: 4px solid var(--accent);
+    padding: 16px 32px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+  .release-pill { background: var(--accent); color: #fff; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; padding: 3px 10px; border-radius: 12px; white-space: nowrap; }
+  .release-banner p { margin: 0; font-size: 14px; color: var(--text); flex: 1; }
+  .release-banner a { color: var(--primary); font-weight: 600; }
+
+  .container { max-width: 1080px; margin: 0 auto; padding: 0 32px; }
+  section { padding: 72px 0; }
+  section:nth-child(even) { background: var(--surface); }
+
+  .section-label { font-size: 11.5px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 10px; }
+  h2 { font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 700; color: var(--primary-dark); margin-bottom: 16px; line-height: 1.2; }
+  .lead { font-size: 16px; color: var(--text-muted); max-width: 620px; margin-bottom: 40px; }
+
+  .feature-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; margin-top: 8px; }
+  .feature-card { background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 28px 24px; box-shadow: var(--shadow); transition: transform 0.15s, box-shadow 0.15s, border-color 0.15s; }
+  .feature-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(94,53,177,0.14); border-color: var(--primary-light); }
+  .feature-icon { width: 44px; height: 44px; border-radius: 10px; background: var(--surface-alt); display: flex; align-items: center; justify-content: center; margin-bottom: 18px; }
+  .feature-icon svg { width: 22px; height: 22px; fill: var(--primary); }
+  .feature-card h3 { font-size: 15.5px; font-weight: 700; color: var(--primary-dark); margin-bottom: 8px; }
+  .feature-card p { font-size: 14px; color: var(--text-muted); line-height: 1.65; }
+
+  .story-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; }
+  @media (max-width: 720px) { .story-grid { grid-template-columns: 1fr; gap: 32px; } }
+  .story-text h2 { margin-bottom: 20px; }
+  .story-text p { color: var(--text-muted); font-size: 15px; margin-bottom: 16px; }
+  .stat-row { display: flex; gap: 24px; margin-top: 32px; flex-wrap: wrap; }
+  .stat { text-align: center; display: flex; flex-direction: column; align-items: center; flex: 1 1 auto; }
+  .stat-num { font-size: 1.1rem; font-weight: 800; color: var(--primary); display: block; line-height: 1.2; margin-bottom: 4px; }
+  .stat-label { font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; text-align: center; }
+  .story-visual { background: linear-gradient(145deg, var(--surface-alt), var(--border)); border-radius: 16px; padding: 36px; display: flex; flex-direction: column; gap: 14px; }
+  .perf-bar-row { display: flex; align-items: center; gap: 12px; }
+  .perf-bar-label { font-size: 12.5px; font-weight: 600; color: var(--text); min-width: 90px; }
+  .perf-bar-track { flex: 1; height: 10px; background: var(--border); border-radius: 5px; overflow: hidden; }
+  .perf-bar-fill { height: 100%; border-radius: 5px; }
+  .perf-bar-fill.openj9 { background: linear-gradient(90deg, var(--primary), var(--accent)); }
+  .perf-bar-fill.other { background: #b0b0c8; }
+  .perf-bar-val { font-size: 12px; font-weight: 700; color: var(--primary); min-width: 36px; text-align: right; }
+  .perf-caption { font-size: 11px; color: var(--text-muted); text-align: center; margin-top: 6px; }
+  .perf-link-row { text-align: center; margin-top: 2px; }
+  .perf-link-row a { font-size: 12.5px; font-weight: 600; color: var(--primary); }
+  .perf-link-row a:hover { color: var(--accent); }
+
+  .supporters-grid { display: flex; flex-wrap: wrap; gap: 16px; margin-top: 8px; align-items: stretch; }
+  .supporter-card { background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px 28px; font-size: 14px; color: var(--text-muted); flex: 1 1 200px; box-shadow: var(--shadow); }
+  .supporter-card strong { display: block; color: var(--primary-dark); font-size: 15px; margin-bottom: 6px; }
+
+  .community-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-top: 8px; }
+  .community-card { background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 30px 26px; box-shadow: var(--shadow); display: flex; flex-direction: column; gap: 14px; }
+  .community-card .icon-wrap { width: 48px; height: 48px; border-radius: 12px; background: var(--primary); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .community-card .icon-wrap svg { width: 24px; height: 24px; fill: #fff; }
+  .community-card h3 { font-size: 16px; font-weight: 700; color: var(--primary-dark); }
+  .community-card p { font-size: 14px; color: var(--text-muted); line-height: 1.65; flex: 1; }
+  .community-card a.card-link { display: inline-flex; align-items: center; gap: 6px; font-size: 13.5px; font-weight: 600; color: var(--accent); text-decoration: none; }
+  .community-card a.card-link:hover { text-decoration: underline; }
+
+  .release-card { background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 32px; box-shadow: var(--shadow); display: grid; grid-template-columns: 1fr auto; gap: 24px; align-items: start; }
+  @media (max-width: 600px) { .release-card { grid-template-columns: 1fr; } }
+  .release-card h3 { font-size: 1.25rem; font-weight: 700; color: var(--primary-dark); margin-bottom: 8px; }
+  .release-card p { font-size: 14px; color: var(--text-muted); margin-bottom: 10px; line-height: 1.65; }
+  .release-highlights { list-style: none; display: flex; flex-direction: column; gap: 7px; margin: 12px 0; }
+  .release-highlights li { font-size: 14px; color: var(--text); padding-left: 20px; position: relative; }
+  .release-highlights li::before { content: ''; position: absolute; left: 0; top: 8px; width: 8px; height: 8px; background: var(--accent); border-radius: 50%; }
+  .release-meta { font-size: 12px; color: var(--text-muted); }
+
+  .contribute-split { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  @media (max-width: 660px) { .contribute-split { grid-template-columns: 1fr; } }
+  .contribute-card { background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 30px; box-shadow: var(--shadow); }
+  .contribute-card h3 { font-size: 15.5px; font-weight: 700; color: var(--primary-dark); margin-bottom: 10px; }
+  .contribute-card p { font-size: 14px; color: var(--text-muted); line-height: 1.65; margin-bottom: 18px; }
+
+  footer { background: var(--primary-dark); color: rgba(255,255,255,0.72); padding: 48px 32px 28px; }
+  .footer-inner { max-width: 1080px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 36px; }
+  @media (max-width: 760px) { .footer-inner { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 480px) { .footer-inner { grid-template-columns: 1fr; } }
+  .footer-brand { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+  .footer-tagline { font-size: 13px; line-height: 1.6; }
+  .footer-col h4 { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255,255,255,0.5); margin-bottom: 14px; }
+  .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+  .footer-col a { font-size: 13px; color: rgba(255,255,255,0.72); text-decoration: none; display: flex; align-items: center; gap: 6px; }
+  .footer-col a:hover { color: var(--accent-light); }
+  .footer-bottom { max-width: 1080px; margin: 32px auto 0; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.12); display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: rgba(255,255,255,0.45); flex-wrap: wrap; gap: 8px; }
+
+  .icon-x { width: 14px; height: 14px; fill: currentColor; display: inline-block; vertical-align: middle; }
+
 </style>
 </head>
 <body>
 
-<!-- Navbar -->
-<div class="w3-top">
-  <div class="w3-bar w3-cyan w3-card w3-left-align w3-large">
-    <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large w3-cyan" href="javascript:void(0);" onclick="myFunction()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>
-    <img class="w3-bar-item w3-padding-large w3-black" src="Logo.svg"></img>
-    <a href="https://eclipse.dev/openj9/docs/" target="_blank" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Docs</a>
-    <a href="https://blog.openj9.org/" target="_blank" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Blog</a>
-    <a href="https://openj9.slack.com/" target="_blank" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Slack</a>
-    <a href="https://openj9.slack.com/join/shared_invite/enQtNDU4MDI4Mjk0MTk2LWVhNTMzMGY1N2JkODQ1OWE0NTNmZjM4ZDcxOTBiMjk3NGFjM2U0ZDNhMmY0MDZlNzU0ZjAyNzQ1ODlmYjg3MjA" target="_blank" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Join Slack</a>
-    <a href="https://github.com/eclipse-openj9/openj9/issues" target="_blank" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">OpenJ9 Issues</a>
-    <a href="performance/benchmark17/performanceoverpriew17.html" target="_blank" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Performance</a>
-    <div class="w3-right w3-xlarge">
-    <a class="w3-bar-item w3-button w3-hide-small fa fa-twitter w3-hover-opacity" href="https://twitter.com/openj9/" target="_blank"></a>
-    <a class="w3-bar-item w3-button w3-hide-small fa fa-github w3-hover-opacity" href="https://github.com/eclipse-openj9/openj9" target="_blank"></a>
-    <a class="w3-bar-item w3-button w3-hide-small fa fa-slack w3-hover-opacity" href="https://openj9.slack.com/" target="_blank"></a>
-    <a class="w3-bar-item w3-button w3-hide-small fa fa-stack-overflow w3-hover-opacity" href="https://stackoverflow.com/search?q=%23OpenJ9" target="_blank"></a>
-    </div>
-  </div>
+<nav>
+  <a class="nav-logo" href="https://eclipse.dev/openj9/">
+    <img src="Logo.svg" class="logo-nav" alt="Eclipse OpenJ9" />
+  </a>
+  <ul class="nav-links">
+    <li><a href="https://eclipse.dev/openj9/docs/">Docs</a></li>
+    <li><a href="https://eclipse.dev/openj9/performance/benchmark17/performanceoverpriew17.html">Performance</a></li>
+    <li><a href="https://blog.openj9.org/">Blog</a></li>
+    <li><a href="https://openj9.slack.com/">Slack</a></li>
+    <li><a href="https://x.com/openj9">
+      <svg class="icon-x" xmlns="http://www.w3.org/2000/svg"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.736-8.844L2.25 2.25h6.894l4.254 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path></svg>
+      @openj9
+    </a></li>
+    <li><a href="https://github.com/eclipse-openj9/openj9/issues">Issues</a></li>
+    <li><a class="nav-cta" href="https://developer.ibm.com/languages/java/semeru-runtimes/">Get OpenJ9 →</a></li>
+  </ul>
+</nav>
 
-  <!-- Navbar on small screens -->
-  <div id="navDemo" class="w3-bar-block w3-white w3-hide w3-hide-large w3-hide-medium w3-large">
-    <a href="https://eclipse.dev/openj9/docs/" target="_blank" class="w3-bar-item w3-button w3-padding-large">Docs</a>
-    <a href="https://blog.openj9.org/" target="_blank" class="w3-bar-item w3-button w3-padding-large">Blog</a>
-    <a href="https://openj9.slack.com/" target="_blank" class="w3-bar-item w3-button w3-padding-large">Slack</a>
-    <a href="https://openj9.slack.com/join/shared_invite/enQtNDU4MDI4Mjk0MTk2LWVhNTMzMGY1N2JkODQ1OWE0NTNmZjM4ZDcxOTBiMjk3NGFjM2U0ZDNhMmY0MDZlNzU0ZjAyNzQ1ODlmYjg3MjA" target="_blank" class="w3-bar-item w3-button w3-padding-large">Join Slack</a>
-    <a href="https://github.com/eclipse-openj9/openj9/issues" target="_blank" class="w3-bar-item w3-button w3-padding-large">OpenJ9 Issues</a>
-  </div>
+
+<div class="release-banner">
+  <span class="release-pill">New</span>
+  <p><strong>Eclipse OpenJ9 v0.62.0</strong> is now available — supporting OpenJDK 27, ZIP64 bootstrap class loading and shared classes cache.  <a href="#news">Read the release notes →</a></p>
 </div>
 
-<!-- Header -->
-<header class="w3-container w3-cyan w3-center" style="padding:96px 16px">
-  <img style="width:20%" class="w3-black" src="openj9-logo-white.svg"/>
-  <h1 class="w3-margin w3-jumbo">Unleash the power of Java</h1>
-  <p class="w3-content w3-xlarge">Optimized to run Java™ applications cost-effectively in the cloud, Eclipse OpenJ9™ is a fast and efficient JVM that delivers power and performance when you need it most.</p>
-<div class="w3-large">
-<p>Optimized for the Cloud, for microservices and monoliths too!</p>
-<p>Faster Startup</p>
-<p>Faster Ramp-up, when deployed to cloud</p>
-<p>Smaller</p>
-</div>
+
+<header class="hero">
+  <img src="Logo.svg" class="hero-logo" alt="Eclipse OpenJ9" />
+  <div class="hero-badge">Eclipse Foundation Open-Source JVM</div>
+  <h1>Eclipse OpenJ9™ — the JVM built for<br /><span>enterprise performance</span></h1>
+  <p>Eclipse OpenJ9 is a high-performance, scalable Java Virtual Machine implementation — contributed by IBM and representing thousands of person-years of engineering effort.</p>
+  <div class="hero-actions">
+    <a class="btn btn-primary" href="https://developer.ibm.com/languages/java/semeru-runtimes/">
+      <svg width="16" height="16" fill="white"><path d="M2 3h12v2H2zm0 4h9v2H2zm0 4h6v2H2z"></path></svg>
+      Semeru Runtimes
+    </a>
+    <a class="btn btn-outline" href="https://eclipse.dev/openj9/docs/">Read the Docs</a>
+    <a class="btn btn-outline" href="https://eclipse.dev/openj9/performance/benchmark17/performanceoverpriew17.html">View Benchmarks</a>
+    <a class="btn btn-outline" href="https://github.com/eclipse-openj9/openj9">
+      <svg width="16" height="16" fill="white"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.54 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg>
+      View on GitHub
+    </a>
+  </div>
 </header>
 
-<!-- First Grid -->
-<div class="w3-row-padding w3-padding-64 w3-container">
-  <div class="w3-content">
-    <div class="w3-center">
-      <h1 id="about">Our Story</h1>
-      <h5 class="w3-padding-32">Eclipse OpenJ9 is a high performance, scalable, Java virtual machine (JVM) implementation that represents hundreds of person-years of effort. Contributed to the Eclipse project by IBM, the OpenJ9 JVM underpins the IBM SDK, Java Technology Edition product that is a core component of many IBM Enterprise software products. Continued development of OpenJ9 at the Eclipse foundation ensures wider collaboration, fresh innovation, and the opportunity to influence the development of OpenJ9 for the next generation of Java applications.</h5>
+
+<section>
+  <div class="container">
+    <div class="section-label">Why OpenJ9</div>
+    <h2>Engineered for real-world workloads</h2>
+    <p class="lead">OpenJ9 is optimized for cloud, enterprise, and container environments — delivering fast startup, low memory footprint, and sustained throughput.</p>
+    <div class="feature-grid">
+      <div class="feature-card">
+        <div class="feature-icon"><svg><path d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg></div>
+        <h3>Fast startup time</h3>
+        <p>Ahead-of-Time (AOT) compilation and shared class caches dramatically cut startup latency, even in containerized workloads.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon"><svg><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93V18c0-.55.45-1 1-1s1 .45 1 1v1.93A8.01 8.01 0 0111 19.93zM17.66 17.66l-1.41-1.41a.996.996 0 010-1.41c.39-.39 1.02-.39 1.41 0l1.41 1.41c.39.39.39 1.02 0 1.41-.39.39-1.02.39-1.41 0zm-11.32 0c-.39-.39-.39-1.02 0-1.41l1.41-1.41c.39-.39 1.02-.39 1.41 0 .39.39.39 1.02 0 1.41l-1.41 1.41c-.39.39-1.02.39-1.41 0zM4.07 13H2.07A8.01 8.01 0 012.07 11h2c.55 0 1 .45 1 1s-.45 1-1 1zm15.93-1c0 .55-.45 1-1 1h-2c-.55 0-1-.45-1-1s.45-1 1-1h2c.55 0 1 .45 1 1z"></path></svg></div>
+        <h3>Low memory footprint</h3>
+        <p>Idle-time optimization, compaction, and container-aware memory management keep heap usage lean — reducing cloud cost.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon"><svg><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"></path></svg></div>
+        <h3>Flexible GC policies</h3>
+        <p>Choose from multiple garbage collection policies — gencon, balanced, metronome, and more — tuned to your application's workload profile.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon"><svg><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm-5 11.5v-2.25l4.5 2.75-4.5 2.75V16.5zm0-9.5l4.5 2.75L15 12V7zM4 9h9v2H4V9zm0 4h9v2H4v-2z"></path></svg></div>
+        <h3>JIT compilation</h3>
+        <p>Advanced JIT with GPU offload capability and <code>-Xtune:virtualized</code> mode for maximizing throughput in multi-tenant cloud environments.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon"><svg><path d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z"></path></svg></div>
+        <h3>Class data sharing</h3>
+        <p>Reduce startup time across multiple JVM instances by sharing class bytecodes and AOT-compiled methods via a persistent shared class cache.</p>
+      </div>
     </div>
   </div>
-</div>
-
-<!-- Second Grid -->
-<div class="w3-light-grey w3-padding-64 w3-container">
-  <div class="w3-content">
-    <!--div class="w3-third w3-center">
-      <i class="w3-padding-64 w3-margin-right"></i>
-    </div-->
-
-    <div class="w3-center">
-      <h1>Our supporters</h1>
-      <h5 class="w3-padding-32">The success of the OpenJ9 project is underpinned by the generosity of our supporters, to whom we would like to extend our thanks. This support comes in different forms; monetary, people, system, and data center resources. People resources help us to staff the planning, development, delivery, and support of OpenJ9 releases as well as pioneering new and innovative technologies. Dedicated systems and hosting services allow us to run automated build and test operations, which help ensure that quality and reliability is central to all our deliverables.</h5>
-</div>
-</div>
-</div>
-<div class="w3-center w3-light-grey">
-      <img style="width:14%" src="ibm-logo.svg"/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      <img style="width:20%" class="w3-grey" src="adopt-open-jdk.png"/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      <img style="width:20%" src="oregon-state-university-logo.svg"/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      <img style="width:16%" src="university-of-new-brunswick-unb-logo-vector.svg"/>
-</div>
-<div class="w3-light-grey w3-padding-32">
-</div>
-
-<div class="w3-container w3-black w3-opacity w3-padding-64">
-    <h1 class="w3-quarter w3-margin w3-center">Join the conversation</h1>
-<div class="w3-row-padding w3-third w3-large">
-<p>Join us on Slack where you can ask questions and chat directly with our developers. Whether you simply have a question about using OpenJ9, an idea for improvement, or a problem you want to discuss, we'd love to hear from you.</p>
-<a class="w3-button w3-cyan" href="https://openj9.slack.com/join/shared_invite/enQtNDU4MDI4Mjk0MTk2LWVhNTMzMGY1N2JkODQ1OWE0NTNmZjM4ZDcxOTBiMjk3NGFjM2U0ZDNhMmY0MDZlNzU0ZjAyNzQ1ODlmYjg3MjA" target="_blank">Join OpenJ9 Slack <i class="fa fa-slack"></i></a>
-</div>
-<div class="w3-row-padding w3-third w3-large">
-<p>Like all great open source projects, we have a vibrant and busy GitHub repository where you can create issues to explore ideas, request new features, or report any difficulties you are having.</p>
-<a class="w3-button w3-cyan" href="https://github.com/eclipse-openj9/openj9/issues" target="_blank">See OpenJ9 Issues <i class="fa fa-github"></i></a>
-</div>
-</div>
-
-<div class="w3-container w3-grey w3-opacity w3-padding-64">
-    <h1 class="w3-quarter w3-margin w3-center">Participate in the Eclipse OpenJ9 project</h1>
-<div class="w3-row-padding w3-third w3-large">
-<h2>Become a contributor</h2>
-<p>We welcome contributions to the project in all shapes and forms. If you are interested in JVM development, we'd love to hear your ideas and help you collaborate with us on the code base. There are other ways you can contribute too, such as working on our website and docs. Be a part of the project and share in our success!</p>
-<a class="w3-button w3-cyan" href="https://github.com/eclipse-openj9/openj9/blob/master/CONTRIBUTING.md" target="_blank">Contributor Guide</a>
-</div>
-<div class="w3-row-padding w3-third w3-large">
-<h2>Join community calls</h2>
-<p>Our regular calls are a great place to find out what is going on in the project. As well as discussing our release plans and development status, we often feature lightning talks by members of the community. For example, technical deep dives or overviews about new features. To see agendas and recordings, look in the Slack #planning channel.</p>
-<a class="w3-button w3-cyan" href="https://calendar.google.com/calendar?cid=YjBnYjB0ZzNxaTZhb3NhZGZnbG0wa3BjY29AZ3JvdXAuY2FsZW5kYXIuZ29vZ2xlLmNvbQ" target="_blank">Add to Calendar</a>
-</div>
-</div>
-
-<div class="w3-padding-64 w3-container w3-light-grey">
-  <div class="w3-content">
-        <div class="w3-center">
-      <h1 id="news">Eclipse OpenJ9 version 0.62.0 released</h1>
-<p>September 2026</p>
-</div>
-<p>We're pleased to announce the availability of Eclipse OpenJ9 v0.62.0.</p>
-<p>This release supports OpenJDK 27. For more information about supported platforms and OpenJDK versions, see <a class="w3-hover-opacity" href="https://eclipse.dev/openj9/docs/openj9_support/" target="_blank">Supported environments</a>.</p>
-<p>Other updates in this release include the following:</p>
- <ul>
-  <li>OpenJ9 VM now supports ZIP files that use ZIP64 extensions for bootstrap class loading and shared classes cache operations. This enhancement enables the VM to eliminate the 4 GB size limitation of standard ZIP files and work with large JAR or ZIP files.</li>
-</ul>
-  <p>To read more about these and other changes, see the <a class="w3-hover-opacity" href="https://eclipse.dev/openj9/docs/openj9_releases/" target="_blank">OpenJ9 user documentation</a>.</p>  
-  </div>
-</div>
+</section>
 
 
-<!-- Footer -->
-<footer class="w3-container w3-opacity">  
-  <div class="w3-large w3-padding-32">
-    <a class="w3-hover-opacity" style="text-decoration:none" href="https://www.eclipse.org/" target="_blank">Eclipse Foundation Website</a> &nbsp;&nbsp;
-    <a class="w3-hover-opacity" style="text-decoration:none" href="https://www.eclipse.org/legal/privacy.php" target="_blank">Privacy Policy</a> &nbsp;&nbsp;
-    <a class="w3-hover-opacity" style="text-decoration:none" href="https://www.eclipse.org/legal/termsofuse.php" target="_blank">Terms of Use</a> &nbsp;&nbsp;
-    <a class="w3-hover-opacity" style="text-decoration:none" href="https://www.eclipse.org/legal/copyright.php" target="_blank">Copyright Agent</a> &nbsp;&nbsp;
-    <a class="w3-hover-opacity" style="text-decoration:none" href="https://www.eclipse.org/legal/" target="_blank">Legal</a>
-    <div class="w3-right w3-xlarge">
-    <a class="w3-button fa fa-twitter w3-hover-opacity" href="https://twitter.com/openj9/" target="_blank"></a>
-    <a class="w3-button fa fa-github w3-hover-opacity" href="https://github.com/eclipse-openj9/openj9" target="_blank"></a>
-    <a class="w3-button fa fa-slack w3-hover-opacity" href="https://openj9.slack.com/" target="_blank"></a>
-    <a class="w3-button fa fa-stack-overflow w3-hover-opacity" href="https://stackoverflow.com/search?q=%23OpenJ9" target="_blank"></a>
+<section id="about">
+  <div class="container">
+    <div class="story-grid">
+      <div class="story-text">
+        <div class="section-label">Our Story</div>
+        <h2>Decades of JVM engineering, open source</h2>
+        <p>Eclipse OpenJ9 represents thousands of person-years of engineering effort, powering the IBM SDK, Java Technology Edition, IBM Semeru Runtimes, and many core IBM Enterprise software products.</p>
+        <p>Contributed in 2017 to the Eclipse Foundation, OpenJ9 continues to evolve through wider community collaboration — driving fresh innovation and shaping the future of the Java platform for enterprise and cloud-native workloads.</p>
+        <div class="stat-row">
+          <div class="stat"><span class="stat-num">1000s</span><span class="stat-label">Person-years of engineering</span></div>
+          <div class="stat"><span class="stat-num">All OpenJDK LTS</span><span class="stat-label">Long-term support releases</span></div>
+          <div class="stat"><span class="stat-num">Linux® · Windows™ · macOS® · AIX® · z/OS®</span><span class="stat-label">Supported platforms</span></div>
+        </div>
+      </div>
+      <div class="story-visual">
+        <p style="font-size:12.5px;font-weight:700;color:#5e35b1;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px">vs. HotSpot — Open Liberty on OpenJDK 17</p>
+        <div class="perf-bar-row">
+          <span class="perf-bar-label">Startup time</span>
+          <div class="perf-bar-track"><div class="perf-bar-fill openj9" style="width:70%"></div></div>
+          <span class="perf-bar-val">70%</span>
+        </div>
+        <div class="perf-bar-row">
+          <span class="perf-bar-label">Idle footprint</span>
+          <div class="perf-bar-track"><div class="perf-bar-fill openj9" style="width:69%"></div></div>
+          <span class="perf-bar-val">69%</span>
+        </div>
+        <div class="perf-bar-row">
+          <span class="perf-bar-label">Load footprint</span>
+          <div class="perf-bar-track"><div class="perf-bar-fill openj9" style="width:52%"></div></div>
+          <span class="perf-bar-val">52%</span>
+        </div>
+        <div class="perf-bar-row">
+          <span class="perf-bar-label">InstantOn start</span>
+          <div class="perf-bar-track"><div class="perf-bar-fill openj9" style="width:6%"></div></div>
+          <span class="perf-bar-val">6%</span>
+        </div>
+        <div class="perf-bar-row">
+          <span class="perf-bar-label">HotSpot</span>
+          <div class="perf-bar-track"><div class="perf-bar-fill other" style="width:100%"></div></div>
+          <span class="perf-bar-val" style="color:#5f5f7a">100%</span>
+        </div>
+        <p class="perf-caption">Lower is better. OpenJ9 as % of HotSpot.</p>
+        <div class="perf-link-row"><a href="https://eclipse.dev/openj9/performance/benchmark17/performanceoverpriew17.html">See full benchmark results →</a></div>
+      </div>
     </div>
-    <p><a class="w3-right w3-hover-opacity" style="text-decoration:none" href="https://wiki.eclipse.org/Development_Resources/Process_Guidelines/What_is_Incubation" target="_blank">OpenJ9 is an Eclipse Incubator Project</a></p>
- </div>
+  </div>
+</section>
+
+
+<section id="news">
+  <div class="container">
+    <div class="section-label">Latest Release</div>
+    <h2><a href="https://eclipse.dev/openj9/docs/version0.62/" style="color:inherit;text-decoration:none">Eclipse OpenJ9 v0.62.0</a></h2>
+    <p class="lead">Released September 2026 — supports OpenJDK 27.</p>
+    <div class="release-card">
+      <div>
+        <h3>What's new in v0.62.0</h3>
+        <p>This release brings several significant improvements to bootstrap class loading, ZIP handling, and platform compatibility.</p>
+        <ul class="release-highlights">
+          <li>ZIP64 extension support for bootstrap class loading and shared class cache operations, eliminating the previous 4 GB JAR/ZIP size limit.</li>
+          <li>OpenJDK 27 support across all certified platforms.</li>
+          <li>Continued improvements to CRIU (Checkpoint/Restore in Userspace) support for instant-on workloads.</li>
+          <li>Enhanced native cryptographic acceleration through OpenSSL integration updates.</li>
+        </ul>
+        <p class="release-meta">For a full list of supported platforms and OpenJDK versions, see <a href="https://eclipse.dev/openj9/docs/openj9_support/">Supported environments</a>.</p>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:10px;align-items:flex-start;padding-top:4px">
+        <a class="btn btn-primary" href="https://eclipse.dev/openj9/docs/version0.62/" style="white-space:nowrap">Full release notes</a>
+        <a class="btn" href="https://developer.ibm.com/languages/java/semeru-runtimes/" style="background:var(--surface-alt);color:var(--primary);border:1px solid var(--border);white-space:nowrap">Semeru Runtimes</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section>
+  <div class="container">
+    <div class="section-label">Our Supporters</div>
+    <h2>Backed by the community</h2>
+    <p class="lead">The success of OpenJ9 is underpinned by the generosity of our supporters — through people, systems, data centres, and financial resources.</p>
+    <div class="supporters-grid">
+      <div class="supporter-card">
+        <strong>👥 People Resources</strong>
+        Staffing the planning, development, delivery, and support of OpenJ9 releases, plus pioneering new and innovative technologies.
+      </div>
+      <div class="supporter-card">
+        <strong>🖥️ Systems &amp; Hosting</strong>
+        Dedicated systems and hosting services power our automated build and test operations, ensuring quality and reliability in every deliverable.
+      </div>
+      <div class="supporter-card">
+        <strong>🎓 Oregon State University</strong>
+        The <a href="https://osuosl.org/">OSU Open Source Lab</a> generously provides hosting and data centre resources that support the OpenJ9 build and test infrastructure.
+      </div>
+      <div class="supporter-card">
+        <strong>🎓 University of New Brunswick</strong>
+        <a href="https://www.unb.ca/">UNB</a> provides additional systems and hosting resources that contribute to the OpenJ9 build and test infrastructure.
+      </div>
+      <div class="supporter-card">
+        <strong>🏗️ IBM &amp; Eclipse Foundation</strong>
+        IBM contributed the OpenJ9 JVM — the core of IBM SDK, Java Technology Edition and IBM Semeru Runtimes — and continues to be a primary development partner at the Eclipse Foundation.
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section>
+  <div class="container">
+    <div class="section-label">Get Involved</div>
+    <h2>Join the conversation</h2>
+    <p class="lead">OpenJ9 is a community-driven project. Whether you are a user, adopter, or contributor — we'd love to hear from you.</p>
+    <div class="community-grid">
+
+      <div class="community-card">
+        <div class="icon-wrap">
+          <svg><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"></path></svg>
+        </div>
+        <h3>Chat on Slack</h3>
+        <p>Ask questions and chat directly with OpenJ9 developers. Whether you have a usage question, an improvement idea, or a problem to discuss — we're here.</p>
+        <a class="card-link" href="https://openj9.slack.com/join/shared_invite/enQtNDU4MDI4Mjk0MTk2LWVhNTMzMGY1N2JkODQ1OWE0NTNmZjM4ZDcxOTBiMjk3NGFjM2U0ZDNhMmY0MDZlNzU0ZjAyNzQ1ODlmYjg3MjA">Join OpenJ9 Slack →</a>
+      </div>
+
+      <div class="community-card">
+        <div class="icon-wrap" style="background:var(--accent)">
+          <svg><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.44 9.8 8.2 11.38.6.11.82-.26.82-.58 0-.28-.01-1.22-.01-2.22-3.03.56-3.83-.74-4.07-1.41-.14-.35-.73-1.41-1.25-1.7-.43-.22-1.04-.77-.01-.78.96-.01 1.65.88 1.88 1.25 1.1 1.85 2.86 1.33 3.56 1.01.11-.79.43-1.33.78-1.63-2.72-.31-5.57-1.36-5.57-6.03 0-1.33.47-2.42 1.25-3.27-.12-.31-.54-1.55.12-3.22 0 0 1.02-.33 3.35 1.25a11.64 11.64 0 013.05-.41c1.03 0 2.07.14 3.05.41 2.33-1.58 3.35-1.25 3.35-1.25.66 1.67.24 2.91.12 3.22.78.85 1.25 1.94 1.25 3.27 0 4.68-2.85 5.72-5.57 6.03.44.38.83 1.12.83 2.27 0 1.63-.01 2.95-.01 3.35 0 .32.22.7.83.58A12.01 12.01 0 0024 12c0-6.63-5.37-12-12-12z"></path></svg>
+        </div>
+        <h3>GitHub Issues</h3>
+        <p>Create issues to explore ideas, request new features, or report problems. Our welcoming repository is open to all.</p>
+        <a class="card-link" href="https://github.com/eclipse-openj9/openj9/issues" style="color:var(--accent)">See OpenJ9 Issues →</a>
+      </div>
+
+      <div class="community-card">
+        <div class="icon-wrap" style="background:#c00">
+          <svg><path d="M23.5 6.2a3.01 3.01 0 00-2.12-2.13C19.54 3.6 12 3.6 12 3.6s-7.54 0-9.38.47A3.01 3.01 0 00.5 6.2 31.5 31.5 0 000 12a31.5 31.5 0 00.5 5.8 3.01 3.01 0 002.12 2.13C4.46 20.4 12 20.4 12 20.4s7.54 0 9.38-.47a3.01 3.01 0 002.12-2.13A31.5 31.5 0 0024 12a31.5 31.5 0 00-.5-5.8zM9.6 15.6V8.4l6.27 3.6-6.27 3.6z"></path></svg>
+        </div>
+        <h3>Past Talk Recordings</h3>
+        <p>Browse our archive of community talks, technical deep dives, and feature overviews on YouTube — covering everything from GC policies to JITServer.</p>
+        <a class="card-link" href="https://www.youtube.com/channel/UCN3mR03nrndbD2fYqvfD7AQ" style="color:#c00">Watch on YouTube →</a>
+      </div>
+
+      <div class="community-card">
+        <div class="icon-wrap" style="background:#1a1a1a">
+          <svg fill="white" width="24" height="24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.736-8.844L2.25 2.25h6.894l4.254 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path></svg>
+        </div>
+        <h3>Follow on X</h3>
+        <p>Stay up to date with release announcements, performance insights, and community news from the OpenJ9 team.</p>
+        <a class="card-link" href="https://x.com/openj9" style="color:#1a1a1a">@openj9 on X →</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<section>
+  <div class="container">
+    <div class="section-label">Participate</div>
+    <h2>Become a contributor</h2>
+    <p class="lead">We welcome contributions in all shapes and forms — code, docs, website, testing, and more. Be a part of the project and share in our success.</p>
+    <div class="contribute-split">
+      <div class="contribute-card">
+        <h3>Contribute Code</h3>
+        <p>Interested in JVM development? We'd love to hear your ideas and help you collaborate on the OpenJ9 codebase. Our Contributor Guide will get you started.</p>
+        <a class="btn btn-primary" href="https://github.com/eclipse-openj9/openj9/blob/master/CONTRIBUTING.md">Contributor Guide</a>
+      </div>
+      <div class="contribute-card">
+        <h3>Improve Docs &amp; Website</h3>
+        <p>There are many ways to contribute beyond code — help us improve user documentation, the website, or translations. Every contribution matters.</p>
+        <a class="btn" href="https://github.com/eclipse-openj9/openj9-docs" style="background:var(--surface-alt);color:var(--primary);border:1px solid var(--border)">Docs Repository</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-brand">
+        <img src="Logo.svg" class="logo-footer" alt="Eclipse OpenJ9" />
+      </div>
+      <p class="footer-tagline">A high-performance, scalable Java Virtual Machine implementation for enterprise and cloud-native workloads.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Project</h4>
+      <ul>
+        <li><a href="https://eclipse.dev/openj9/docs/">Documentation</a></li>
+        <li><a href="https://eclipse.dev/openj9/performance/benchmark17/performanceoverpriew17.html">Performance</a></li>
+        <li><a href="https://blog.openj9.org/">Blog</a></li>
+        <li><a href="https://github.com/eclipse-openj9/openj9/releases">Releases</a></li>
+        <li><a href="https://eclipse.dev/openj9/docs/openj9_support/">Supported Platforms</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Community</h4>
+      <ul>
+        <li><a href="https://openj9.slack.com/">Slack</a></li>
+        <li><a href="https://x.com/openj9">
+          <svg class="icon-x"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.736-8.844L2.25 2.25h6.894l4.254 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path></svg>
+          @openj9 on X
+        </a></li>
+        <li><a href="https://github.com/eclipse-openj9/openj9/issues">GitHub Issues</a></li>
+        <li><a href="https://github.com/eclipse-openj9/openj9/blob/master/CONTRIBUTING.md">Contribute</a></li>
+        <li><a href="https://www.youtube.com/channel/UCN3mR03nrndbD2fYqvfD7AQ">YouTube Recordings</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Resources</h4>
+      <ul>
+        <li><a href="https://developer.ibm.com/languages/java/semeru-runtimes/">IBM Semeru Runtimes</a></li>
+        <li><a href="https://github.com/eclipse-openj9/openj9">GitHub Repository</a></li>
+        <li><a href="https://projects.eclipse.org/projects/technology.openj9">Eclipse Project Page</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© Eclipse Foundation. Eclipse OpenJ9™ is available under the <a href="https://www.eclipse.org/legal/eplfaq.php" style="color:rgba(255,255,255,0.5)">Eclipse Public License 2.0</a>.</span>
+    <span style="display:flex;flex-wrap:wrap;gap:12px;align-items:center;">
+      <a href="https://www.eclipse.org/" style="color:rgba(255,255,255,0.5)">Eclipse Foundation Website</a>
+      <a href="https://www.eclipse.org/legal/privacy.php" style="color:rgba(255,255,255,0.5)">Privacy Policy</a>
+      <a href="https://www.eclipse.org/legal/termsofuse.php" style="color:rgba(255,255,255,0.5)">Terms of Use</a>
+      <a href="https://www.eclipse.org/legal/compliance/" style="color:rgba(255,255,255,0.5)">Compliance</a>
+      <a href="https://www.eclipse.org/legal" style="color:rgba(255,255,255,0.5)">Legal Resources</a>
+    </span>
+  </div>
 </footer>
 
-<script>
-// Used to toggle the menu on small screens when clicking on the menu button
-function myFunction() {
-  var x = document.getElementById("navDemo");
-  if (x.className.indexOf("w3-show") == -1) {
-    x.className += " w3-show";
-  } else { 
-    x.className = x.className.replace(" w3-show", "");
-  }
-}
-</script>
 
 </body>
 </html>
