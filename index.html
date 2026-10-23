@@ -255,7 +255,7 @@
 
 <div class="release-banner">
   <span class="release-pill">New</span>
-  <p><strong>Eclipse OpenJ9 v0.62.0</strong> is now available — supporting OpenJDK 27, ZIP64 bootstrap class loading and shared classes cache.  <a href="#news">Read the release notes →</a></p>
+  <p><strong>Eclipse OpenJ9 v0.63.0</strong> is now available — supporting OpenJDK 8, 11, 17, 21, 25, and 27.  <a href="#news">Read the release notes →</a></p>
 </div>
 
 
@@ -367,22 +367,22 @@
 <section id="news">
   <div class="container">
     <div class="section-label">Latest Release</div>
-    <h2><a href="https://eclipse.dev/openj9/docs/version0.62/" style="color:inherit;text-decoration:none">Eclipse OpenJ9 v0.62.0</a></h2>
-    <p class="lead">Released September 2026 — supports OpenJDK 27.</p>
+    <h2><a href="https://eclipse.dev/openj9/docs/version0.63/" style="color:inherit;text-decoration:none">Eclipse OpenJ9 v0.63.0</a></h2>
+    <p class="lead">Released October 2026 — supports OpenJDK 8, 11, 17, 21, 25, and 27.</p>
     <div class="release-card">
       <div>
-        <h3>What's new in v0.62.0</h3>
-        <p>This release brings several significant improvements to bootstrap class loading, ZIP handling, and platform compatibility.</p>
-        <ul class="release-highlights">
-          <li>ZIP64 extension support for bootstrap class loading and shared class cache operations, eliminating the previous 4 GB JAR/ZIP size limit.</li>
-          <li>OpenJDK 27 support across all certified platforms.</li>
-          <li>Continued improvements to CRIU (Checkpoint/Restore in Userspace) support for instant-on workloads.</li>
-          <li>Enhanced native cryptographic acceleration through OpenSSL integration updates.</li>
-        </ul>
+        <h3>What's new in v0.63.0</h3>
+
         <p class="release-meta">For a full list of supported platforms and OpenJDK versions, see <a href="https://eclipse.dev/openj9/docs/openj9_support/">Supported environments</a>.</p>
+        <p> </p>
+        <p><b>Performance highlights include the following:</b></p>
+
+   <ul class="release-highlights">
+      <li>Performance improvement in throughput due to <code>setThreadStateNoSave</code> that was introduced to avoid extra <code>Thread.threadStatus</code> reads. </li>
+    </ul>
       </div>
       <div style="display:flex;flex-direction:column;gap:10px;align-items:flex-start;padding-top:4px">
-        <a class="btn btn-primary" href="https://eclipse.dev/openj9/docs/version0.62/" style="white-space:nowrap">Full release notes</a>
+        <a class="btn btn-primary" href="https://eclipse.dev/openj9/docs/version0.63/" style="white-space:nowrap">Full release notes</a>
         <a class="btn" href="https://developer.ibm.com/languages/java/semeru-runtimes/" style="background:var(--surface-alt);color:var(--primary);border:1px solid var(--border);white-space:nowrap">Semeru Runtimes</a>
       </div>
     </div>
