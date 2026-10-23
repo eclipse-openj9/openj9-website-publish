@@ -419,6 +419,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../version0.63/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Version 0.63.0
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../version0.62/" class="md-nav__link">
         
   
@@ -1015,10 +1043,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_23" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_24" >
         
           
-          <label class="md-nav__link" for="__nav_5_23" id="__nav_5_23_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_5_24" id="__nav_5_24_label" tabindex="0">
             
   
   
@@ -1036,8 +1064,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_23_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_5_23">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_24_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_24">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -13023,14 +13051,14 @@ the dynamic compaction triggers that look at heap occupancy. This option works o
 <pre><code>    -Xgc:tlhIncrementSize=&lt;bytes&gt;
 </code></pre>
 <dl>
-<dd>Sets the increment size of the thread local heap (TLH), which plays a key role in cache allocation. Threads start creating TLHs with a predefined initial size (default 2 KB). On every TLH refresh, the requested size for that thread is increased by an increment (default 4 KB). Use this option to control the increment size.</dd>
+<dd>Sets the increment size of the thread local heap (TLH), which plays a key role in cache allocation. Threads start creating TLHs with a predefined initial size (default 4 KB). On every TLH refresh, the requested size for that thread is increased by an increment (default 4 KB). Use this option to control the increment size.</dd>
 <dd>This option can be used with all OpenJ9 GC policies.</dd>
 </dl>
 <h3 id="tlhinitialsize"><code>tlhInitialSize</code></h3>
 <pre><code>    -Xgc:tlhInitialSize=&lt;bytes&gt;
 </code></pre>
 <dl>
-<dd>Sets the initial size of the TLH. The default size is 2 KB.</dd>
+<dd>Sets the initial size of the TLH. The default size is 4 KB.</dd>
 <dd>This option can be used with all OpenJ9 GC policies.</dd>
 </dl>
 <h3 id="tlhmaximumsize"><code>tlhMaximumSize</code></h3>

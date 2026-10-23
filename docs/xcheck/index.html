@@ -419,6 +419,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../version0.63/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Version 0.63.0
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../version0.62/" class="md-nav__link">
         
   
@@ -1015,10 +1043,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_23" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_24" >
         
           
-          <label class="md-nav__link" for="__nav_5_23" id="__nav_5_23_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_5_24" id="__nav_5_24_label" tabindex="0">
             
   
   
@@ -1036,8 +1064,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_23_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_5_23">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_24_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_24">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -11856,6 +11884,7 @@
 </ul>
 <dl>
 <dd>This message indicates that the AIX operating system user limit is set to restrict the size of system dumps to the value indicated. If a system dump is produced by the VM it might be truncated, and therefore of greatly reduced value in investigating the cause of crashes and other issues. For more information about how to set user limits on AIX, see <a href="https://www.ibm.com/support/knowledgecenter/SSYKE2_8.0.0/com.ibm.java.vm.80.doc/docs/j9_configure_ulimits.html">Setting system resource limits on AIX and Linux systems</a>.</dd>
+<dd>The VM can raise the core file size soft limit up to the hard limit when it produces a system dump, so this message is based on the hard limit.</dd>
 </dl>
 <ul>
 <li><code>JVMJ9VM134W The system fullcore option is set to FALSE, system dumps may be truncated</code></li>
@@ -11869,6 +11898,7 @@
 </ul>
 <dl>
 <dd>This message indicates that the Linux operating system user limit is set to restrict the size of system dumps to the value indicated. If a system dump is produced by the VM, it might be truncated and therefore of greatly reduced value in investigating the cause of crashes and other issues. Review the documentation that is provided for your operating system to correctly configure the value for <code>ulimits</code>. For further information, see <a href="https://www.ibm.com/support/knowledgecenter/SSYKE2_8.0.0/com.ibm.java.vm.80.doc/docs/j9_configure_ulimits.html">Setting system resource limits on AIX and Linux systems</a>.</dd>
+<dd>The VM can raise the core file size soft limit up to the hard limit when it produces a system dump, so this message is based on the hard limit.</dd>
 </dl>
 <ul>
 <li><code>JVMJ9VM135W /proc/sys/kernel/core_pattern setting "|/usr/libexec/abrt-hook-ccpp %s %c %p %u %g %t e" specifies that core dumps are to be piped to an external program. The JVM may be unable to locate core dumps and rename them.</code></li>
