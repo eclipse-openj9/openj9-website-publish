@@ -85,6 +85,9 @@
 
   .logo-nav  { display: block; height: 34px; width: auto; filter: brightness(0) invert(1); }
   .logo-footer { display: block; height: 28px; width: auto; filter: brightness(0) invert(1); opacity: 0.9; }
+  .logo-ef     { display: block; height: 32px; width: auto; }
+  .footer-ef   { margin-top: auto; padding-top: 24px; }
+  .footer-brand-col { display: flex; flex-direction: column; }
 
   .icon-x { width: 14px; height: 14px; fill: currentColor; display: inline-block; vertical-align: middle; }
 
@@ -334,11 +337,16 @@ JCL      - 524b935753e based on jdk-17.0.17+10)
 <!-- Footer -->
 <footer>
   <div class="footer-inner">
-    <div>
+    <div class="footer-brand-col">
       <div class="footer-brand">
         <img src="../../Logo.svg" class="logo-footer" alt="Eclipse OpenJ9" />
       </div>
       <p class="footer-tagline">A high-performance, scalable Java Virtual Machine implementation for enterprise and cloud-native workloads.</p>
+      <div class="footer-ef">
+        <a href="https://www.eclipse.org/" target="_blank" rel="noopener noreferrer">
+          <img src="../../EF_White-Orange.svg" class="logo-ef" alt="Eclipse Foundation" />
+        </a>
+      </div>
     </div>
     <div class="footer-col">
       <h4>Project</h4>
